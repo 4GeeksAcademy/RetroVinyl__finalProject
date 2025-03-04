@@ -23,7 +23,7 @@ export const DespliegueAlbums = () => {
                         </div>
                     </div>
                     <div className="cont-gen-btn">
-                        <a className="youtube-gen d-flex justify-content-center align-items-center text-decoration-none" 
+                        <a className="youtube-gen d-flex justify-content-center align-items-center text-decoration-none"
                             href="https://www.youtube.com/watch?v=pXu6JC6-d_o&list=PL7tBPYQzCjeLGK4hm4eZnf1gQRPQZYg8Y"
                             target="_blank"
                             rel="noopener noreferrer">
