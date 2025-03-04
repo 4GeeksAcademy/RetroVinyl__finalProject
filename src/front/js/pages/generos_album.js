@@ -1,9 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/generos.css";
 import { useParams } from "react-router-dom";
 
 export const DespliegueAlbums = () => {
+    const {decada, genero} = useParams()
+
+    const [albums, setAlbums] = useState([])
+
+    useEffect(()=>{
+        const getAlbums = async () =>{
+            const response = await fetch(`${process.env.BACKEND_URL}`)
+        }
+    },[])
     return (
         <div className="cont-gen container">
             <div className="titulo-gen">
