@@ -1,0 +1,32 @@
+.card-title1{
+    font-family: fantasy;
+    color: white;
+}
+
+.card-title2{
+    margin-top: 5px;
+    font-family: fantasy;
+    color: white;
+}
+
+.label{
+    color: white;
+}
+
+.cardshadow{
+    background-color: black;
+    box-shadow: rgba(64, 64, 192, 0.2) 0px 7px 29px 0px;
+}
+
+.slider-container {
+    position: relative;
+    height: 486px; /* Ajusta según el tamaño deseado */
+    overflow: hidden;
+  }
+  
+  .slider-image {
+    width: 100%;
+    height: 150px;  /* Asegura que las imágenes tengan el mismo tamaño */
+    object-fit: cover;  /* Ajusta las imágenes sin distorsionarlas */
+  }
+
