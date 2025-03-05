@@ -14,7 +14,7 @@
     color: black;
 }
 .cont-gen-card{
-    justify-content: start;
+    justify-content: center;
 }
 .carta-gen {
     display: flex;
