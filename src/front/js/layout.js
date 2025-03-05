@@ -8,6 +8,7 @@ import { InfoAlbum } from "./views/InfoAlbum";
 import { Demo } from "./pages/demo";
 import { Login } from "./pages/login";
 import { Favoritos } from "./pages/favoritos";
+import { DespliegueAlbums } from "./pages/despliegue_albums";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
@@ -31,7 +32,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Decada />} path="/decadas" />
+                        <Route element={<Decada />} path="/:decada" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Register />} path="/register" />
@@ -39,6 +40,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Favoritos />} path="/favoritos" />
+                        <Route element={<DespliegueAlbums />} path="/albums/:decada/:genero" />
                         <Route element={<Perfil />} path="/perfil" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

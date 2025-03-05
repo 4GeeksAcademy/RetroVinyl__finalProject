@@ -21,7 +21,6 @@ class Album(db.Model):
     title = db.Column(db.String(250), unique=False, nullable=False)
     country = db.Column(db.String(80), unique=False, nullable=False)
     year = db.Column(db.String(80), unique=False, nullable=False)
-    thumb = db.Column(db.String(250), unique=False, nullable=False)
     cover_image = db.Column(db.String(250), unique=False, nullable=False)
     genre = db.Column(db.String(250), unique=False, nullable=False)
     have = db.Column(db.String(80), unique=False, nullable=False)
@@ -35,7 +34,6 @@ class Album(db.Model):
             "title": self.title,
             "country" : self.country,
             "year" : self.year,
-            "thumb" : self.thumb,
             "cover_image" : self.cover_image,
             "genre" : self.genre,
             "have" : self.have,   
