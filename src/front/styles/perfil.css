@@ -3,16 +3,15 @@
 }
 
 .form-control::placeholder {
-    color: rgb(233, 213, 213) !important; /* Cambia el color del texto del placeholder a blanco */
+    color: rgb(153, 143, 143) !important; /* Cambia el color del texto del placeholder a blanco */
 }
 
 .bodyuser{
-    background: -webkit-gradient(linear, left top, right top, from(#e07672), to(#e0314c));
-    background: linear-gradient(to right, #e0314c, #e07672);
-    opacity: 1;
+    
+    background: rgb(0, 0, 0, 0.671);
     padding: 5px;        
     overflow: hidden;
-    box-shadow: rgba(64, 64, 192, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
 }
 
 #changeAvatar{

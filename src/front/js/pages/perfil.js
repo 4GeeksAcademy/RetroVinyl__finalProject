@@ -49,22 +49,24 @@ export const Perfil = () => {
   return (
     <div className="bodyuser container rounded mt-5 mb-5">
       <div className="row input-group">
-        <div className="col-md-3 border-right">
-          <div className="d-flex flex-column align-items-center text-center p-3 py-5">
+        <div className="col-md-4 border-right">
+          <div className="d-flex flex-column align-items-center text-center p-3 py-1">
             <img
               className="rounded-circle mt-5"
               width="150px"
               src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/>
               <input type="file" id="changeAvatar" 
               />
-            <span className="font-weight-bold">{name}{surname}</span>
-            <span className="text-black-50">{email}</span>
-            <span> </span>
+            <span className="font-weight-bold text-light">{name}{surname}</span>
+            <span className="text-light-50">{email}</span>
+            <button className="btn btn-outline-danger mt-5">
+              <i className="fa fa-plus"></i>&nbsp;Change photo
+            </button>
           </div>
         </div>
 
         <div className="col-md-5 border-right">
-          <div className="p-3 py-5">
+          <div className=" text-light py-5">
             <div className="d-flex justify-content-between align-items-center mb-3">
               <h4 className="text-right">Profile Settings</h4>
             </div>
@@ -123,16 +125,6 @@ export const Perfil = () => {
                 />
               </div>
               <div className="col-md-12">
-                <label className="labels">Area</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter area"
-                  value={area}
-                  onChange={(e) => setArea(e.target.value)}
-                />
-              </div>
-              <div className="col-md-12">
                 <label className="labels">Email</label>
                 <input
                   type="email"
@@ -187,15 +179,6 @@ export const Perfil = () => {
               </button>
             </div>
           </div>
-        </div>
-
-        <div className="col-md-4">
-          <div className="p-3 py-5">
-            <button className="btn btn-outline-danger">
-              <i className="fa fa-plus"></i>&nbsp;Change photo
-            </button>
-          </div>
-          <br />
         </div>
       </div>
     </div>

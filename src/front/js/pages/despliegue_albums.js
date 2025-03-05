@@ -9,6 +9,8 @@ export const DespliegueAlbums = () => {
     const [albums, setAlbums] = useState([])
 
     useEffect(()=>{ // DONDE LLAMO A LA RUTA DEL BACK QUE TRAE LA INFORMACION??????
+        console.log("estoy cargando los albumes");
+        
         const getAlbums = async () =>{
             const response = await fetch(`${process.env.BACKEND_URL}/api/albums/${decada}/${genero}`)
             const data = await response.json()
