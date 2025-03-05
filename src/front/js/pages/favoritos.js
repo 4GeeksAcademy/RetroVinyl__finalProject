@@ -1,6 +1,11 @@
-import React from "react";
+import React,{useContext, useEffect} from "react";
+import { Context } from "../store/appContext";
+
+
 import "../../styles/favoritos.css";
 export const Favoritos = () => {
+    
+    
     return (
         <div className="cont-favs container">
             <div className="titulo-favs">
