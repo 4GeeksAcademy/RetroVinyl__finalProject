@@ -123,16 +123,6 @@ export const Perfil = () => {
                 />
               </div>
               <div className="col-md-12">
-                <label className="labels">Area</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter area"
-                  value={area}
-                  onChange={(e) => setArea(e.target.value)}
-                />
-              </div>
-              <div className="col-md-12">
                 <label className="labels">Email</label>
                 <input
                   type="email"
