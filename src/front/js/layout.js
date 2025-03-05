@@ -16,6 +16,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Home from "./pages/home";
 import Register from "./pages/register";
+import Perfil from "./pages/perfil";
 
 //create your first component
 const Layout = () => {
@@ -40,6 +41,7 @@ const Layout = () => {
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<Favoritos />} path="/favoritos" />
                         <Route element={<DespliegueAlbums />} path="/albums/:decada/:genero" />
+                        <Route element={<Perfil />} path="/perfil" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
