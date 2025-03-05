@@ -1,6 +1,10 @@
 .cont-gen{
     height: auto;
 }
+.nombre-genero{
+    font-size: 4rem;
+    color: #DC3545;
+}
 .titulo-gen{
     text-align:start;
     padding-top: 1rem;
@@ -10,21 +14,23 @@
     color: black;
 }
 .cont-gen-card{
-    justify-content: space-between;
+    justify-content: start;
 }
-.carta-gen{
-    font-family: fantasy;
-    font-size: small;
-    height: 350px;
+.carta-gen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center;
+    height: 450px; 
     width: 220px;
     margin-bottom: 3rem;
+    margin-right: 8px;
     border-radius: 15px;
-    color: white; 
-    align-items: center;
+    color: white;
     background: rgba(0, 0, 0, 0.671);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    border: 2px solid #DC3545
+    padding: 1rem;
+    box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
+    box-sizing: border-box;
 }
 
 .img-gen{
@@ -37,14 +43,20 @@
     margin:8px auto;
 
 }
-.detalles-gen{
-    margin-left: 1rem;
-    margin-top: 1rem;
-}
-.cont-gen-btn{
+.detalles-gen {
+    flex-grow: 1;
+    max-height: 200px; 
+    overflow-y: hidden; 
     display: flex;
-    justify-content:space-between;
-    margin-top: 1.8rem;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+.cont-gen-btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    width: 100%;
 }
 .fav-gen{
     width: 40px;
@@ -61,7 +73,6 @@
     border-radius: 10px;
     border: 1.5px solid #248cdb;
     background-color: #c7c7c7;
-   
     
 }
 .youtube-gen{
@@ -70,4 +81,9 @@
     border-radius: 10px;
     border: 1.5px solid #f20d0d;
     background-color: #c7c7c7;
+}
+.cuerpo-gen {
+    flex-grow: 1; 
+    width: 100%;
+    overflow: visible; 
 }

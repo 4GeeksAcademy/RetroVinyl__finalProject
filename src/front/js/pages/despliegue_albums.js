@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../../styles/generos.css";
+import "../../styles/despliegue_albums.css";
 import { useParams } from "react-router-dom";
 
 export const DespliegueAlbums = () => {
@@ -16,11 +16,11 @@ export const DespliegueAlbums = () => {
 
         }
         getAlbums()
-    },[])
+    },[decada, genero])
     return (
         <div className="cont-gen container">
             <div className="titulo-gen">
-                <h1 className="text-center my-2"><span className="text-danger">R</span>OCK</h1>
+                <h1 className="nombre-genero text-center my-2"><span>{decada}</span>'S <span className="text-light">{genero.toUpperCase()}</span></h1>
             </div>
             <div className="cont-gen-card row">
                 {
