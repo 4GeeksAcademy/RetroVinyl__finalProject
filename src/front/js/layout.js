@@ -42,7 +42,7 @@ const Layout = () => {
                         <Route element={<Favoritos />} path="/favoritos" />
                         <Route element={<DespliegueAlbums />} path="/albums/:decada/:genero" />
                         <Route element={<Perfil />} path="/perfil" />
-                        <Route element={<h1>Not found!</h1>} />
+                        <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
