@@ -47,7 +47,9 @@ export const Navbar = () => {
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
 								<li><a className="dropdown-item" href="#">Perfil</a></li>
-								<li><a className="dropdown-item" href="#">Favoritos</a></li>
+								<Link to="/favoritos">
+									<li><a className="dropdown-item" href="#">Favoritos</a></li>
+								</Link>
 								<li><a className="dropdown-item" href="#">Pedidos</a></li>
 								<li><a className="dropdown-item" href="#">Cerrar Sesión</a></li>
 							</ul>
