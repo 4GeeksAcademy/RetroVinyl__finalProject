@@ -27,7 +27,6 @@ def get_all_albums():
                 genre = ", ".join(album["genre"]),  # Convertir lista a string, ", ".join = unelos con una coma y una espacio
                 year = album["year"],
                 country = album["country"],
-                thumb = album["thumb"],
                 cover_image = album["cover_image"],
                 have = album["community"]["have"],
             )

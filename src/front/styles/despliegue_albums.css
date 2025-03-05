@@ -14,7 +14,7 @@
     color: black;
 }
 .cont-gen-card{
-    justify-content: start;
+    justify-content: center;
 }
 .carta-gen {
     display: flex;
@@ -63,7 +63,7 @@
     height: 40px;
     border-radius: 10px;
     border: 1.5px solid #daab03;
-    background-color: #c7c7c7;
+    background-color: transparent;
     margin-left: 3rem;
     
 }
@@ -72,7 +72,7 @@
     height: 40px;
     border-radius: 10px;
     border: 1.5px solid #248cdb;
-    background-color: #c7c7c7;
+    background-color: transparent;
     
 }
 .youtube-gen{
@@ -80,7 +80,7 @@
     height: 40px;
     border-radius: 10px;
     border: 1.5px solid #f20d0d;
-    background-color: #c7c7c7;
+    background-color: transparent;
 }
 .cuerpo-gen {
     flex-grow: 1; 
