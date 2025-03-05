@@ -26,7 +26,7 @@ export const Navbar = () => {
 				</a>
 				</Link>
 				{
-					localStorage.getItem("token") ?
+					!localStorage.getItem("token") ?
 						<div className="d-flex dropdown">
 							<div class="search input-group mb-3">
 								<input type="text"
@@ -48,7 +48,9 @@ export const Navbar = () => {
 								Usuario
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
+						        <Link to="/perfil" style={{ textDecoration: 'none' }}>		
 								<li><a className="dropdown-item" href="#">Perfil</a></li>
+								</Link>
 							    <Link to="/favoritos"  style={{ textDecoration: 'none' }}>
 								<li><a className="dropdown-item" href="#">Favoritos</a></li>
 								</Link>
