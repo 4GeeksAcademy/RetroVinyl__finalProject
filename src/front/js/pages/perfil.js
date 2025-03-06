@@ -8,6 +8,7 @@ export const Perfil = () => {
   // Establecer el estado para cada campo de entrada
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [username, setUsername] = useState('');
   const [mobile, setMobile] = useState('');
   const [postcode, setPostcode] = useState('');
   const [state, setState] = useState('');
@@ -19,6 +20,7 @@ export const Perfil = () => {
 
   const handleChangeName = (e) => setName(e.target.value);
   const handleChangeSurname = (e) => setSurname(e.target.value);
+  const handleChangeUsername = (e) => setUsername(e.target.value);
   const handleChangeMobile = (e) => setMobile(e.target.value);
   const handleChangePostcode = (e) => setPostcode(e.target.value);
   const handleChangeState = (e) => setState(e.target.value);
@@ -33,6 +35,7 @@ export const Perfil = () => {
     const userProfile = {
       name,
       surname,
+      username,
       mobile,
       postcode,
       state,
@@ -94,6 +97,16 @@ export const Perfil = () => {
             </div>
 
             <div className="row mt-3">
+            <div className="col-md-12">
+                <label className="labels">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Enter your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
               <div className="col-md-12">
                 <label className="labels">Mobile Number</label>
                 <input
