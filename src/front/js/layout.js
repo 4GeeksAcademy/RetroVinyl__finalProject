@@ -9,6 +9,7 @@ import { Pedidos } from "./views/Pedidos";
 import { Demo } from "./pages/demo";
 import { Login } from "./pages/login";
 import { Favoritos } from "./pages/favoritos";
+import { DespliegueAlbums } from "./pages/despliegue_albums";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
@@ -16,6 +17,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import Home from "./pages/home";
 import Register from "./pages/register";
+import Perfil from "./pages/perfil";
 
 //create your first component
 const Layout = () => {
@@ -31,7 +33,7 @@ const Layout = () => {
                 <ScrollToTop>
                     <Navbar />
                     <Routes>
-                        <Route element={<Decada />} path="/decadas" />
+                        <Route element={<Decada />} path="/decada/:decada" />
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Register />} path="/register" />
@@ -41,6 +43,9 @@ const Layout = () => {
                         <Route element={<Favoritos />} path="/favoritos" />
                         <Route element={<Pedidos />} path="/pedidos" />
                         <Route element={<h1>Not found!</h1>} />
+                        <Route element={<DespliegueAlbums />} path="/albums/:decada/:genero" />
+                        <Route element={<Perfil />} path="/perfil" />
+                        <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>
