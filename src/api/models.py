@@ -6,6 +6,14 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    name = db.Column(db.String(120), nullable=False)
+    sur_name = db.Column(db.String(120), nullable=False)
+    username = db.Column(db.String(120), unique=True, nullable=False)
+    mobile_number = db.Column(db.String(120), unique=True, nullable=False)
+    post_code = db.Column(db.String(120), nullable=False)
+    state = db.Column(db.String(120), nullable=False)
+    country = db.Column(db.String(120),  nullable=False)
+    region_state = db.Column(db.String(120), nullable=False)
     
    
     def __repr__(self):
@@ -16,34 +24,6 @@ class User(db.Model):
             "id": self.id,
             "email": self.email, 
         }
-    
-class Perfil(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=False)
-    sur_name = db.Column(db.String(120), unique=True, nullable=False)
-    username = db.Column(db.String(120), unique=True, nullable=False)
-    mobile_number = db.Column(db.String(120), unique=True, nullable=False)
-    post_code = db.Column(db.String(120), unique=True, nullable=False)
-    state = db.Column(db.String(120), unique=True, nullable=False)
-    country = db.Column(db.String(120), unique=True, nullable=False)
-    region_state = db.Column(db.String(120), unique=True, nullable=False)
-   
-    def __repr__(self):
-        return f'<Perfil {self.username}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "sur name": self.sur_name,
-            "username": self.username,
-            "mobile" : self.mobile_number,
-            "post code" : self.post_code,
-            "state" : self.state,
-            "country": self.country,
-            "region state": self.region_state,
-        }
-
     
 class Album(db.Model):
     id = db.Column(db.Integer, primary_key=True)

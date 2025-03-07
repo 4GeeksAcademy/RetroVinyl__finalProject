@@ -44,7 +44,7 @@ const Layout = () => {
                         <Route element={<Pedidos />} path="/pedidos" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<DespliegueAlbums />} path="/albums/:decada/:genero" />
-                        <Route element={<Perfil />} path="/perfil/:userName" />
+                        <Route element={<Perfil />} path="/perfil" />
                         <Route element={<h1>Not found!</h1>} path="*" />
                     </Routes>
                     <Footer />
