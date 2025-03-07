@@ -48,3 +48,8 @@ def get_albums_by_decada_and_genero(decada, genero):
         if genre in [g.strip().lower() for g in album.genre.replace('/', ',').split(',')] # Recibe los albumes filtrados por año y remplaza el / y la , de los genreros solo por ,
     ]
     return jsonify([album.serialize() for album in filtered_albums])  # crea un diccionario añadiendo la propiedad jsonify para convertirlo en json
+
+@api.route('/infoAlbums/<albumid>', methods = ['GET']) # Ruta que conecta el back con el front (Despliegue albums.js useEffect linea 11)
+def get_albums_by_id(albumid):
+    album_selected = Album.query.filter_by(id=albumid).first()
+    return jsonify(album_selected.serialize())

@@ -47,6 +47,28 @@ class Album(db.Model):
             "genre" : self.genre,
             "have" : self.have,   
         }
-    
-    
-    
+
+class Pedido(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    album_title_order = db.Column(db.String(250), unique=False, nullable=False)
+    album_country_order = db.Column(db.String(80), unique=False, nullable=False)
+    album_year_order = db.Column(db.String(80), unique=False, nullable=False)
+    album_cover_image_order = db.Column(db.String(250), unique=False, nullable=False)
+    album_genre_order = db.Column(db.String(250), unique=False, nullable=False)
+    album_date_order = db.Column(db.String(250), unique=False, nullable=False)
+    album_order_id = db.Column(db.Integer, unique=False, nullable=False)
+
+    def __repr__(self):
+        return f'<Pedido {self.album_title_order}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "album_title_order": self.album_title_order,
+            "album_country_order" : self.album_country_order,
+            "album_year_order" : self.album_year_order,
+            "album_cover_image_order" : self.album_cover_image_order,
+            "album_genre_order" : self.album_genre_order,
+            "album_date_order" : self.album_date_order,
+            "album_order_id" : self.album_order_id
+        }
