@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
+import { Link } from "react-router-dom";
 
 export const Pedidos = () => {
     const { store, actions } = useContext(Context)

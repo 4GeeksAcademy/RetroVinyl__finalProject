@@ -50,9 +50,11 @@ export const DespliegueAlbums = () => {
                                 <button className="fav-gen">
                                     <i class="fa-solid fa-star" style={{ color: '#daab03' }}></i>
                                 </button>
+                                <Link to= {`/infoAlbum/${album.id}`}>
                                 <button className="compra-gen">
                                     <i class="fa-solid fa-cart-shopping" style={{ color: '#248cdb' }}></i>
                                 </button>
+                                </Link>
                             </div>
                         </div>
                         )
