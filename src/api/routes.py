@@ -80,3 +80,7 @@ def get_favorito():
     favoritos = Favoritos.query.all() 
     favoritos_serialized = [favorito.serialize() for favorito in favoritos] 
     return favoritos_serialized   
+@api.route('/infoAlbums/<albumid>', methods = ['GET']) # Ruta que conecta el back con el front (Despliegue albums.js useEffect linea 11)
+def get_albums_by_id(albumid):
+    album_selected = Album.query.filter_by(id=albumid).first()
+    return jsonify(album_selected.serialize())
