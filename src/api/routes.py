@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Album, Favoritos
+from api.models import db, Album, Favorito
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.fetch_data import get_all_albums # importar las funciones que llaman a la API externa
@@ -52,9 +52,9 @@ def get_albums_by_decada_and_genero(decada, genero):
 @api.route('/favoritos', methods =['POST'])
 def add_favorito():
     data = request.get_json()
-    exist = Favoritos.query.filter_by(title = data.get("title")).first()
+    exist = Favorito.query.filter_by(title = data.get("title")).first()
     if not exist:
-        new_favorito = Favoritos(
+        new_favorito = Favorito(
         id = data['id'],   
         title=data['title'],
         country=data['country'],
@@ -69,7 +69,7 @@ def add_favorito():
 
 @api.route('/favoritos/<id>', methods=['DELETE'])
 def delete_favorito(id):
-    favorito = Favoritos.query.get(id)
+    favorito = Favorito.query.get(id)
     db.session.delete(favorito)
     db.session.commit()
     
@@ -77,9 +77,10 @@ def delete_favorito(id):
     
 @api.route('/favoritos', methods =['GET'])
 def get_favorito():
-    favoritos = Favoritos.query.all() 
+    favoritos = Favorito.query.all() 
     favoritos_serialized = [favorito.serialize() for favorito in favoritos] 
     return favoritos_serialized   
+
 @api.route('/infoAlbums/<albumid>', methods = ['GET']) # Ruta que conecta el back con el front (Despliegue albums.js useEffect linea 11)
 def get_albums_by_id(albumid):
     album_selected = Album.query.filter_by(id=albumid).first()
