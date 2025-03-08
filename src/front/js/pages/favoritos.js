@@ -1,7 +1,5 @@
 import React,{useContext, useEffect} from "react";
 import { Context } from "../store/appContext";
-
-
 import "../../styles/favoritos.css";
 export const Favoritos = () => {
     

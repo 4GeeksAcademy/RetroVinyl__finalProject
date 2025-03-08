@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Album
+from api.models import db, Album, Favorito
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.fetch_data import get_all_albums # importar las funciones que llaman a la API externa
@@ -48,6 +48,38 @@ def get_albums_by_decada_and_genero(decada, genero):
         if genre in [g.strip().lower() for g in album.genre.replace('/', ',').split(',')] # Recibe los albumes filtrados por año y remplaza el / y la , de los genreros solo por ,
     ]
     return jsonify([album.serialize() for album in filtered_albums])  # crea un diccionario añadiendo la propiedad jsonify para convertirlo en json
+
+@api.route('/favoritos', methods =['POST'])
+def add_favorito():
+    data = request.get_json()
+    exist = Favorito.query.filter_by(title = data.get("title")).first()
+    if not exist:
+        new_favorito = Favorito(
+        id = data['id'],   
+        title=data['title'],
+        country=data['country'],
+        year=data['year'],
+        cover_image=data['cover_image'],
+        genre=data['genre'],
+        have=data['have']
+        )
+        db.session.add(new_favorito)
+        db.session.commit()
+    return jsonify("Favorito añadido")
+
+@api.route('/favoritos/<id>', methods=['DELETE'])
+def delete_favorito(id):
+    favorito = Favorito.query.get(id)
+    db.session.delete(favorito)
+    db.session.commit()
+    
+    return jsonify({"message": "Favorito eliminado"}), 200
+    
+@api.route('/favoritos', methods =['GET'])
+def get_favorito():
+    favoritos = Favorito.query.all() 
+    favoritos_serialized = [favorito.serialize() for favorito in favoritos] 
+    return favoritos_serialized   
 
 @api.route('/infoAlbums/<albumid>', methods = ['GET']) # Ruta que conecta el back con el front (Despliegue albums.js useEffect linea 11)
 def get_albums_by_id(albumid):
