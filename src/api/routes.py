@@ -85,3 +85,18 @@ def get_favorito():
 def get_albums_by_id(albumid):
     album_selected = Album.query.filter_by(id=albumid).first()
     return jsonify(album_selected.serialize())
+
+
+@api.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')  #permite obtener valores individuales de la url     
+    if query:
+        # Filtra los resultados según el título del álbum
+        results = Album.query.filter(Album.title.ilike(f'%{query}%')).all() #ilike sirve para consultar datos sin distinguir entre mayusculas y minusculas
+        print(f"Resultados encontrados: {len(results)}")
+        for album in results:
+            print(f"- {album.title}")
+    else:
+        results = [] #si esta vacío no se devuelve ninguna búsqueda
+    
+    return jsonify([album.serialize() for album in results])
