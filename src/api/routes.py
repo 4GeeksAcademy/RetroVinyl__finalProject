@@ -52,16 +52,11 @@ def get_albums_by_decada_and_genero(decada, genero):
 @api.route('/favoritos', methods =['POST'])
 def add_favorito():
     data = request.get_json()
-    exist = Favorito.query.filter_by(title = data.get("title")).first()
+    exist = Favorito.query.filter_by(id_usuario = 1, id_album = data.get("id_album")).first()
     if not exist:
         new_favorito = Favorito(
-        id = data['id'],   
-        title=data['title'],
-        country=data['country'],
-        year=data['year'],
-        cover_image=data['cover_image'],
-        genre=data['genre'],
-        have=data['have']
+        id_album = data['id_album'],   
+        id_usuario = 1
         )
         db.session.add(new_favorito)
         db.session.commit()
@@ -69,7 +64,10 @@ def add_favorito():
 
 @api.route('/favoritos/<id>', methods=['DELETE'])
 def delete_favorito(id):
-    favorito = Favorito.query.get(id)
+    user_id = 1
+    favorito = Favorito.query.filter_by(id_usuario = user_id, id_album = id).first()
+    if not favorito : 
+        return jsonify({"error" : "el album no esta en los favoritos del usuario"}), 404
     db.session.delete(favorito)
     db.session.commit()
     
@@ -77,9 +75,9 @@ def delete_favorito(id):
     
 @api.route('/favoritos', methods =['GET'])
 def get_favorito():
-    favoritos = Favorito.query.all() 
+    favoritos = Favorito.query.filter_by(id_usuario = 1).all()
     favoritos_serialized = [favorito.serialize() for favorito in favoritos] 
-    return favoritos_serialized   
+    return jsonify (favoritos_serialized)  
 
 @api.route('/infoAlbums/<albumid>', methods = ['GET']) # Ruta que conecta el back con el front (Despliegue albums.js useEffect linea 11)
 def get_albums_by_id(albumid):

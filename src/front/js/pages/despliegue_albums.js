@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import "../../styles/despliegue_albums.css";
+import "/workspaces/RetroVinyl__finalProject/src/front/styles/despliegue_albums.css"
 
 export const DespliegueAlbums = () => {
     const { decada, genero } = useParams();
@@ -28,7 +28,7 @@ export const DespliegueAlbums = () => {
         const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(album),
+            body: JSON.stringify({ id_album: album.id }),
         });
         if (response.ok) {
             console.log("Álbum añadido");
@@ -36,8 +36,8 @@ export const DespliegueAlbums = () => {
         }
     };
     // Eliminar un favorito
-    const deleteFavorito = async (album) => {
-        const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos/${album}`, {
+    const deleteFavorito = async (id_album) => {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos/${id_album}`, {
             method: 'DELETE'
         });
         if (response.ok) {
@@ -47,8 +47,8 @@ export const DespliegueAlbums = () => {
     };
     //Comprueba en el useState si el album existe en favoritos
     const isFavorito = (id) => {
-         console.log("IDs en favoritos:", favoritos.map(f => f.id));
-        return favoritos.some((fav) => fav.id === id);
+        console.log("IDs en favoritos:", favoritos.map(f => f.id_album));
+        return favoritos.some((fav) => fav.id_album === id);
     };
 
     // Maneja el clic en el botón favorito (Si el album no existe, lo añade. Si existe, lo borra)
@@ -90,16 +90,16 @@ export const DespliegueAlbums = () => {
                             <button className="fav-gen" onClick={() => handleFavoritoClick(album)}>{
                                 isFavorito(album.id)
                                     ?
-                                    <i class="fa-solid fa-star" style={{ color: '#daab03' }}></i>
+                                    <i class="fa-solid fa-star"></i>
                                     :
-                                    <i class="fa-regular fa-star" style={{ color: '#daab03' }}></i>
+                                    <i class="fa-regular fa-star"></i>
                             }
                             </button>
-                                <Link to= {`/infoAlbum/${album.id}`}>
-                            <button className="compra-gen">
-                                <i className="fa-solid fa-plus" style={{ color: '#248cdb' }}></i>
-                            </button>
-                                </Link>
+                            <Link to={`/infoAlbum/${album.id}`} style={{ textDecoration: 'none' }} >
+                                <button className="compra-gen">
+                                    <i className="fa-solid fa-plus" ></i>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
