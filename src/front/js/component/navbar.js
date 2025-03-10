@@ -30,6 +30,7 @@ export const Navbar = () => {
 		} else {
 			setSearchResults([]); //si no hay busqueda limpia el resultado
 		}
+
 	};
 
 	const handleResultClick = (albumid) => {
