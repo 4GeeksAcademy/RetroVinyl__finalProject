@@ -16,6 +16,7 @@ class User(db.Model):
     state = db.Column(db.String(120), nullable=False)
     country = db.Column(db.String(120),  nullable=False)
     region_state = db.Column(db.String(120), nullable=False)
+    favoritos = db.relationship ("Favorito", backref ="user", lazy = True)
     
    
     def __repr__(self):
@@ -25,6 +26,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email, 
+            "favorito" : [favorito.serialize() for favorito in self.favoritos]
         }
     def set_password(self, password):
         self.password_hash = generate_password_hash(str(password))
@@ -84,24 +86,15 @@ class Pedido(db.Model):
 class Favorito(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_album = db.Column(db.Integer, db.ForeignKey('album.id'))
-    title = db.Column(db.String(250), unique=False, nullable=False)
-    country = db.Column(db.String(80), unique=False, nullable=False)
-    year = db.Column(db.String(80), unique=False, nullable=False)
-    cover_image = db.Column(db.String(250), unique=False, nullable=False)
-    genre = db.Column(db.String(250), unique=False, nullable=False)
-    have = db.Column(db.String(80), unique=False, nullable=False)
-
+    id_usuario = db.Column(db.Integer, db.ForeignKey('user.id'))
+    album = db.relationship('Album', backref = 'favoritos', lazy =True)
     def __repr__(self):
-        return f'<Favorito {self.title}>'
+        return f'<Favorito {self.id}>'
 
     def serialize(self):
         return {
             "id": self.id,
-            "id_album" : self.id_album,
-            "title": self.title,
-            "country" : self.country,
-            "year" : self.year,
-            "cover_image" : self.cover_image,
-            "genre" : self.genre,
-            "have" : self.have,   
+            "id_album" : self.id_album, 
+            "id_usuario" : self.id_usuario,
+            "album" : self.album.serialize()
         }    

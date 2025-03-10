@@ -58,7 +58,7 @@
     margin-top: auto;
     width: 100%;
 }
-.fav-gen{
+.fav-gen {
     width: 40px;
     height: 40px;
     font-size: 25px;
@@ -69,7 +69,19 @@
     border: 1.5px solid #daab03;
     background-color: transparent;
     margin-left: 3rem;
-    
+    color: #daab03;
+    transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.fav-gen:hover {
+    border-color: #daab03;
+    box-shadow: 0 0 15px 2px #daab03;
+}
+
+.fav-gen:active {
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow: 0 0 15px 2px #ffffff;
 }
 .compra-gen{
     width: 40px;
@@ -81,8 +93,19 @@
     border-radius: 10px;
     border: 1.5px solid #248cdb;
     background-color: transparent;
-    
+    color:#248cdb;
+    transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
 }
+.compra-gen:hover{
+    border-color: #248cdb;
+    box-shadow: 0 0 15px 2px #248cdb;
+}
+.compra-gen:active{
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow: 0 0 15px 2px #ffffff;
+}
+
 .youtube-gen{
     width: 40px;
     height: 40px;
