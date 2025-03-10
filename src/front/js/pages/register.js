@@ -1,10 +1,52 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useState } from "react";
 import "../../styles/registro.css";
 import Slider from "react-slick";
+import { useNavigate } from 'react-router-dom';
+
 
 export const Register = () => {
-  const { store, actions } = useContext(Context);
+  const [email, setEmail] = useState(""); // Guardamos el email
+  const [password, setPassword] = useState(""); // Guardamos la contraseña
+  const [confirmPassword, setConfirmPassword] = useState(""); // Guardamos la confirmación de contraseña
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  const sign_up = async () => {
+    if (password !== confirmPassword) {
+      setMessage("Las contraseñas no coinciden.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json(); // Convertimos la respuesta a JSON
+
+      if (data.msg) {
+        setMessage(data.msg); // Si la respuesta tiene "msg", lo mostramos
+      } else {
+        setMessage("¡Usuario registrado con éxito!");
+        navigate("/"); // Mensaje de éxito por defecto
+      }
+    } catch (error) {
+      setMessage("Hubo un problema con la solicitud. Intenta nuevamente."); // Si ocurre un error en la solicitud
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevenir la recarga de la página
+    sign_up(); // Llamada a la función sign_up
+  };
+
 
   const settings = {
     dots: false,
@@ -40,7 +82,7 @@ export const Register = () => {
         </div>
         <div className="py-2">
           <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/abbey-road-the-beatles.jpg" alt="image" className="slider-image" />
-        </div>        
+        </div>
         <div className="py-2">
           <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/aladin-sane-david-bowie.jpg" alt="image" className="slider-image" />
         </div>
@@ -64,18 +106,32 @@ export const Register = () => {
           <div className="cardshadow card">
             <div className="card-body">
               <h3 className="card-title1 text-center mb-4">Registrarse</h3>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="label mb-4">
                   <label htmlFor="inputEmail3" className="form-label">Email</label>
-                  <input type="email" className="form-control" id="inputEmail3" required />
+                  <input type="email"
+                    className="form-control"
+                    id="inputEmail3"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div className="label mb-4">
                   <label htmlFor="inputPassword3" className="form-label">Contraseña</label>
-                  <input type="password" className="form-control" id="inputPassword3" required />
+                  <input type="password"
+                    className="form-control"
+                    id="inputPassword3"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required />
                 </div>
                 <div className="label mb-4">
                   <label htmlFor="confirmPassword" className="form-label">Confirmar Contraseña</label>
-                  <input type="password" className="form-control" id="confirmPassword" required />
+                  <input type="password"
+                    className="form-control"
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)} // Actualizamos el estado
+                    required />
                 </div>
                 <div className="label mb-4">
                   <label className="form-label" >Términos y Condiciones</label>
