@@ -39,7 +39,7 @@ export const Perfil = () => {
     const words = fullname.split(" "); // Dividimos el nombre completo en palabras
     return words
       .filter(word => word.length > 0) // Filtramos palabras vacías (por si hay múltiples espacios)
-      .map((word) => word[0]?.toUpperCase()) // Aseguramos que la primera letra existe antes de aplicar toUpperCase()
+      .map((word) => word[0]?.toUpperCase()) // Aseguramos que la primera letra existe antes de aplicar toUpperCase() que es el que devuelve la longitud de caracteres en mayúsucla
       .join(""); // Unimos las iniciales en un string
   };
 
