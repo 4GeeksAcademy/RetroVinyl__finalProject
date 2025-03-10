@@ -56,7 +56,7 @@ export const Perfil = () => {
       <div className="row input-group">
         <div className="col-md-4 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
-            <div className="rounded-circle mt-5 bg-light" style={{ width: "140px", height: "140px" }}>
+            <div className="rounded-circle mt-5 " style={{ width: "140px", height: "140px" }}>
               {initials}
             </div>
             <span className="font-weight-bold text-light mt-5">{name} {surname}</span>

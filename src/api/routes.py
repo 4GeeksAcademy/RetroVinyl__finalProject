@@ -59,7 +59,7 @@ def create_token():
         return jsonify("Wrong username or password"), 401
     
     acces_token = create_access_token(identity=user)
-    return jsonify(acces_token=acces_token)
+    return jsonify(acces_token= acces_token)
 
 
 @api.route('/perfil', methods=['GET'])

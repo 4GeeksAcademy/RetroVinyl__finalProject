@@ -29,13 +29,13 @@ export const Register = () => {
         }),
       });
 
-      const data = await response.json(); // Convertimos la respuesta a JSON
+      const data = await response.json();
 
       if (data.msg) {
         setMessage(data.msg); // Si la respuesta tiene "msg", lo mostramos
       } else {
         setMessage("¡Usuario registrado con éxito!");
-        navigate("/"); // Mensaje de éxito por defecto
+        navigate("/");
       }
     } catch (error) {
       setMessage("Hubo un problema con la solicitud. Intenta nuevamente."); // Si ocurre un error en la solicitud
@@ -43,8 +43,8 @@ export const Register = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevenir la recarga de la página
-    sign_up(); // Llamada a la función sign_up
+    e.preventDefault(); // para que no se recargue de la página
+    sign_up();
   };
 
 
@@ -54,8 +54,8 @@ export const Register = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 3000,      // Aumentado de 1000 a 3000 para suavizar
-    autoplaySpeed: 1000,  // Cambiado de 1000 a 0 para eliminar pausas
+    speed: 3000,
+    autoplaySpeed: 1000,
     cssEase: "linear",
     vertical: true,
     verticalSwiping: true,
@@ -130,7 +130,7 @@ export const Register = () => {
                     className="form-control"
                     id="confirmPassword"
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)} // Actualizamos el estado
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required />
                 </div>
                 <div className="label mb-4">
@@ -151,6 +151,7 @@ export const Register = () => {
                   Registrarse
                 </button>
               </form>
+              {message && <p>{message}</p>} {/* Mostrar el mensaje de respuesta */}
             </div>
           </div>
         </div>
