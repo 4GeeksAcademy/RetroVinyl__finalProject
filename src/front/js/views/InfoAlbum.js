@@ -6,8 +6,23 @@ import { useParams } from "react-router-dom";
 
 export const InfoAlbum = () => {
     const { store, actions } = useContext(Context)
+
+    const [cantidad, setCantidad] = useState(1)
+    const [precio, setPrecio] = useState(20)
+    const precioTotal= precio*cantidad;
+
+    const restar=((num) => {
+        if (num >1) {
+            return num-1
+        }
+        else{
+            return 1
+        }
+    })
+
     const [newComment, setNewComment] = useState("");
     const [commentList, setCommentList] = useState([]);
+
     const { albumid } = useParams();
     const [albums, setAlbums] = useState([])
     
@@ -36,8 +51,15 @@ export const InfoAlbum = () => {
                     <p className="card-text">Género: {albums.genre} </p>
                 </div>
                 <div className="card-body">
-                    <p className="card-text">Cantidad de productos: </p>
-                    <p className="card-text">TOTAL: </p>
+                    <div className="d-flex justify-content-between">
+                        <p className="card-text">Cantidad: </p>
+                    <div class="d-sm-flex">
+                        <button class="btn btn-primary ms-1" type="button" onClick={() => setCantidad(restar(cantidad))}>-</button>
+                        <p className="card-text ps-3 pe-3">{cantidad} </p>
+                        <button class="btn btn-primary ms-1" type="button" onClick={() => setCantidad(cantidad + 1)}>+</button>
+                    </div>
+                    </div>
+                    <p className="card-text">TOTAL: {precioTotal}€</p>
 
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Comprar

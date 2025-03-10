@@ -22,7 +22,6 @@ def get_all_albums():
         exist = Album.query.filter_by(id= album.get("id")).first() # Verificar si el album ya existe en la base de datos propia, first() devuelve la primera coincidencia con respecto al id
         if not exist: 
             newAlbum = Album(
-                id = album["id"],
                 title = album["title"],
                 genre = ", ".join(album["genre"]),  # Convertir lista a string, ", ".join = unelos con una coma y una espacio
                 year = album["year"],
