@@ -1,11 +1,7 @@
-import React, { useState, useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useState, useEffect } from "react";
 import "../../styles/perfil.css";
 
 export const Perfil = () => {
-  const { store, actions } = useContext(Context);
-
-  // Establecer el estado para cada campo de entrada
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [username, setUsername] = useState('');
@@ -17,20 +13,8 @@ export const Perfil = () => {
   const [password, setPassword] = useState('');
   const [country, setCountry] = useState('');
   const [region, setRegion] = useState('');
+  const [initials, setInitials] = useState("");
 
-  const handleChangeName = (e) => setName(e.target.value);
-  const handleChangeSurname = (e) => setSurname(e.target.value);
-  const handleChangeUsername = (e) => setUsername(e.target.value);
-  const handleChangeMobile = (e) => setMobile(e.target.value);
-  const handleChangePostcode = (e) => setPostcode(e.target.value);
-  const handleChangeState = (e) => setState(e.target.value);
-  const handleChangeArea = (e) => setArea(e.target.value);
-  const handleChangeEmail = (e) => setEmail(e.target.value);
-  const handleChangePassword = (e) => setPassword(e.target.value);
-  const handleChangeCountry = (e) => setCountry(e.target.value);
-  const handleChangeRegion = (e) => setRegion(e.target.value);
-
-  // Función para guardar los datos
   const handleSave = () => {
     const userProfile = {
       name,
@@ -44,27 +28,39 @@ export const Perfil = () => {
       password,
       country,
       region,
-    }};
+      initials,
+    }
+  };
+
+  // Función para obtener las iniciales
+  const getInitials = (fullname) => {
+    if (!fullname) return ""; // Si el fullname es vacío o nulo, devolvemos un string vacío
+
+    const words = fullname.split(" "); // Dividimos el nombre completo en palabras
+    return words
+      .filter(word => word.length > 0) // Filtramos palabras vacías (por si hay múltiples espacios)
+      .map((word) => word[0]?.toUpperCase()) // Aseguramos que la primera letra existe antes de aplicar toUpperCase()
+      .join(""); // Unimos las iniciales en un string
+  };
 
 
-    
+  useEffect(() => {
+    const fullname = `${name} ${surname}`;
+    const initials = getInitials(fullname);
+    setInitials(initials); // Actualizamos el estado de las iniciales
+  }, [name, surname]);
+
 
   return (
     <div className="bodyuser container rounded mt-5 mb-5">
       <div className="row input-group">
         <div className="col-md-4 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
-            <img
-              className="rounded-circle mt-5"
-              width="150px"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"/>
-              <input type="file" id="changeAvatar" 
-              />
-            <span className="font-weight-bold text-light">{name}{surname}</span>
+            <div className="rounded-circle mt-5 bg-light" style={{ width: "140px", height: "140px" }}>
+              {initials}
+            </div>
+            <span className="font-weight-bold text-light mt-5">{name} {surname}</span>
             <span className="text-light-50">{email}</span>
-            <button className="btn btn-outline-danger mt-5">
-              <i className="fa fa-plus"></i>&nbsp;Change photo
-            </button>
           </div>
         </div>
 
@@ -97,7 +93,7 @@ export const Perfil = () => {
             </div>
 
             <div className="row mt-3">
-            <div className="col-md-12">
+              <div className="col-md-12">
                 <label className="labels">Username</label>
                 <input
                   type="text"
