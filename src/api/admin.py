@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, Album, Favorito, User
+from .models import db, Album, Favorito, User, Comentario
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -14,6 +14,7 @@ def setup_admin(app):
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Album, db.session)) # interfaz grafica de las clases que aparece al ejecutar pipenv run start
     admin.add_view(ModelView(Favorito, db.session))
+    admin.add_view(ModelView(Comentario, db.session))
     
 
     # You can duplicate that line to add mew models

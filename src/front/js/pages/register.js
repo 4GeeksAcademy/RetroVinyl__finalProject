@@ -1,10 +1,52 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React, { useState } from "react";
 import "../../styles/registro.css";
 import Slider from "react-slick";
+import { useNavigate } from 'react-router-dom';
+
 
 export const Register = () => {
-  const { store, actions } = useContext(Context);
+  const [email, setEmail] = useState(""); // Guardamos el email
+  const [password, setPassword] = useState(""); // Guardamos la contraseña
+  const [confirmPassword, setConfirmPassword] = useState(""); // Guardamos la confirmación de contraseña
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
+  const sign_up = async () => {
+    if (password !== confirmPassword) {
+      setMessage("Las contraseñas no coinciden.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.msg) {
+        setMessage(data.msg); // Si la respuesta tiene "msg", lo mostramos
+      } else {
+        setMessage("¡Usuario registrado con éxito!");
+        navigate("/");
+      }
+    } catch (error) {
+      setMessage("Hubo un problema con la solicitud. Intenta nuevamente."); // Si ocurre un error en la solicitud
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // para que no se recargue de la página
+    sign_up();
+  };
+
 
   const settings = {
     dots: false,
@@ -12,8 +54,8 @@ export const Register = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 3000,      // Aumentado de 1000 a 3000 para suavizar
-    autoplaySpeed: 1000,  // Cambiado de 1000 a 0 para eliminar pausas
+    speed: 3000,
+    autoplaySpeed: 1000,
     cssEase: "linear",
     vertical: true,
     verticalSwiping: true,
@@ -40,7 +82,7 @@ export const Register = () => {
         </div>
         <div className="py-2">
           <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/abbey-road-the-beatles.jpg" alt="image" className="slider-image" />
-        </div>        
+        </div>
         <div className="py-2">
           <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/aladin-sane-david-bowie.jpg" alt="image" className="slider-image" />
         </div>
@@ -64,18 +106,32 @@ export const Register = () => {
           <div className="cardshadow card">
             <div className="card-body">
               <h3 className="card-title1 text-center mb-4">Registrarse</h3>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="label mb-4">
                   <label htmlFor="inputEmail3" className="form-label">Email</label>
-                  <input type="email" className="form-control" id="inputEmail3" required />
+                  <input type="email"
+                    className="form-control"
+                    id="inputEmail3"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div className="label mb-4">
                   <label htmlFor="inputPassword3" className="form-label">Contraseña</label>
-                  <input type="password" className="form-control" id="inputPassword3" required />
+                  <input type="password"
+                    className="form-control"
+                    id="inputPassword3"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required />
                 </div>
                 <div className="label mb-4">
                   <label htmlFor="confirmPassword" className="form-label">Confirmar Contraseña</label>
-                  <input type="password" className="form-control" id="confirmPassword" required />
+                  <input type="password"
+                    className="form-control"
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required />
                 </div>
                 <div className="label mb-4">
                   <label className="form-label" >Términos y Condiciones</label>
@@ -95,6 +151,7 @@ export const Register = () => {
                   Registrarse
                 </button>
               </form>
+              {message && <p>{message}</p>} {/* Mostrar el mensaje de respuesta */}
             </div>
           </div>
         </div>
