@@ -17,6 +17,7 @@ class User(db.Model):
     country = db.Column(db.String(120),  nullable=False)
     region_state = db.Column(db.String(120), nullable=False)
     favoritos = db.relationship ("Favorito", backref ="user", lazy = True)
+    comentarios = db.relationship ("Comentario", backref ="user", lazy = True)
     
    
     def __repr__(self):
@@ -97,4 +98,21 @@ class Favorito(db.Model):
             "id_album" : self.id_album, 
             "id_usuario" : self.id_usuario,
             "album" : self.album.serialize()
-        }    
+        } 
+
+class Comentario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    texto = db.Column(db.String(250), unique=False, nullable=False)
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    album = db.relationship('Album', backref = 'comentario', lazy =True)
+    def __repr__(self):
+        return f'<Comentario {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "texto": self.texto,
+            "id_album" : self.album_id, 
+            "id_usuario" : self.user_id
+        }     
