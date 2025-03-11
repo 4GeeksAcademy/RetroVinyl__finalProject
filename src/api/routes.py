@@ -70,6 +70,39 @@ def get_current_user():
         current_user.serialize()
     ), 200
 
+@api.route('/perfil', methods=['PUT'])
+@jwt_required()
+def update_profile_user():
+    current_user = User.query.filter_by(id=get_jwt_identity()).first()
+    
+    if current_user is None:
+        return jsonify({"error": "User not found"}), 404  # Asegúrate de que el usuario existe
+    
+    processed_params = request.get_json()  # Obtener los nuevos datos
+    
+    # Actualizar los campos del usuario
+    if 'name' in processed_params:
+        current_user.name = processed_params['name']
+    if 'sur_name' in processed_params:
+        current_user.sur_name = processed_params['sur_name']
+    if 'username' in processed_params:
+        current_user.username = processed_params['username']
+    if 'mobile_number' in processed_params:
+        current_user.mobile_number = processed_params['mobile_number']
+    if 'post_code' in processed_params:
+        current_user.post_code = processed_params['post_code']
+    if 'state' in processed_params:
+        current_user.state = processed_params['state']
+    if 'country' in processed_params:
+        current_user.country = processed_params['country']
+    if 'region_state' in processed_params:
+        current_user.region_state = processed_params['region_state']
+    
+    db.session.commit()  # Guardar los cambios en la base de datos
+    
+    return jsonify({"msg": "Profile updated successfully"}), 200
+
+
 
 
 @api.route('/get-albums', methods=['GET']) # Crear un end-point de tipo get para traer la informacion de la API externa

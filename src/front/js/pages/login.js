@@ -36,6 +36,8 @@ export const Login = () => {
       const data = await response.json(); // Convertimos la respuesta a JSON
       console.log("Datos de login exitoso:", data);
 
+      localStorage.setItem("token", data.access_token);  // Guardamos el token en el localStorage
+
       setMessage("¡Usuario logueado con éxito!");
       navigate("/");
 
