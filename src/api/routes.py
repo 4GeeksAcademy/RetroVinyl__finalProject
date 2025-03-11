@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Album, Favorito, User
+from api.models import db, Album, Favorito, Comentario, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.fetch_data import get_all_albums # importar las funciones que llaman a la API externa
@@ -180,3 +180,25 @@ def search():
         results = [] #si esta vacío no se devuelve ninguna búsqueda
     
     return jsonify([album.serialize() for album in results])
+
+@api.route('/comentariosAlbum', methods =['POST'])
+def add_comentario():
+    data = request.get_json()
+
+    new_comentario = Comentario(
+        album_id = data['album_id'],
+        user_id = data['user_id'],
+        texto = data['comentario']
+        )
+    db.session.add(new_comentario)
+    db.session.commit()
+    return jsonify("Comentario añadido")
+
+@api.route('/comentariosAlbum/<albumid>', methods=['GET'])
+def get_comentarios(albumid):
+    comentarios = Comentario.query.filter_by(album_id=albumid).all()
+    
+    if not comentarios:
+        return jsonify({"message": "No hay comentarios para este álbum"}), 404
+
+    return jsonify([comentario.serialize() for comentario in comentarios]), 200

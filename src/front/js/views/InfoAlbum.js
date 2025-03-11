@@ -30,13 +30,47 @@ export const InfoAlbum = () => {
         console.log("estoy cargando los albumes");
 
         const getAlbums = async () => {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/infoAlbums/${albumid}`)
+            const response = await fetch(`${process.env.BACKEND_URL}api/infoAlbums/${albumid}`)
             const data = await response.json()
             setAlbums(data)
-
+            console.log(response);
+            
         }
         getAlbums()
+        getComments()
     }, [albumid])
+
+    const getComments = async () => {
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum/${albumid}`);
+            console.log(data);
+            const data = await response.json();
+            setCommentList(Array.isArray(data) ? data : []);
+
+        } catch (error) {
+            console.error("Error fetching comments:", error);
+        }
+    };
+
+    const postComentario = async (newComment) => {
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ comentario: newComment, album_id: albumid, user_id: 1 }), //cambiar id usuario por le token
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("Data fetched successfully:", data);
+            getComments()
+            return data;
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        
+    };
 
     return (
         <div className="container">
@@ -88,28 +122,31 @@ export const InfoAlbum = () => {
 
                 <div className="card-coment text-light text-center ms-3 col-md-6">
                     <div className="p-3">
-                        <h3 className="sentimientosRetro" >"Sentimientos RetroVinyl"</h3>
+                        <h3 className="sentimientosRetro" >"Sentimientos Retr<span className="text-danger">o</span>Vinyl"</h3>
                         <h4> Lo Que Dicen los Fans</h4>
                     </div>
                     <div className="list-comments">
-                        {commentList.map((text, index) => (
-                            <div className="list-group">
-                                <li className="list-group-item m-1 d-flex justify-content-between">
-                                    <div>{text}</div>
+
+                        <div className="list-group">
+                            {commentList.map((comment, index) => (
+                               
+                                <li key={index} className="list-group-item m-1 d-flex justify-content-between">
+                                    <div>{comment.texto}</div>
                                     <a href="#!"><i className="btn-close" onClick={() => setCommentList(commentList.filter((t, currentindex) => index !== currentindex))}></i></a>
                                 </li>
-                            </div>
-                        ))}
+
+                            ))}
+                        </div>
                     </div>
                     <div className="input-group mb-3">
                         <input type="text" className="form-control" placeholder="Deja tu comentario"
                             onChange={(e) => setNewComment(e.target.value)}
-                            value={newComment}
-                        />
-                        <button className="btn btn-danger" type="button" onClick={() => { setCommentList(() => [...commentList, newComment]); setNewComment(''); }}>Añadir</button>
+                            value={newComment} />
+                        <button className="btn btn-danger" type="button" onClick={() => { postComentario(newComment); setNewComment(""); }}>Añadir</button>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
+//onClick={() => { setCommentList(() => [...commentList, newComment]); setNewComment(''); }}
