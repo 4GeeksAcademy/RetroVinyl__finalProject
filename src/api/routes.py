@@ -182,15 +182,15 @@ def search():
     return jsonify([album.serialize() for album in results])
 
 @api.route('/comentariosAlbum', methods =['POST'])
-#@jwt_required()
+@jwt_required()
 def add_comentario():
-    #current_user_id = get_jwt_identity()
+    current_user_id = get_jwt_identity()
     data = request.get_json()
 
     new_comentario = Comentario(
         album_id = data['album_id'],
-        user_id = data['user_id'],
-        #user_id = current_user_id,
+        #user_id = data['user_id'],
+        user_id = current_user_id,
         texto = data['comentario']
         )
     db.session.add(new_comentario)
@@ -198,7 +198,7 @@ def add_comentario():
     return jsonify("Comentario añadido")
 
 @api.route('/comentariosAlbum/<albumid>', methods=['GET'])
-#@jwt_required()
+@jwt_required()
 def get_comentarios(albumid):
     comentarios = Comentario.query.filter_by(album_id=albumid).all()
     
