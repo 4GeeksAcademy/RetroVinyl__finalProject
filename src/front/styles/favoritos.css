@@ -8,6 +8,7 @@
     color: white;
     font-family: fantasy;
     color: black;
+    
 }
 .card-cont-fav{
     display: flex;
@@ -15,11 +16,14 @@
     flex-wrap: wrap;
     gap: 2rem; 
     margin-left: 1rem;
+    margin-top: 2rem;
+    overflow:hidden;
+    
+    
 }
 .carta-favs{
-    font-family: fantasy;
     display: flex;
-    height: 180px;
+    height: 250px;
     width: 500px;
     margin-bottom: 1rem;
     border-radius: 15px;
@@ -28,27 +32,22 @@
     background: rgba(0, 0, 0, 0.671);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
-    border: 1.5px solid rgba(209, 213, 219, 0.3)
+    overflow: hidden;
+    box-shadow: rgb(58, 136, 252, 0.5) 0px 6px 15px 0px;
 }
-.img-favs-cont{
-    width: 33%;
-}
+
 .img-favs{
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     object-fit: cover;
     margin-left: 1rem;
     border: 1px solid white;
     border-radius: 10px;
 }
 .cuerpo-favs{
-    margin-left: 1rem;
-    width: 47%;
+    margin-left: 2em;
 }
-.genero-favs{
-    background-color: red;
-    color: black;
-}
+
 .botones-cont1{
     display: flex;
     justify-content: space-around;
@@ -60,12 +59,32 @@
     height: 40px;
     border-radius: 10px;
     border: 1.5px solid #daab03;
-    background-color: #c7c7c7;
+    background-color: transparent;
+}
+.fav-favs:hover {
+    border-color: #daab03;
+    box-shadow: 0 0 15px 2px #daab03;
+}
+
+.fav-favs:active {
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow: 0 0 15px 2px #ffffff;
 }
 .compra-favs{
     width: 40px;
     height: 40px;
     border-radius: 10px;
     border: 1.5px solid #248cdb;
-    background-color: #c7c7c7;
+    background-color: transparent;
+}
+
+.compra-favs:hover{
+    border-color: #248cdb;
+    box-shadow: 0 0 15px 2px #248cdb;
+}
+.compra-favs:active{
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow: 0 0 15px 2px #ffffff;
 }

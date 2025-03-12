@@ -17,19 +17,19 @@ export const Favoritos = () => {
     }, []);
 
     return (
-        <div className="card-cont-fav">
+        <div className="card-cont-fav container">
             {favoritos.map((item) => {
                 const album = item.album; // Extraer el álbum del objeto
                 return (
-                    <div className="carta-favs" key={album.id}>
+                    <div className="carta-favs mt-3" key={album.id}>
                         <div className="img-favs-cont">
                             <img className="img-favs" src={album.cover_image} alt={album.title} />
                         </div>
                         <div className="cuerpo-favs">
-                            <p>Título: {album.title}</p>
+                            <p><strong>Título:</strong> {album.title}</p>
                             <p>Artista: {album.have}</p>
-                            <p>Año: {album.year}</p>
-                            <button type="button" className="genero-favs btn btn-danger">{album.genre}</button>
+                            <p>Año: <strong>{album.year}</strong></p>
+                            <button type="button" className="genero-favs btn btn-outline-danger" disabled>{album.genre}</button>
                         </div>
                         <div className="botones-cont1">
                             <div className="botones-cont2">
