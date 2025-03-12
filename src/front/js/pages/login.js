@@ -10,7 +10,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const {actions, store} = useContext(Context)
+  const { actions, store } = useContext(Context)
 
   const sign_in = async (e) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ export const Login = () => {
     dots: false,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     autoplay: true,
     speed: 3000,
     autoplaySpeed: 1000,

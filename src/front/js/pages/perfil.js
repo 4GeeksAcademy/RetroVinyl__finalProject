@@ -13,6 +13,7 @@ export const Perfil = () => {
   const [country, setCountry] = useState('');
   const [region, setRegion] = useState('');
   const [initials, setInitials] = useState("");
+  const [profileExists, setProfileExists] = useState(false);
 
   const handleSave = () => {
     const userProfile = {
@@ -28,7 +29,11 @@ export const Perfil = () => {
       region_state: region,
       initials,
     }
-    update_profile(userProfile);
+    if (profileExists) {
+      update_profile(userProfile); // Si el perfil existe, actualizamos los datos.
+    } else {
+      create_profile(userProfile); // Si el perfil no existe, lo creamos.
+    }
   };
 
   // Función para obtener las iniciales
@@ -42,16 +47,20 @@ export const Perfil = () => {
       .join(""); // Unimos las iniciales en un string
   };
 
-
   useEffect(() => {
     const fullname = `${name} ${surname}`;
     const initials = getInitials(fullname);
     setInitials(initials);// Actualizamos el estado de las iniciales 
+    get_profile();
   }, [name, surname]);
 
 
   //GET
   const get_profile = async () => {
+
+    const token = localStorage.getItem("token");
+    console.log(token);
+
     const myHeaders = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,  // PORQUE NO LO TOMA?
@@ -78,10 +87,11 @@ export const Perfil = () => {
   };
 
 
-
   // PUT
   const update_profile = async (userProfile) => {
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("token");
+    console.log(token);
+
 
     const headers = {
       "Content-Type": "application/json",
@@ -92,6 +102,43 @@ export const Perfil = () => {
 
     const requestOptions = {
       method: "PUT",
+      headers: headers,
+      body: raw,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}api/perfil`, requestOptions);
+
+      if (!response.ok) {
+        const result = await response.json();
+        console.error("Detalles del error:", result);  // Ver detalles del error
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.error("Error:", error);  // Manejo de errores
+    }
+  };
+
+
+  // POST
+  const create_profile = async (userProfile) => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+
+
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,  // Agregamos el token en el header de autorización
+    };
+
+    const raw = JSON.stringify(userProfile);  // Enviar el objeto de perfil directamente
+
+    const requestOptions = {
+      method: "POST",
       headers: headers,
       body: raw,
       redirect: "follow",
