@@ -4,10 +4,10 @@ import "../../styles/navbar.css";
 import {Context} from "../store/appContext"
 
 export const Navbar = () => {
-	const {store, action} = useContext(Context)
+	const {store, actions} = useContext(Context)
 	const [searchTerm, setSearchTerm] = useState(""); //Almacena las consultas de busqueda
 	const [searchResults, setSearchResults] = useState([]); // Estado para los resultados de búsqueda
-	const [isLogged, setIsLogged] = useState(false)
+	const [isLogged, setIsLogged] = useState(!!store.token)
 	const navigate = useNavigate(); // Para redirigir a otra página
 
 	const handleSearch = async () => {
@@ -42,11 +42,13 @@ export const Navbar = () => {
 	};
 
 	const logoutUser = () => {
-		action.logout(); // Elimina el token en el store y localStorage
+		actions.logout(); // Elimina el token en el store y localStorage
 		navigate("/login"); // Redirige al login
 	  };
 
 	useEffect(() => {
+	
+	setIsLogged(!!store.token)  //!!
 	
 	 }, [store.token]);
 
@@ -60,7 +62,7 @@ export const Navbar = () => {
 					</a>
 				</Link>
 				{
-					!localStorage.getItem("token") ?
+					isLogged ?
 						<div className="d-flex dropdown">
 							<div className="search input-group mb-3">
 								<input type="text"
@@ -110,13 +112,11 @@ export const Navbar = () => {
 								</Link>
 								<Link to="/pedidos" style={{ textDecoration: 'none' }}>
 									<li><a className="dropdown-item" href="#">Pedidos</a></li>
-								</Link>
-								<Link to="/" style={{ textDecoration: 'none' }}>
-									<li><a className="dropdown-item"
-									onChange={(e) => {
-										logoutUser(e.target.value);
-									}} href="#">Cerrar Sesión</a></li>
-								</Link>
+								</Link>								
+									<li><div className="dropdown-item"
+									onClick={() => {
+										logoutUser();
+									}} >Cerrar Sesión</div></li>								
 							</ul>
 						</div>
 						:
