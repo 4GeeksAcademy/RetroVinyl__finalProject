@@ -28,7 +28,7 @@ export const DespliegueAlbums = () => {
         const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id_album: album.id }),
+            body: JSON.stringify({ id_album: album.id, user_id : 1 }),
         });
         if (response.ok) {
             console.log("Álbum añadido");

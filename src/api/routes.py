@@ -142,13 +142,13 @@ def add_favorito():
         return jsonify({"error": "El id del álbum es requerido"}), 400
 
     # Verificar si el álbum ya está en los favoritos del usuario
-    exist = Favorito.query.filter_by(id_usuario=user_id, id_album=album_id).first()
+    exist = Favorito.query.filter_by(id_usuario = user_id, id_album=album_id).first()
     if exist:
         return jsonify({"error": "El álbum ya está en favoritos"}), 400
 
     new_favorito = Favorito(
         id_album=album_id,
-        id_usuario=user_id
+        id_usuario= 1
     )
     db.session.add(new_favorito)
     db.session.commit()
@@ -169,7 +169,7 @@ def delete_favorito(id):
 @api.route('/favoritos', methods=['GET'])
 #@jwt_required()
 def get_favorito():
-    user_id = current_user.id  # Se obtiene el id del usuario autenticado
+    user_id = 1  # Se obtiene el id del usuario autenticado
     favoritos = Favorito.query.filter_by(id_usuario=user_id).all()
     favoritos_serialized = [favorito.serialize() for favorito in favoritos]
     return jsonify(favoritos_serialized), 200  
