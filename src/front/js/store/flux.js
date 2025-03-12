@@ -5,9 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 	  },
 	  actions: {
 		// Acción para iniciar sesión
-		login: (token) => {
-		  localStorage.setItem("token", token);  // Guardamos el token en localStorage
-		  setStore({ token });  // Actualizamos el store
+		login: (token) => {		
+		setStore({ token: token });  // Actualizamos el store
 		},
   
 		// Acción para cerrar sesión
