@@ -59,7 +59,7 @@ def create_token():
         return jsonify("Wrong username or password"), 401
     
     acces_token = create_access_token(identity=user)
-    return jsonify(acces_token= acces_token)
+    return jsonify(access_token= acces_token)
 
 
 @api.route('/perfil', methods=['GET'])
@@ -69,6 +69,39 @@ def get_current_user():
     return jsonify(
         current_user.serialize()
     ), 200
+
+@api.route('/perfil', methods=['PUT'])
+@jwt_required()
+def update_profile_user():
+    current_user = User.query.filter_by(id=get_jwt_identity()).first()
+    
+    if current_user is None:
+        return jsonify({"error": "User not found"}), 404  # Asegúrate de que el usuario existe
+    
+    processed_params = request.get_json()  # Obtener los nuevos datos
+    
+    # Actualizar los campos del usuario
+    if 'name' in processed_params:
+        current_user.name = processed_params['name']
+    if 'sur_name' in processed_params:
+        current_user.sur_name = processed_params['sur_name']
+    if 'username' in processed_params:
+        current_user.username = processed_params['username']
+    if 'mobile_number' in processed_params:
+        current_user.mobile_number = processed_params['mobile_number']
+    if 'post_code' in processed_params:
+        current_user.post_code = processed_params['post_code']
+    if 'state' in processed_params:
+        current_user.state = processed_params['state']
+    if 'country' in processed_params:
+        current_user.country = processed_params['country']
+    if 'region_state' in processed_params:
+        current_user.region_state = processed_params['region_state']
+    
+    db.session.commit()  # Guardar los cambios en la base de datos
+    
+    return jsonify({"msg": "Profile updated successfully"}), 200
+
 
 
 
@@ -162,12 +195,15 @@ def search():
     return jsonify([album.serialize() for album in results])
 
 @api.route('/comentariosAlbum', methods =['POST'])
+#@jwt_required()
 def add_comentario():
+    #current_user_id = get_jwt_identity()
     data = request.get_json()
 
     new_comentario = Comentario(
         album_id = data['album_id'],
         user_id = data['user_id'],
+        #user_id = current_user_id,
         texto = data['comentario']
         )
     db.session.add(new_comentario)
@@ -175,6 +211,7 @@ def add_comentario():
     return jsonify("Comentario añadido")
 
 @api.route('/comentariosAlbum/<albumid>', methods=['GET'])
+#@jwt_required()
 def get_comentarios(albumid):
     comentarios = Comentario.query.filter_by(album_id=albumid).all()
     

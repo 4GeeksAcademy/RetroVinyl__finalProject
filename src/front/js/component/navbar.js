@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
+import {Context} from "../store/appContext"
 
 export const Navbar = () => {
+	const {store, actions} = useContext(Context)
 	const [searchTerm, setSearchTerm] = useState(""); //Almacena las consultas de busqueda
 	const [searchResults, setSearchResults] = useState([]); // Estado para los resultados de búsqueda
+	const [isLogged, setIsLogged] = useState(!!store.token)
 	const navigate = useNavigate(); // Para redirigir a otra página
 
 	const handleSearch = async () => {
@@ -34,10 +37,20 @@ export const Navbar = () => {
 	};
 
 	const handleResultClick = (albumid) => {
-		navigate(`/infoAlbum/${albumid}`);// Redirige al pedido del album específico. O es mejor en infoAlbum?
+		navigate(`/infoAlbum/${albumid}`);// Redirige a infoAlbum
 		setSearchTerm("");   // recetea el termino de busqueda al reedirigir
 	};
 
+	const logoutUser = () => {
+		actions.logout(); // Elimina el token en el store y localStorage
+		navigate("/login"); // Redirige al login
+	  };
+
+	useEffect(() => {
+	
+	setIsLogged(!!store.token)  //!!
+	
+	 }, [store.token]);
 
 	return (
 		<nav className="navbar py-0">
@@ -49,7 +62,7 @@ export const Navbar = () => {
 					</a>
 				</Link>
 				{
-					!localStorage.getItem("token") ?
+					isLogged ?
 						<div className="d-flex dropdown">
 							<div className="search input-group mb-3">
 								<input type="text"
@@ -86,7 +99,7 @@ export const Navbar = () => {
 									)
 								)}
 							</ul>
-
+                            
 							<button className="user btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Usuario
 							</button>
@@ -99,10 +112,11 @@ export const Navbar = () => {
 								</Link>
 								<Link to="/pedidos" style={{ textDecoration: 'none' }}>
 									<li><a className="dropdown-item" href="#">Pedidos</a></li>
-								</Link>
-								<Link to="/" style={{ textDecoration: 'none' }}>
-									<li><a className="dropdown-item" href="#">Cerrar Sesión</a></li>
-								</Link>
+								</Link>								
+									<li><div className="dropdown-item"
+									onClick={() => {
+										logoutUser();
+									}} >Cerrar Sesión</div></li>								
 							</ul>
 						</div>
 						:

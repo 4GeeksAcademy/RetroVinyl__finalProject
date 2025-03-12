@@ -8,7 +8,6 @@ export const Perfil = () => {
   const [mobile, setMobile] = useState('');
   const [postcode, setPostcode] = useState('');
   const [state, setState] = useState('');
-  const [area, setArea] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [country, setCountry] = useState('');
@@ -18,18 +17,18 @@ export const Perfil = () => {
   const handleSave = () => {
     const userProfile = {
       name,
-      surname,
+      sur_name: surname,  
       username,
-      mobile,
-      postcode,
+      mobile_number: mobile,  
+      post_code: postcode,
       state,
-      area,
       email,
       password,
       country,
-      region,
+      region_state: region,
       initials,
     }
+    update_profile(userProfile);
   };
 
   // Función para obtener las iniciales
@@ -47,9 +46,73 @@ export const Perfil = () => {
   useEffect(() => {
     const fullname = `${name} ${surname}`;
     const initials = getInitials(fullname);
-    setInitials(initials); // Actualizamos el estado de las iniciales
+    setInitials(initials);// Actualizamos el estado de las iniciales 
   }, [name, surname]);
 
+
+  //GET
+  const get_profile = async () => {
+    const myHeaders = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,  // PORQUE NO LO TOMA?
+    };
+    
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+    
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/perfil`, requestOptions);
+  
+      if (!response.ok) {
+        throw new Error('Error al obtener el perfil');
+      }
+  
+      const result = await response.json();
+      console.log(result);  
+    } catch (error) {
+      console.error("Error:", error); 
+    }
+  }; 
+
+  
+
+  // PUT
+  const update_profile = async (userProfile) => {
+    const token = localStorage.getItem("access_token");
+  
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,  // Agregamos el token en el header de autorización
+    };
+  
+    const raw = JSON.stringify(userProfile);  // Enviar el objeto de perfil directamente
+  
+    const requestOptions = {
+      method: "PUT",
+      headers: headers,
+      body: raw,
+      redirect: "follow",
+    };
+  
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/api/perfil`, requestOptions);
+  
+      if (!response.ok) {
+        const result = await response.json();
+        console.error("Detalles del error:", result);  // Ver detalles del error
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const result = await response.json(); 
+      console.log(result);
+    } catch (error) {
+      console.error("Error:", error);  // Manejo de errores
+    }
+  };
+  
 
   return (
     <div className="bodyuser container rounded mt-5 mb-5">

@@ -26,6 +26,8 @@ export const InfoAlbum = () => {
     const { albumid } = useParams();
     const [albums, setAlbums] = useState([])
 
+    //const token = localStorage.getItem("token");
+
     useEffect(() => { // DONDE LLAMO A LA RUTA DEL BACK QUE TRAE LA INFORMACION??????
         console.log("estoy cargando los albumes");
 
@@ -42,7 +44,11 @@ export const InfoAlbum = () => {
 
     const getComments = async () => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum/${albumid}`);
+            const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum/${albumid}`,{
+                //headers: {
+                    //"Authorization": `Bearer ${token}`
+                //}
+            });
             console.log(data);
             const data = await response.json();
             setCommentList(Array.isArray(data) ? data : []);
@@ -56,8 +62,10 @@ export const InfoAlbum = () => {
         try {
             const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ comentario: newComment, album_id: albumid, user_id: 1 }), //cambiar id usuario por le token
+                headers: { 'Content-Type': 'application/json',
+                    //"Authorization": `Bearer ${token}`
+                 },
+                body: JSON.stringify({ comentario: newComment, album_id: albumid, user_id: 2}), //cambiar id usuario por le token
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -78,24 +86,25 @@ export const InfoAlbum = () => {
 
                 <div className="card-info card col-md-5">
                     <img src={albums.cover_image} className="img-card card-img-top" alt="..." />
-                    <div className="card-body">
-                        <h5 className="card-title">Titulo: {albums.title}</h5>
-                        <p className="card-text">Pais: {albums.country} </p>
+                    <div className="card-body ml-3">
+                        <h5 className="card-title mt-3">Titulo: {albums.title}</h5>
+                        <p className="card-text mt-3">Pais: {albums.country} </p>
                         <p className="card-text">Año: {albums.year}</p>
-                        <p className="card-text">Género: {albums.genre} </p>
+                        <p className="card-text">Género: <strong>{albums.genre}</strong> </p>
                     </div>
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
-                            <p className="card-text">Cantidad: </p>
+                            <p className="card-text mt-3"><strong>Cantidad:</strong></p>
                             <div class="d-sm-flex">
-                                <button class="btn btn-primary ms-1" type="button" onClick={() => setCantidad(restar(cantidad))}>-</button>
-                                <p className="card-text ps-3 pe-3">{cantidad} </p>
-                                <button class="btn btn-primary ms-1" type="button" onClick={() => setCantidad(cantidad + 1)}>+</button>
+                                <button class="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(restar(cantidad))}>-</button>
+                                <p className="card-text mt-3 ps-3 pe-3"><strong>{cantidad}</strong></p>
+                                <button class="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(cantidad + 1)}>+</button>
                             </div>
                         </div>
-                        <p className="card-text">TOTAL: {precioTotal}€</p>
+                        <br></br>
+                        <p className="card-text"><strong>TOTAL :</strong>{precioTotal}<strong>€</strong></p>
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Comprar
                         </button>
 
@@ -110,7 +119,7 @@ export const InfoAlbum = () => {
                                         ...
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Confirmar compra</button>
+                                        <button type="button" class="btn btn-outline-danger">Confirmar compra</button>
                                     </div>
                                 </div>
                             </div>
@@ -119,9 +128,10 @@ export const InfoAlbum = () => {
                 </div>
 
 
-                <div className="card-coment text-black border-start border-3 border-danger ms-3 col-md-6">
+                <div className="card-coment text-light text-center ms-3 col-md-6">
                     <div className="p-3">
-                        <h3>Comentarios</h3>
+                        <h3 className="sentimientosRetro" >"Sentimientos Retr<span className="text-danger">o</span>Vinyl"</h3>
+                        <h4> Lo Que Dicen los Fans</h4>
                     </div>
                     <div className="list-comments">
 
@@ -137,7 +147,7 @@ export const InfoAlbum = () => {
                         </div>
                     </div>
                     <div className="input-group mb-3">
-                        <input type="text" className="form-control bg-light" placeholder="Deja tu comentario"
+                        <input type="text" className="form-control" placeholder="Deja tu comentario"
                             onChange={(e) => setNewComment(e.target.value)}
                             value={newComment} />
                         <button className="btn btn-danger" type="button" onClick={() => { postComentario(newComment); setNewComment(""); }}>Añadir</button>

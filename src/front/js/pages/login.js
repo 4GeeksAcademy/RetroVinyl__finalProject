@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext, use } from "react";
 import { useNavigate } from 'react-router-dom';
 import "../../styles/registro.css";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const {actions, store} = useContext(Context)
 
   const sign_in = async (e) => {
     e.preventDefault();
@@ -35,6 +37,9 @@ export const Login = () => {
 
       const data = await response.json(); // Convertimos la respuesta a JSON
       console.log("Datos de login exitoso:", data);
+
+      localStorage.setItem("token", data.access_token);  // Guardamos el token en el localStorage
+      actions.login(data.access_token);
 
       setMessage("¡Usuario logueado con éxito!");
       navigate("/");
