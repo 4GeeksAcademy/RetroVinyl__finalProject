@@ -11,12 +11,13 @@ export const Home = () => {
     dots: true,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 180,
     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 2000,
+    speed: 15000,
+    autoplaySpeed: null, //incia el carousel automaticamente
     cssEase: "linear",
     arrows: false,
+    pauseOnhover: false, //evita que se detenga al pasar el mouse
   };
 
   const Carousel2 = () => (
@@ -52,21 +53,21 @@ export const Home = () => {
         </div>
         <div className="row">
           {/* Introcard: ocupa 6 columnas a la izquierda */}
-          <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem"}}>
+          <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
             <p className="introWeb pt-2">¡BIENVENIDO A VINILOS NOSTÁLGICOS EL PORTAL DONDE LA MAGIA DEL PASADO SE ENCUENTRA CON LA MÚSICA QUE NUNCA MUERE!</p>
           </div>
           <div className="col-12 col-md-6"> {/* Introcard: ocupa 6 columnas a la derecha */}
             <div className="row ">
               <div className="col-6 col-md-6 col-sm-12">
                 <Link to="/decada/60" style={{ textDecoration: 'none' }}>
-                  <div className="sesenta card-body d-flex align-items-center justify-content-center" style={{ height: "14rem", width:"auto" }}>
+                  <div className="sesenta card-body d-flex align-items-center justify-content-center" style={{ height: "14rem", width: "auto" }}>
                     <p>60's</p>
                   </div>
                 </Link>
               </div>
               <div className="col-6 col-md-6 col-sm-12">
                 <Link to="/decada/70" style={{ textDecoration: 'none' }}>
-                  <div className="setenta card-body d-flex align-items-center justify-content-center" style={{ height: "14rem", width:"auto" }}>
+                  <div className="setenta card-body d-flex align-items-center justify-content-center" style={{ height: "14rem", width: "auto" }}>
                     <p>70's</p>
                   </div>
                 </Link>

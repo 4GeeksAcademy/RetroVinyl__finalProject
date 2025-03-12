@@ -101,7 +101,7 @@ export const Navbar = () => {
 							</ul>
                             
 							<button className="user btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Usuario
+								LP
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
 								<Link to="/perfil" style={{ textDecoration: 'none' }}>
