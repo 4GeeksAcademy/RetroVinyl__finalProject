@@ -26,7 +26,7 @@ export const InfoAlbum = () => {
     const { albumid } = useParams();
     const [albums, setAlbums] = useState([])
 
-    //const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     useEffect(() => { // DONDE LLAMO A LA RUTA DEL BACK QUE TRAE LA INFORMACION??????
         console.log("estoy cargando los albumes");
@@ -40,14 +40,14 @@ export const InfoAlbum = () => {
         }
         getAlbums()
         getComments()
-    }, [albumid])
+    }, [albumid, token])
 
     const getComments = async () => {
         try {
             const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum/${albumid}`,{
-                //headers: {
-                    //"Authorization": `Bearer ${token}`
-                //}
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
             });
             console.log(data);
             const data = await response.json();
@@ -63,7 +63,7 @@ export const InfoAlbum = () => {
             const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json',
-                    //"Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${token}`
                  },
                 body: JSON.stringify({ comentario: newComment, album_id: albumid, user_id: 2}), //cambiar id usuario por le token
             });
