@@ -47,7 +47,6 @@ export const DespliegueAlbums = () => {
     };
     //Comprueba en el useState si el album existe en favoritos
     const isFavorito = (id) => {
-        console.log("IDs en favoritos:", favoritos.map(f => f.id_album));
         return favoritos.some((fav) => fav.id_album === id);
     };
 
@@ -68,6 +67,7 @@ export const DespliegueAlbums = () => {
             </div>
             <div className="cont-gen-card row">
                 {albums.map((album) => (
+                    
                     <div className="carta-gen" key={album.id}>
                         <div className="img-gen-cont">
                             <img className="img-gen" src={album.cover_image} alt={album.title} />

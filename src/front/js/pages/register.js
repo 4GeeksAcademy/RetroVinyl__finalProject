@@ -35,7 +35,7 @@ export const Register = () => {
         setMessage(data.msg); // Si la respuesta tiene "msg", lo mostramos
       } else {
         setMessage("¡Usuario registrado con éxito!");
-        navigate("/");
+        navigate("/perfil");
       }
     } catch (error) {
       setMessage("Hubo un problema con la solicitud. Intenta nuevamente."); // Si ocurre un error en la solicitud
