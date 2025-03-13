@@ -9,6 +9,7 @@ export const Navbar = () => {
 	const [searchResults, setSearchResults] = useState([]); // Estado para los resultados de búsqueda
 	const [isLogged, setIsLogged] = useState(!!store.token)
 	const navigate = useNavigate(); // Para redirigir a otra página
+	
 
 	const handleSearch = async () => {
 		if (searchTerm.trim()) {
