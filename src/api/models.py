@@ -28,8 +28,17 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email, 
-            "favorito" : [favorito.serialize() for favorito in self.favoritos]
+            "favorito" : [favorito.serialize() for favorito in self.favoritos],
+            "name" : self.name,
+            "sur_name" : self.sur_name,
+            "username" : self.username,
+            "mobile_number": self.mobile_number,
+            "post_code" : self.post_code,
+            "state" : self.state,
+            "country": self.country,
+            "region_state" : self.region_state
         }
+    
     def set_password(self, password):
         self.encoded_password = generate_password_hash(str(password))
     
