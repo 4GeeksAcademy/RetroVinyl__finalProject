@@ -68,10 +68,53 @@ def create_token():
 @api.route('/perfil', methods=['GET'])
 @jwt_required()
 def get_current_user():
-    # We can now access our sqlalchemy User object via `current_user`.
-    return jsonify(
-        current_user.serialize()
-    ), 200
+     # Obtener al usuario actual usando el JWT
+    current_user = User.query.filter_by(id=get_jwt_identity()).first()
+    
+    if not current_user:
+        return jsonify({"msg": "User not found"}), 404
+
+    return jsonify(current_user.serialize()), 200
+
+@api.route('/perfil', methods=['POST'])
+@jwt_required()
+def create_user():
+    # Obtener los datos del perfil del usuario desde el JSON de la solicitud
+    processed_params = request.get_json()
+
+    # Obtener el ID del usuario autenticado (deberías asociarlo al perfil)
+    user_id = get_jwt_identity()  # Obtener el ID del usuario autenticado desde el token
+
+    # Obtener los parámetros del perfil
+    name = processed_params.get('name', None)
+    sur_name = processed_params.get('sur_name', None)
+    username = processed_params.get('username', None)
+    mobile_number = processed_params.get('mobile_number', None)
+    post_code = processed_params.get('post_code', None)
+    state = processed_params.get('state', None)
+    country = processed_params.get('country', None)
+    region_state = processed_params.get('region_state', None)
+
+    # Verificar si el usuario ya tiene un perfil creado
+    existing_user = User.query.filter_by(id=user_id).first()
+    if not existing_user:
+        return jsonify({"msg": "User not found"}), 404
+
+    # Actualizar el perfil del usuario
+    existing_user.name = name
+    existing_user.sur_name = sur_name
+    existing_user.username = username
+    existing_user.mobile_number = mobile_number
+    existing_user.post_code = post_code
+    existing_user.state = state
+    existing_user.country = country
+    existing_user.region_state = region_state
+
+    db.session.commit()  # Guardar los cambios en la base de datos
+
+    return jsonify({"msg": "Profile created successfully"}), 201
+
+
 
 @api.route('/perfil', methods=['PUT'])
 @jwt_required()

@@ -1,16 +1,16 @@
 import React, { useState, useContext, use } from "react";
 import { useNavigate } from 'react-router-dom';
 import "../../styles/registro.css";
-import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { Carousel } from "../component/carousel.js";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const {actions, store} = useContext(Context)
+  const { actions, store } = useContext(Context)
 
   const sign_in = async (e) => {
     e.preventDefault();
@@ -51,59 +51,8 @@ export const Login = () => {
     }
   };
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    speed: 3000,
-    autoplaySpeed: 1000,
-    cssEase: "linear",
-    vertical: true,
-    verticalSwiping: true,
-    arrows: false,
-    pauseOnHover: false,
-    centerMode: true,   // Añadido para evitar esperas
-    //waitForAnimate: false //me hace un efecto raro de caida* 
-  };
-
-  const Carousel = ({ speed = 3000 }) => (
-    <div className="row slider-container" style={{ overflow: "hidden" }}>
-      <Slider {...{ ...settings, speed }}>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/the-dark-side-of-the-moon.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://www.efeeme.com/wp-content/uploads/2016/08/velvet-underground-03-08-16-k.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/animals-pink-floyd.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/led-zeppelin-led-zeppelin.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/abbey-road-the-beatles.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/aladin-sane-david-bowie.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/atom-heart-mother-pink-floyd.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/nevermind-nirvana.jpg" alt="image" className="slider-image" />
-        </div>
-        <div className="py-2">
-          <img src="https://revistafervordebahiablanca.wordpress.com/wp-content/uploads/2015/09/ziggy-stardust-david-bowie.jpg" alt="image" className="slider-image" />
-        </div>
-      </Slider>
-    </div>
-  );
-
   return (
-    <div className="container py-3">
+    <div className="container py-3 mt-4">
       <div className="row">
         <div className="col-md-6 col-sm-8">
           <div className="cardshadow card">
@@ -127,11 +76,11 @@ export const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required />
                 </div>
-                <button type="submit" className="btn btn-danger mt-3 mb-5 w-100">
+                <button type="submit" className="btn btn-danger mt-2 mb-5 w-100">
                   Inciar Sesión
                 </button>
                 <Link to="/register" style={{ textDecoration: 'none' }}>
-                  <h6 className="registrarse text-white text-center"> ¿No tienes una cuenta? Registrate</h6>
+                  <h6 className="registrarse text-white text-center mb-3"> ¿No tienes una cuenta? Registrate</h6>
                 </Link>
               </form>
               {message && <p>{message}</p>} {/* Mostrar el mensaje de respuesta */}

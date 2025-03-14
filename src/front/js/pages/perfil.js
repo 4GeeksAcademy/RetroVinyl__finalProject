@@ -1,60 +1,69 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/perfil.css";
 
 export const Perfil = () => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [username, setUsername] = useState('');
-  const [mobile, setMobile] = useState('');
-  const [postcode, setPostcode] = useState('');
-  const [state, setState] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [country, setCountry] = useState('');
-  const [region, setRegion] = useState('');
-  const [initials, setInitials] = useState("");
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    name: "",
+    sur_name: "",
+    username: "",
+    password: "",
+    mobile_number: "",
+    post_code: "",
+    state: "",
+    email: "",
+    password: "",
+    country: "",
+    region_state: "",
+    initials: "",
+  })
+
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value })
+  }
 
   const handleSave = () => {
-    const userProfile = {
-      name,
-      sur_name: surname,
-      username,
-      mobile_number: mobile,
-      post_code: postcode,
-      state,
-      email,
-      password,
-      country,
-      region_state: region,
+    update_profile();
+    navigate("/")
+  }
+
+  console.log(user);
+
+ 
+  const getInitials = (name, sur_name) => {
+    // Si los campos no están vacíos, usamos las iniciales
+    const nameInitial = name ? name[0]?.toUpperCase() : "";
+    
+    const surNameInitial = sur_name ? sur_name[0]?.toUpperCase() : "";
+  
+    // Retornamos las iniciales concatenadas 
+    return nameInitial + surNameInitial;
+  };
+
+   // Función para obtener las iniciales deforma dinámica
+  useEffect(() => {
+    const initials = getInitials(user.name, user.sur_name);
+    setUser(prevUser => ({
+      ...prevUser,
       initials,
-    }
-    update_profile(userProfile);
-  };
-
-  // Función para obtener las iniciales
-  const getInitials = (fullname) => {
-    if (!fullname) return ""; // Si el fullname es vacío o nulo, devolvemos un string vacío
-
-    const words = fullname.split(" "); // Dividimos el nombre completo en palabras
-    return words
-      .filter(word => word.length > 0) // Filtramos palabras vacías (por si hay múltiples espacios)
-      .map((word) => word[0]?.toUpperCase()) // Aseguramos que la primera letra existe antes de aplicar toUpperCase() que es el que devuelve la longitud de caracteres en mayúsucla
-      .join(""); // Unimos las iniciales en un string
-  };
+    }));
+  }, [user.name, user.sur_name]);
 
 
   useEffect(() => {
-    const fullname = `${name} ${surname}`;
-    const initials = getInitials(fullname);
-    setInitials(initials);// Actualizamos el estado de las iniciales 
-  }, [name, surname]);
-
+    get_profile();
+  }, []);
 
   //GET
   const get_profile = async () => {
+
+    const token = localStorage.getItem("token");
+    
+
     const myHeaders = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,  // PORQUE NO LO TOMA?
+      Authorization: `Bearer ${token}`,
     };
 
     const requestOptions = {
@@ -64,7 +73,7 @@ export const Perfil = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/api/perfil`, requestOptions);
+      const response = await fetch(`${process.env.BACKEND_URL}api/perfil`, requestOptions);
 
       if (!response.ok) {
         throw new Error('Error al obtener el perfil');
@@ -72,23 +81,27 @@ export const Perfil = () => {
 
       const result = await response.json();
       console.log(result);
+      const initials = getInitials(result.name, result.sur_name);
+
+      setUser({ ...user, ...result, initials });
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
 
-
   // PUT
-  const update_profile = async (userProfile) => {
-    const token = localStorage.getItem("access_token");
+  const update_profile = async () => {
+    const token = localStorage.getItem("token");
+    console.log(token);
+
 
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,  // Agregamos el token en el header de autorización
     };
 
-    const raw = JSON.stringify(userProfile);  // Enviar el objeto de perfil directamente
+    const raw = JSON.stringify(user);  // Enviar el objeto de perfil directamente
 
     const requestOptions = {
       method: "PUT",
@@ -113,87 +126,91 @@ export const Perfil = () => {
     }
   };
 
-
   return (
     <div className="bodyuser container rounded mt-5 mb-5">
       <div className="row input-group">
-        <div className="col-md-4 border-right">
+        <div className="col-md-6 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
-            <div className="rounded-circle mt-5 " style={{ width: "140px", height: "140px" }}>
-              {initials}
+            <div className="rounded-circle mt-5" style={{ width: "300px", height: "300px" }}>
+              {user.initials}
             </div>
-            <span className="font-weight-bold text-light mt-5">{name} {surname}</span>
-            <span className="text-light-50">{email}</span>
+            <span className="font-weight-bold text-light">{user.name} {user.sur_name}</span>
+            <span className="text-light-50">{user.email}</span>
           </div>
         </div>
-
-        <div className="col-md-5 border-right">
+        <div className="col-md-6 border-right">
           <div className=" text-light py-5">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <h4 className="text-right">Profile Settings</h4>
+              <h4 className="profile text-center">Mi Perfil</h4>
             </div>
             <div className="row mt-2">
               <div className="col-md-6">
-                <label className="labels">Name</label>
+                <label className="labels">Nombre</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="First Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Nombre"
+                  value={user.name}
+                  name="name"
+                  onChange={handleChange}
                 />
               </div>
               <div className="col-md-6">
-                <label className="labels">Surname</label>
+                <label className="labels">Apellido</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Surname"
-                  value={surname}
-                  onChange={(e) => setSurname(e.target.value)}
+                  placeholder="Apellido"
+                  value={user.sur_name}
+                  name="sur_name"
+                  onChange={handleChange}
                 />
               </div>
             </div>
 
             <div className="row mt-3">
               <div className="col-md-12">
-                <label className="labels">Username</label>
+                <label className="labels">Usuario</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter your username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Ingresa tu nombre de Usuario"
+                  value={user.username}
+                  name="username"
+                  onChange={handleChange}
                 />
               </div>
               <div className="col-md-12">
-                <label className="labels">Mobile Number</label>
+                <label className="labels">N° de contacto</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter phone number"
-                  value={mobile}
-                  onChange={(e) => setMobile(e.target.value)}
+                  placeholder="teléfono"
+                  value={user.mobile_number}
+                  name="mobile_number"
+                  onChange={handleChange}
                 />
               </div>
               <div className="col-md-12">
-                <label className="labels">Postcode</label>
+                <label className="labels">Domicilio</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter postcode"
-                  value={postcode}
-                  onChange={(e) => setPostcode(e.target.value)}
+                  placeholder="domicilio"
+                  value={user.state}
+                  name="state"
+                  onChange={handleChange}
                 />
               </div>
               <div className="col-md-12">
-                <label className="labels">State</label>
+                <label className="labels">Código Postal</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter state"
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
+                  placeholder="código postal"
+                  value={user.post_code}
+                  name="post_code"
+                  onChange={handleChange}
                 />
               </div>
               <div className="col-md-12">
@@ -201,42 +218,45 @@ export const Perfil = () => {
                 <input
                   type="email"
                   className="form-control"
-                  placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="email"
+                  value={user.email}
+                  name="email"
+                  onChange={handleChange}
                 />
               </div>
               <div className="col-md-12">
-                <label className="labels">Password</label>
+                <label className="labels">Contraseña</label>
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Contraseña"
+                  value={user.password}
+                  name="password"
+                  onChange={handleChange}
                 />
               </div>
             </div>
-
             <div className="row mt-3">
               <div className="col-md-6">
-                <label className="labels">Country</label>
+                <label className="labels">País</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter country"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
+                  placeholder="país"
+                  value={user.country}
+                  name="country"
+                  onChange={handleChange}
                 />
               </div>
               <div className="col-md-6">
-                <label className="labels">Region/State</label>
+                <label className="labels">Provincia</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Enter region/state"
-                  value={region}
-                  onChange={(e) => setRegion(e.target.value)}
+                  placeholder="provincia"
+                  value={user.region_state}
+                  name="region_state"
+                  onChange={handleChange}
                 />
               </div>
             </div>
