@@ -3,6 +3,13 @@ import { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import '../../styles/InfoAlbum.css';
 import { useParams } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { PaymentForm } from "../component/PaymentForm.js";
+
+// Carga la clave pública de Stripe (almacenada en una variable de entorno, por ejemplo, REACT_APP_STRIPE_PUBLIC_KEY)
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+//const stripePromise = loadStripe("pk_test_51QvwkbG1uRRpZkNMxgiAR89ARq2qyxOV94XesY7bxfVc6bSNckhZCIKMbKMGEubSI7ki1Fi9G3wyluU6o4o4JMKz00xLWOGXxA");
 
 export const InfoAlbum = () => {
     const { store, actions } = useContext(Context)
@@ -26,6 +33,16 @@ export const InfoAlbum = () => {
     const { albumid } = useParams();
     const [albums, setAlbums] = useState([])
 
+    // Estado para los datos de envío
+    const [shipping, setShipping] = useState({
+        name: "",
+        address: "",
+        city: "",
+        cp: "",
+        country: "",
+        contactNumber: ""
+    });
+
     const token = localStorage.getItem("token");
 
     useEffect(() => { // DONDE LLAMO A LA RUTA DEL BACK QUE TRAE LA INFORMACION??????
@@ -36,7 +53,7 @@ export const InfoAlbum = () => {
             const data = await response.json()
             setAlbums(data)
             console.log(response);
-            
+
         }
         getAlbums()
         getComments()
@@ -44,7 +61,7 @@ export const InfoAlbum = () => {
 
     const getComments = async () => {
         try {
-            const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum/${albumid}`,{
+            const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum/${albumid}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -62,23 +79,47 @@ export const InfoAlbum = () => {
         try {
             const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json',
+                headers: {
+                    'Content-Type': 'application/json',
                     "Authorization": `Bearer ${token}`
-                 },
-                body: JSON.stringify({ comentario: newComment, album_id: albumid, user_id: 2}), //cambiar id usuario por le token
+                },
+                body: JSON.stringify({ comentario: newComment, album_id: albumid, user_id: token }),
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
             console.log("Data fetched successfully:", data);
+            setNewComment(""); // Limpiar campo después de enviar
             getComments()
-            return data;
         } catch (error) {
             console.error("Error fetching data:", error);
         }
-        
+
     };
+
+    const deleteComment = async (comment_id) => {
+
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}api/comentariosAlbum/${comment_id}`, {
+                method: 'DELETE',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Error deleting comment:", errorData);
+                return;
+            }
+            // Actualiza el estado eliminando el comentario borrado
+            setCommentList(commentList.filter(comment => comment.id !== comment_id));
+        } catch (error) {
+            console.error("Error deleting comment:", error);
+        }
+    };
+    console.log(commentList);
 
     return (
         <div className="container">
@@ -104,22 +145,70 @@ export const InfoAlbum = () => {
                         <br></br>
                         <p className="card-text"><strong>TOTAL :</strong>{precioTotal}<strong>€</strong></p>
 
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#paymentModal">
                             Comprar
                         </button>
 
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div className="modal fade" id="paymentModal" tabIndex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                            <div className="modal-dialog modal-dialog-centered modal-lg">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h1 className="modal-title fs-5 text-black" id="paymentModalLabel">Detalles del pago</h1>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body text-black">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-danger">Confirmar compra</button>
+                                    <div className="modal-body text-black">
+                                        <div className="p-2">
+                                            <label className="p-2 col-4">Nombre del titular de la tarjeta:</label>
+                                            <input className="col-8"
+                                                type="text" value={shipping.name} placeholder="Nombre completo"
+                                                onChange={(e) => setShipping({ ...shipping, name: e.target.value })} required
+                                            />
+                                        </div>
+                                        <div className="p-2">
+                                            <label className="p-2 col-4">Dirección de envío:</label>
+                                            <input className="col-8"
+                                                type="text" value={shipping.address} placeholder="Dirección"
+                                                onChange={(e) => setShipping({ ...shipping, address: e.target.value })} required
+                                            />
+                                        </div>
+                                        <div className="p-2">
+                                            <label className="p-2 col-4">Teléfono de contacto:</label>
+                                            <input className="col-8"
+                                                type="text" value={shipping.contactNumber} placeholder="Número de teléfono"
+                                                onChange={(e) => setShipping({ ...shipping, contactNumber: e.target.value })} required
+                                            />
+                                        </div>
+                                        <div className="row p-2">
+                                            <div className="col-4">
+                                                <label className="p-2 col-4">CP:</label>
+                                                <input className="col-8"
+                                                    type="text" value={shipping.cp} placeholder="Codigo Postal"
+                                                    onChange={(e) => setShipping({ ...shipping, cp: e.target.value })} required
+                                                />
+                                            </div>
+                                            <div className="col-4">
+                                                <label className="col-4">Ciudad:</label>
+                                                <input className="col-8"
+                                                    type="text" value={shipping.city} placeholder="Ciudad"
+                                                    onChange={(e) => setShipping({ ...shipping, city: e.target.value })} required
+                                                />
+                                            </div>
+                                            <div className="col-4">
+                                                <label className="col-4">País:</label>
+                                                <input className="col-8"
+                                                    type="text" value={shipping.country} placeholder="País"
+                                                    onChange={(e) => setShipping({ ...shipping, country: e.target.value })} required
+                                                />
+                                            </div>
+                                        </div>
+                                        <Elements stripe={stripePromise}>
+                                            <PaymentForm
+                                                amount={precioTotal}
+                                                album_id={albumid}
+                                                cantidad={cantidad}
+                                                onPaymentSuccess={() => alert("¡Pago exitoso!")}
+                                            />
+                                        </Elements>
                                     </div>
                                 </div>
                             </div>
@@ -130,17 +219,22 @@ export const InfoAlbum = () => {
 
                 <div className="card-coment text-light text-center ms-3 col-md-6">
                     <div className="p-3">
-                        <h3 className="sentimientosRetro" >"Sentimientos Retr<span className="text-danger">o</span>Vinyl"</h3>
-                        <h4> Lo Que Dicen los Fans</h4>
+                        <h3 className="sentimientosRetro" >¡Escucha, revive y comparte!</h3>
+                        <h4> Cuéntanos tu historia</h4>
                     </div>
                     <div className="list-comments">
 
                         <div className="list-group">
                             {commentList.map((comment, index) => (
-                               
+
                                 <li key={index} className="list-group-item m-1 d-flex justify-content-between">
-                                    <div>{comment.texto}</div>
-                                    <a href="#!"><i className="btn-close" onClick={() => setCommentList(commentList.filter((t, currentindex) => index !== currentindex))}></i></a>
+
+                                    <div className="text-start">
+                                        <strong>{comment.username}</strong><br></br>{comment.texto}
+                                    </div>
+                                    {comment.user_id == localStorage.getItem("user_id") && (
+                                        <a data-bs-theme="dark" href="#!"><i className="btn-close" onClick={() => { deleteComment(comment.id) }}></i></a>
+                                    )}
                                 </li>
 
                             ))}
@@ -157,4 +251,5 @@ export const InfoAlbum = () => {
         </div>
     );
 };
+//setCommentList(commentList.filter((t, currentindex) => index !== currentindex))
 //onClick={() => { setCommentList(() => [...commentList, newComment]); setNewComment(''); }}

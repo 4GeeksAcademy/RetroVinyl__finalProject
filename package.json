@@ -73,6 +73,8 @@
 		]
 	},
 	"dependencies": {
+		"@stripe/react-stripe-js": "^3.4.0",
+		"@stripe/stripe-js": "^6.0.0",
 		"@types/express-jwt": "^6.0.4",
 		"@types/jsonwebtoken": "^9.0.9",
 		"express-jwt": "^8.5.1",
