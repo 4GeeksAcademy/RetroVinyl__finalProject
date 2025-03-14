@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
-import {Context} from "../store/appContext"
+import { Context } from "../store/appContext"
 
 export const Navbar = () => {
-	const {store, actions} = useContext(Context)
+	const { store, actions } = useContext(Context)
 	const [searchTerm, setSearchTerm] = useState(""); //Almacena las consultas de busqueda
 	const [searchResults, setSearchResults] = useState([]); // Estado para los resultados de búsqueda
 	const [isLogged, setIsLogged] = useState(!!store.token)
@@ -44,22 +44,20 @@ export const Navbar = () => {
 	const logoutUser = () => {
 		actions.logout(); // Elimina el token en el store y localStorage
 		navigate("/login"); // Redirige al login
-	  };
+	};
 
 	useEffect(() => {
-	
-	setIsLogged(!!store.token)  //!!
-	
-	 }, [store.token]);
+
+		setIsLogged(!!store.token)  //!!
+
+	}, [store.token]);
 
 	return (
-		<nav className="navbar py-0">
+		<nav className="navbar py-0 sticky-top">
 			<div className="container-fluid px-3 d-flex justify-content-between">
-				<Link to="/" style={{ textDecoration: 'none' }}>
-					<a className="navbar-brand" href="#">
-						<i className="circle fa-solid fa-record-vinyl"></i>
-						RetroVinyl
-					</a>
+				<Link className="navbar-brand" to="/" style={{ textDecoration: 'none' }}>
+					<i className="circle fa-solid fa-record-vinyl"></i>
+					RetroVinyl
 				</Link>
 				{
 					isLogged ?
@@ -78,7 +76,7 @@ export const Navbar = () => {
 								<div className="input-group-append">
 									<button onClick={handleSearch}
 										className="search btn btn-outline-danger">
-										<i class="fa-solid fa-magnifying-glass"></i>
+										<i className="fa-solid fa-magnifying-glass"></i>
 									</button>
 								</div>
 							</div>
@@ -99,24 +97,24 @@ export const Navbar = () => {
 									)
 								)}
 							</ul>
-                            
+
 							<button className="user btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Usuario
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
-								<Link to="/perfil" style={{ textDecoration: 'none' }}>
-									<li><a className="dropdown-item" href="#">Perfil</a></li>
+								<Link className="dropdown-item" to="/perfil" style={{ textDecoration: 'none' }}>
+									Perfil
 								</Link>
-								<Link to="/favoritos" style={{ textDecoration: 'none' }}>
-									<li><a className="dropdown-item" href="#">Favoritos</a></li>
+								<Link className="dropdown-item" to="/favoritos" style={{ textDecoration: 'none' }}>
+									Favoritos
 								</Link>
-								<Link to="/pedidos" style={{ textDecoration: 'none' }}>
-									<li><a className="dropdown-item" href="#">Pedidos</a></li>
-								</Link>								
-									<li><div className="dropdown-item"
+								<Link className="dropdown-item" to="/pedidos" style={{ textDecoration: 'none' }}>
+									Pedidos
+								</Link>
+								<li><div className="dropdown-item"
 									onClick={() => {
 										logoutUser();
-									}} >Cerrar Sesión</div></li>								
+									}} >Cerrar Sesión</div></li>
 							</ul>
 						</div>
 						:

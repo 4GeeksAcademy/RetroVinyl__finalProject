@@ -1,34 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState} from "react";
+import { useParams, Link , useNavigate} from "react-router-dom";
 import "/workspaces/RetroVinyl__finalProject/src/front/styles/despliegue_albums.css"
 
+
 export const DespliegueAlbums = () => {
+    
     const { decada, genero } = useParams();
     const [albums, setAlbums] = useState([]);
     const [favoritos, setFavoritos] = useState([]);
+    const token = localStorage.getItem("token");
+    const navigate = useNavigate();
 
     const getFavoritos = async () => {
-        const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos`);
+        const response = await fetch(`${process.env.BACKEND_URL}api/favoritos`,
+            {
+                headers:{
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
         const data = await response.json();
         setFavoritos(data);
     };
     useEffect(() => {
         const getAlbums = async () => {
-            const response = await fetch(`${process.env.BACKEND_URL}/api/albums/${decada}/${genero}`);
+            const response = await fetch(`${process.env.BACKEND_URL}api/albums/${decada}/${genero}`);
             const data = await response.json();
             setAlbums(data);
         };
-
+        if (!token) {
+            navigate("/login", { replace: true });
+          }
         getAlbums();
         getFavoritos();
-    }, []);
+    }, [token, navigate]);
 
     // Añadir un favorito
     const postFavorito = async (album) => {
-        const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos`, {
+        const response = await fetch(`${process.env.BACKEND_URL}api/favoritos`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id_album: album.id, user_id : 1 }),
+            headers: { 
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+             },
+            body: JSON.stringify({ id_album: album.id, id_usuario: token}),
         });
         if (response.ok) {
             console.log("Álbum añadido");
@@ -37,8 +52,11 @@ export const DespliegueAlbums = () => {
     };
     // Eliminar un favorito
     const deleteFavorito = async (id_album) => {
-        const response = await fetch(`${process.env.BACKEND_URL}/api/favoritos/${id_album}`, {
-            method: 'DELETE'
+        const response = await fetch(`${process.env.BACKEND_URL}api/favoritos/${id_album}`, {
+            method: 'DELETE',
+            headers:{
+                "Authorization": `Bearer ${token}`
+            }
         });
         if (response.ok) {
             console.log("Álbum borrado");
@@ -58,6 +76,14 @@ export const DespliegueAlbums = () => {
             postFavorito(album);
         }
     };
+    // Acorta el largo de los títulos
+    const shortTitle = (title, maxWords) => {
+        const words = title.split(" "); // Divide el título en un array de palabras
+        
+        if (words.length <= maxWords) return title; // Si tiene pocas palabras, se devuelve igual
+        return words.slice(0, maxWords).join(" ") + "..."; // Toma solo las primeras palabras y agrega "..." 
+    };
+    
     return (
         <div className="cont-gen container">
             <div className="titulo-gen">
@@ -74,7 +100,7 @@ export const DespliegueAlbums = () => {
                         </div>
                         <div className="cuerpo-gen">
                             <div className="detalles-gen">
-                                <p>Título: {album.title}</p>
+                                <p>Título: {shortTitle(album.title, 10)}</p>
                                 <p>País: {album.country}</p>
                                 <p>Año: {album.year}</p>
                             </div>
