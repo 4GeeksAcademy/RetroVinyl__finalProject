@@ -21,6 +21,7 @@
     margin-right: 10%;    
 }
 
+
 .search{
     margin-right: 10px;
     height: 32px;    
@@ -39,18 +40,12 @@
 }
 
 .form-control{
-    height: 30px;
+    height: 32px;
     margin-top: 4px;    
     background-color: transparent;
     border: 1px solid rgb(168, 56, 56);
 }
  
-
-input.form-control::placeholder{
-    color: rgb(168, 162, 162);
-}
-
-
 .search-results-list {
     position: absolute;
     top: 40px; 
@@ -78,7 +73,14 @@ input.form-control::placeholder{
     background-color: rgba(168, 56, 56, 0.2); 
 }
 
-
+.input-search::placeholder {
+    background: linear-gradient(to right, #4169E1 0%, #FF0000 100%);
+    background-clip: text;  /* Versión estándar */
+    -webkit-background-clip: text;
+    color: transparent;  /* Versión estándar */
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
 
 
 

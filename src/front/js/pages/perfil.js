@@ -1,45 +1,46 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../styles/perfil.css";
 
 export const Perfil = () => {
-const [user, setUser] = useState({
-      name : "",
-      sur_name: "",
-      username: "",
-      password: "",
-      mobile_number: "",
-      post_code: "",
-      state: "",
-      email: "",
-      password: "",
-      country: "",
-      region_state:"",
-      initials: "",
-})
+  const navigate = useNavigate();
+  const [user, setUser] = useState({
+    name: "",
+    sur_name: "",
+    username: "",
+    password: "",
+    mobile_number: "",
+    post_code: "",
+    state: "",
+    email: "",
+    password: "",
+    country: "",
+    region_state: "",
+    initials: "",
+  })
 
- const handleChange = (e) => {
-   setUser({...user, [e.target.name]: e.target.value})
- }
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value })
+  }
 
   const handleSave = () => {
     update_profile();
+    navigate("/")
   }
-   
- console.log(user);
- 
+
+  console.log(user);
+
   // Función para obtener las iniciales
-  const getInitials = (fullname) => {
-    if (!fullname) return ""; // Si el fullname es vacío o nulo, devolvemos un string vacío
+  const getInitials = (name, sur_name) => {
+    if (!name || !sur_name) return ""; // Si el fullname es vacío o nulo, devolvemos un string vacío
 
-    const words = fullname.split(" "); // Dividimos el nombre completo en palabras
-    return words
-      .filter(word => word.length > 0) // Filtramos palabras vacías (por si hay múltiples espacios)
-      .map((word) => word[0]?.toUpperCase()) // Aseguramos que la primera letra existe antes de aplicar toUpperCase() que es el que devuelve la longitud de caracteres en mayúsucla
-      .join(""); // Unimos las iniciales en un string
+    const initials = name[0]?.toUpperCase() + sur_name[0]?.toUpperCase(); // Concatenamos la inicial del nombre y apellido
+    return initials;
   };
+   
 
-  useEffect(() => { 
-     get_profile();
+  useEffect(() => {
+    get_profile();
   }, []);
 
 
@@ -51,7 +52,7 @@ const [user, setUser] = useState({
 
     const myHeaders = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,  // PORQUE NO LO TOMA?
+      Authorization: `Bearer ${token}`,  
     };
 
     const requestOptions = {
@@ -69,7 +70,9 @@ const [user, setUser] = useState({
 
       const result = await response.json();
       console.log(result);
-      setUser({...user, ...result});
+      const initials = getInitials(result.name, result.sur_name);
+
+      setUser({...user,...result, initials});
     } catch (error) {
       console.error("Error:", error);
     }
@@ -120,9 +123,9 @@ const [user, setUser] = useState({
         <div className="col-md-4 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
             <div className="rounded-circle mt-5 " style={{ width: "140px", height: "140px" }}>
-              {/* initials */}
-              </div>
-            <span className="font-weight-bold text-light mt-5"></span>
+            {user.initials}
+            </div>
+            <span className="font-weight-bold text-light mt-5">{user.name} {user.sur_name}</span>
             <span className="text-light-50">{user.email}</span>
           </div>
         </div>

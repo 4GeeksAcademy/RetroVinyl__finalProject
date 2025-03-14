@@ -102,7 +102,7 @@ export const Login = () => {
   );
 
   return (
-    <div className="container py-3">
+    <div className="container py-3 mt-4">
       <div className="row">
         <div className="col-md-6 col-sm-8">
           <div className="cardshadow card">
@@ -126,11 +126,11 @@ export const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     required />
                 </div>
-                <button type="submit" className="btn btn-danger mt-3 mb-5 w-100">
+                <button type="submit" className="btn btn-danger mt-2 mb-5 w-100">
                   Inciar Sesión
                 </button>
                 <Link to="/register" style={{ textDecoration: 'none' }}>
-                  <h6 className="registrarse text-white text-center"> ¿No tienes una cuenta? Registrate</h6>
+                  <h6 className="registrarse text-white text-center mb-3"> ¿No tienes una cuenta? Registrate</h6>
                 </Link>
               </form>
               {message && <p>{message}</p>} {/* Mostrar el mensaje de respuesta */}

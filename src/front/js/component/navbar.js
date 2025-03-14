@@ -7,9 +7,41 @@ export const Navbar = () => {
 	const {store, actions} = useContext(Context)
 	const [searchTerm, setSearchTerm] = useState(""); //Almacena las consultas de busqueda
 	const [searchResults, setSearchResults] = useState([]); // Estado para los resultados de búsqueda
-	const [isLogged, setIsLogged] = useState(!!store.token)
+	const [isLogged, setIsLogged] = useState(!!store.token);
 	const navigate = useNavigate(); // Para redirigir a otra página
+	const [user, setUser] = useState({username: ""});
+
+	 const get_profile = async () => {
+
+		const token = localStorage.getItem("token");
+		console.log(token);
 	
+		const myHeaders = {
+		  "Content-Type": "application/json",
+		  Authorization: `Bearer ${token}`,  
+		};
+	
+		const requestOptions = {
+		  method: "GET",
+		  headers: myHeaders,
+		  redirect: "follow"
+		};
+	
+		try {
+		  const response = await fetch(`${process.env.BACKEND_URL}api/perfil`, requestOptions);
+	
+		  if (!response.ok) {
+			throw new Error('Error al obtener el perfil');
+		  }
+	
+		  const result = await response.json();
+		  console.log(result);
+		  setUser({ ...user, ...result });
+		} catch (error) {
+		  console.error("Error:", error);
+		}
+	  };	
+
 
 	const handleSearch = async () => {
 		if (searchTerm.trim()) {
@@ -25,6 +57,7 @@ export const Navbar = () => {
 				if (response.ok) {
 					const data = await response.json();
 					setSearchResults(data);  // Guarda los resultados en data
+					getActions().setUser(data);;
 				} else {
 					console.error("Error al obtener los resultados:", response.status);
 				}
@@ -49,7 +82,9 @@ export const Navbar = () => {
 
 	useEffect(() => {
 	
-	setIsLogged(!!store.token)  //!!
+	setIsLogged(!!store.token);//!!
+	
+	get_profile(); 
 	
 	 }, [store.token]);
 
@@ -67,7 +102,7 @@ export const Navbar = () => {
 						<div className="d-flex dropdown">
 							<div className="search input-group mb-3">
 								<input type="text"
-									className="form-control"
+									className="input-search form-control"
 									placeholder="Escribe para buscar"
 									aria-describedby="basic-addon2"
 									value={searchTerm}
@@ -102,7 +137,7 @@ export const Navbar = () => {
 							</ul>
                             
 							<button className="user btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								LP
+								{user.username}
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
 								<Link to="/perfil" style={{ textDecoration: 'none' }}>
@@ -114,10 +149,10 @@ export const Navbar = () => {
 								<Link to="/pedidos" style={{ textDecoration: 'none' }}>
 									<li><a className="dropdown-item" href="#">Pedidos</a></li>
 								</Link>								
-									<li><div className="dropdown-item"
+									<li><a className="dropdown-item" href="#"
 									onClick={() => {
 										logoutUser();
-									}} >Cerrar Sesión</div></li>								
+									}} >Cerrar Sesión</a></li>								
 							</ul>
 						</div>
 						:

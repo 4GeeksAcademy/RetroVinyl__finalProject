@@ -4,6 +4,17 @@
 
 .form-control::placeholder {
     color: rgb(153, 143, 143) !important; /* Cambia el color del texto del placeholder a blanco */
+    
+}
+
+.form-control:not(:placeholder-shown) {
+    /* Intenta usar un gradiente más vibrante */
+    background: linear-gradient(to right, #4169E1 0%, #FF0000 100%);
+    background-clip: text;  /* Versión estándar */
+    -webkit-background-clip: text;
+    color: transparent;  /* Versión estándar */
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
 }
 
 .bodyuser{
@@ -19,7 +30,6 @@
     background: #2F51CF;
     background: linear-gradient(to right, #2F51CF 0%, #CF1512 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    
+    -webkit-text-fill-color: transparent;   
     
 }

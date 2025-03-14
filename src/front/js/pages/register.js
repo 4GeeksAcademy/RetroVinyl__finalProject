@@ -35,7 +35,7 @@ export const Register = () => {
         setMessage(data.msg); // Si la respuesta tiene "msg", lo mostramos
       } else {
         setMessage("¡Usuario registrado con éxito!");
-        navigate("/perfil");
+        navigate("/login");
       }
     } catch (error) {
       setMessage("Hubo un problema con la solicitud. Intenta nuevamente."); // Si ocurre un error en la solicitud
@@ -61,6 +61,7 @@ export const Register = () => {
     verticalSwiping: true,
     arrows: false,
     pauseOnHover: false,
+    pauseOnFocus:false,
     centerMode: true,   // Añadido para evitar esperas
     //waitForAnimate: false //me hace un efecto raro de caida* 
   };
@@ -100,7 +101,7 @@ export const Register = () => {
   );
 
   return (
-    <div className="container py-3">
+    <div className="container py-3 mt-4">
       <div className="row">
         <div className="col-md-6 col-sm-8">
           <div className="cardshadow card">
