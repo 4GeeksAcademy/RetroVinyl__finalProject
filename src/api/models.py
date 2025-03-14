@@ -119,7 +119,7 @@ class Comentario(db.Model):
     texto = db.Column(db.String(250), unique=False, nullable=False)
     album_id = db.Column(db.Integer, db.ForeignKey('album.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    album = db.relationship('Album', backref = 'comentario', lazy =True)
+    album = db.relationship('Album', backref = 'comentarios', lazy =True)
     def __repr__(self):
         return f'<Comentario {self.id}>'
 

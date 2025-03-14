@@ -11,6 +11,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from api.auth import jwt
+from datetime import timedelta
 
 # from models import Person
 
@@ -37,7 +38,7 @@ setup_admin(app)
 
 # add the admin
 setup_commands(app)
-
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours = 8)
 #Inicializo mi app, conecto ambas partes
 jwt.init_app(app)
 

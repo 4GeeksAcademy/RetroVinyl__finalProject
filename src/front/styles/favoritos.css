@@ -1,8 +1,9 @@
-.cont-favs{
+.cont-gen{
     height: auto;
 }
+
 .titulo-favs{
-    text-align: center;
+    text-align:start;
     padding-top: 1rem;
     margin-bottom: 1rem;
     color: white;
@@ -10,57 +11,66 @@
     color: black;
     
 }
-.card-cont-fav{
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 2rem; 
-    margin-left: 1rem;
-    margin-top: 2rem;
-    overflow:hidden;
-    
-    
+.cont-favs-card{
+    justify-content: center;
 }
-.carta-favs{
+.carta-favs {
     display: flex;
-    height: 250px;
-    width: 500px;
-    margin-bottom: 1rem;
-    border-radius: 15px;
-    color: white; 
+    flex-direction: column;
+    justify-content: space-between; 
     align-items: center;
+    height: 450px; 
+    width: 220px;
+    margin-bottom: 3rem;
+    margin-right: 8px;
+    border-radius: 15px;
+    color: white;
     background: rgba(0, 0, 0, 0.671);
-    -webkit-backdrop-filter: blur(5px);
-    backdrop-filter: blur(5px);
-    overflow: hidden;
-    box-shadow: rgb(58, 136, 252, 0.5) 0px 6px 15px 0px;
+    padding: 1rem;
+    box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
+    box-sizing: border-box;
 }
 
 .img-favs{
     width: 180px;
     height: 180px;
     object-fit: cover;
-    margin-left: 1rem;
     border: 1px solid white;
     border-radius: 10px;
-}
-.cuerpo-favs{
-    margin-left: 2em;
-}
+    display: block;
+    margin:8px auto;
 
-.botones-cont1{
+}
+.detalles-favs {
+    flex-grow: 1;
+    max-height: 200px; 
+    overflow-y: hidden; 
     display: flex;
-    justify-content: space-around;
-    width: 20%;  
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 4px;
 }
-
-.fav-favs{
+.cont-favs-btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    width: 100%;
+}
+.fav-favs {
     width: 40px;
     height: 40px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
     border: 1.5px solid #daab03;
     background-color: transparent;
+    margin-left: 3rem;
+    color: #daab03;
+    transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
 }
+
 .fav-favs:hover {
     border-color: #daab03;
     box-shadow: 0 0 15px 2px #daab03;
@@ -74,11 +84,16 @@
 .compra-favs{
     width: 40px;
     height: 40px;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
     border: 1.5px solid #248cdb;
     background-color: transparent;
+    color:#248cdb;
+    transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
 }
-
 .compra-favs:hover{
     border-color: #248cdb;
     box-shadow: 0 0 15px 2px #248cdb;
@@ -87,4 +102,17 @@
     border-color: #ffffff;
     color: #ffffff;
     box-shadow: 0 0 15px 2px #ffffff;
+}
+
+.youtube-favs{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1.5px solid #f20d0d;
+    background-color: transparent;
+}
+.cuerpo-favs {
+    flex-grow: 1; 
+    width: 100%;
+    overflow: visible; 
 }

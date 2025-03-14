@@ -177,23 +177,35 @@ def get_albums_by_decada_and_genero(decada, genero):
     ]
     return jsonify([album.serialize() for album in filtered_albums])  # crea un diccionario añadiendo la propiedad jsonify para convertirlo en json
 
-@api.route('/favoritos', methods =['POST'])
+@api.route('/favoritos', methods=['POST'])
+@jwt_required()
 def add_favorito():
     data = request.get_json()
-    exist = Favorito.query.filter_by(id_usuario = 1, id_album = data.get("id_album")).first()
-    if not exist:
-        new_favorito = Favorito(
-        id_album = data['id_album'],   
-        id_usuario = 1
-        )
-        db.session.add(new_favorito)
-        db.session.commit()
-    return jsonify("Favorito añadido")
+    current_user_id  = get_jwt_identity()
+    album_id = data.get("id_album")
+    
+    if not album_id:
+        return jsonify({"error": "El id del álbum es requerido"}), 400
+
+    # Verificar si el álbum ya está en los favoritos del usuario
+    exist = Favorito.query.filter_by(id_usuario = current_user_id, id_album=album_id).first()
+    if exist:
+        return jsonify({"error": "El álbum ya está en favoritos"}), 400
+
+    new_favorito = Favorito(
+        id_album=album_id,
+        id_usuario= current_user_id
+    )
+    db.session.add(new_favorito)
+    db.session.commit()
+    return jsonify({"msg": "Favorito añadido"}), 201
+
 
 @api.route('/favoritos/<id>', methods=['DELETE'])
+@jwt_required()
 def delete_favorito(id):
-    user_id = 1
-    favorito = Favorito.query.filter_by(id_usuario = user_id, id_album = id).first()
+    current_user_id = get_jwt_identity()
+    favorito = Favorito.query.filter_by(id_usuario = current_user_id, id_album = id).first()
     if not favorito : 
         return jsonify({"error" : "el album no esta en los favoritos del usuario"}), 404
     db.session.delete(favorito)
@@ -201,11 +213,13 @@ def delete_favorito(id):
     
     return jsonify({"message": "Favorito eliminado"}), 200
     
-@api.route('/favoritos', methods =['GET'])
+@api.route('/favoritos', methods=['GET'])
+@jwt_required()
 def get_favorito():
-    favoritos = Favorito.query.filter_by(id_usuario = 1).all()
-    favoritos_serialized = [favorito.serialize() for favorito in favoritos] 
-    return jsonify (favoritos_serialized)  
+    current_user_id = get_jwt_identity()
+    favoritos = Favorito.query.filter_by(id_usuario = current_user_id).all()
+    favoritos_serialized = [favorito.serialize() for favorito in favoritos]
+    return jsonify(favoritos_serialized), 200  
 
 @api.route('/infoAlbums/<albumid>', methods = ['GET']) # Ruta que conecta el back con el front (Despliegue albums.js useEffect linea 11)
 def get_albums_by_id(albumid):
