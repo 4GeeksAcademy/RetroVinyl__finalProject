@@ -11,12 +11,13 @@ export const Home = () => {
     dots: true,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 1,
+    slidesToScroll: 6,
     autoplay: true,
-    speed: 2000,
-    autoplaySpeed: 2000,
+    speed: 10000,
+    autoplaySpeed: 0,
     cssEase: "linear",
     arrows: false,
+    pauseOnHover: false,
   };
 
   const Carousel2 = () => (

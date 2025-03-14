@@ -28,13 +28,15 @@
 
 .list-comments{
     height: 550px;
-    overflow: hidden;
+    overflow: scroll ;
 }
 
 .list-group-item{
     background-color: rgba(48, 42, 105, 0.671);
     color: white;
     border: none;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .card-text{

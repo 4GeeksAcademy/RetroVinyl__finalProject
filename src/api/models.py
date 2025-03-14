@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime, timezone
 
 
 db = SQLAlchemy()
@@ -62,27 +63,30 @@ class Album(db.Model):
 
 class Pedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    album_title_order = db.Column(db.String(250), unique=False, nullable=False)
-    album_country_order = db.Column(db.String(80), unique=False, nullable=False)
-    album_year_order = db.Column(db.String(80), unique=False, nullable=False)
-    album_cover_image_order = db.Column(db.String(250), unique=False, nullable=False)
-    album_genre_order = db.Column(db.String(250), unique=False, nullable=False)
-    album_date_order = db.Column(db.String(250), unique=False, nullable=False)
-    album_order_id = db.Column(db.Integer, unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
+    precio_total = db.Column(db.Float, nullable=False)
+    fecha = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+    cantidad = db.Column(db.Integer, nullable=False)
+    user = db.relationship("User", backref="pedidos")
+    album = db.relationship("Album", backref="pedidos")
 
     def __repr__(self):
-        return f'<Pedido {self.album_title_order}>'
+        return f'<Pedido {self.album.title}>'
 
-    def serialize(self):
+    def serialize(self): #al relacionar la tabla Pedido con la de User y Album, puedes serializar variables de estas dos tablas y asi tener sus valores.
         return {
             "id": self.id,
-            "album_title_order": self.album_title_order,
-            "album_country_order" : self.album_country_order,
-            "album_year_order" : self.album_year_order,
-            "album_cover_image_order" : self.album_cover_image_order,
-            "album_genre_order" : self.album_genre_order,
-            "album_date_order" : self.album_date_order,
-            "album_order_id" : self.album_order_id
+            "user_id": self.user_id,
+            "precio_total": self.precio_total,
+            "cantidad": self.cantidad,
+            "fecha": self.fecha.strftime('%d-%m-%Y') if self.fecha else None,
+            "album_id": self.album_id,
+            "album_title": self.album.title,
+            "album_country": self.album.country,
+            "album_year": self.album.year,
+            "album_genre": self.album.genre,
+            "album_cover_image": self.album.cover_image
         }
     
 class Favorito(db.Model):
@@ -111,9 +115,12 @@ class Comentario(db.Model):
         return f'<Comentario {self.id}>'
 
     def serialize(self):
+        user_name = self.user.username if self.user and self.user.username else self.user.email if self.user else "Usuario desconocido"
+
         return {
             "id": self.id,
             "texto": self.texto,
-            "id_album" : self.album_id, 
-            "id_usuario" : self.user_id
+            "album_id" : self.album_id, 
+            "user_id" : self.user_id,
+            "username": user_name,
         }     
