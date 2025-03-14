@@ -18,7 +18,7 @@
 }
 
 .bodyuser{
-    
+    width: 80%;
     background: rgb(0, 0, 0, 0.671);
     padding: 5px;        
     overflow: hidden;
@@ -26,10 +26,16 @@
 }
 
 .rounded-circle{
-    font-size: 100px; 
+    margin-top: 25px;
+    font-size: 180px; 
     background: #2F51CF;
     background: linear-gradient(to right, #2F51CF 0%, #CF1512 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;   
     
+}
+
+.user{
+    font-family: fantasy;
+    font-size: 23px;
 }
