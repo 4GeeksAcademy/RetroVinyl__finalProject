@@ -66,9 +66,10 @@ export const InfoAlbum = () => {
                     "Authorization": `Bearer ${token}`
                 }
             });
-            console.log(data);
+            
             const data = await response.json();
             setCommentList(Array.isArray(data) ? data : []);
+            console.log(data);
 
         } catch (error) {
             console.error("Error fetching comments:", error);
