@@ -40,6 +40,7 @@ export const Login = () => {
 
       localStorage.setItem("token", data.access_token);  // Guardamos el token en el localStorage
       actions.login(data.access_token);
+      localStorage.setItem("user_id",data.user_id)
 
       setMessage("¡Usuario logueado con éxito!");
       navigate("/");

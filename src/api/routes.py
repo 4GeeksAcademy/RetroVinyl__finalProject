@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Album, Favorito, Comentario, User
+from api.models import db, Album, Favorito, Comentario, User, Pedido
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from api.fetch_data import get_all_albums # importar las funciones que llaman a la API externa
@@ -13,6 +13,9 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from dotenv import load_dotenv
+import stripe
+import os
 
 # Allow CORS requests to this API
 CORS(api)
@@ -59,7 +62,7 @@ def create_token():
         return jsonify("Wrong username or password"), 401
     
     acces_token = create_access_token(identity=user)
-    return jsonify(access_token= acces_token)
+    return jsonify({"access_token": acces_token, "user_id": user.id})
 
 
 @api.route('/perfil', methods=['GET'])
@@ -263,3 +266,61 @@ def get_comentarios(albumid):
         return jsonify({"message": "No hay comentarios para este álbum"}), 404
 
     return jsonify([comentario.serialize() for comentario in comentarios]), 200
+
+@api.route('/comentariosAlbum/<comment_id>', methods=['DELETE'])
+@jwt_required()
+def delete_comentario(comment_id):
+    # Se obtiene el id del usuario autenticado desde el token
+    current_user_id = get_jwt_identity()
+    
+    # Se busca el comentario por su id
+    comentario = Comentario.query.get(comment_id)
+    if not comentario:
+        return jsonify({"error": "Comentario no encontrado"}), 404
+
+    # Se verifica que el comentario pertenezca al usuario autenticado
+    if comentario.user_id != current_user_id:
+        return jsonify({"error": "No tienes permiso para eliminar este comentario"}), 403
+
+    # Se elimina el comentario y se guarda el cambio en la base de datos
+    db.session.delete(comentario)
+    db.session.commit()
+    
+    return jsonify({"message": "Comentario eliminado exitosamente"}), 200
+
+#load_dotenv()
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+#stripe.api_key ="sk_test_51QvwkbG1uRRpZkNMj0OK53sniI9UWfdh7kp6uVSgOzqpBwVLwLjL0rnXxnP5iyuXjZfa6yLFippZ5h8PHIhmdwkG00vFqfXzuH"
+
+@api.route('/create-payment-intent', methods=['POST'])
+def create_payment_intent():
+    try:
+        data = request.get_json()
+        # Se espera que el monto venga en centavos. Ejemplo: 20€ -> 2000 centavos
+        amount = data.get("amount")
+        if not amount:
+            return jsonify({"error": "El monto es requerido"}), 400
+
+        intent = stripe.PaymentIntent.create(
+            amount=int(amount * 100), # Convierte nuestro precio a centavos
+            currency='eur',
+            automatic_payment_methods={'enabled': True},
+        )
+        return jsonify({'clientSecret': intent.client_secret})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 403
+    
+@api.route('/pedidos', methods =['POST'])
+@jwt_required()
+def add_pedido():
+    data = request.get_json()
+    current_user_id = get_jwt_identity()
+    new_pedido = Pedido(
+        album_id = data['album_id'],   
+        user_id = current_user_id,
+        precio_total = data['precio_total'],
+        cantidad = data['cantidad']
+    )
+    db.session.add(new_pedido)
+    db.session.commit()
+    return jsonify("Pedido añadido")
