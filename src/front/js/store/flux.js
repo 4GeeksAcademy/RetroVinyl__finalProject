@@ -1,23 +1,32 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			token: localStorage.getItem("token") || null,  // Guardamos el token en el store
-			user: null,  // Guardaremos el perfil del usuario aquí
+			token: localStorage.getItem("token") || null, //busca el token del  localStorage del navegador
+			user: null, //el usuario comienza como null hasta que se cargue la información del usuario.
+			
 		},
 		actions: {
 			// Acción para iniciar sesión
-			login: (token) => {
-				setStore({ token: token, user: null });  // Actualizamos el store
+			login: (token, user) => {
+				setStore({ token: token, user: user });
 			},
 
 			// Acción para cerrar sesión
 			logout: () => {
-				localStorage.removeItem("token");  // Eliminamos el token de localStorage
-				setStore({ token: null });  // Limpiamos el token en el store
+				localStorage.removeItem("token");
+				setStore({ token: null, user: null });
 			},
+
+			// Acción para actualizar el usuario
+			updateUser: (userData) => {
+				const store = getStore();
+				setStore({
+					...store,
+					user: { ...store.user, ...userData }
+				});
+			}
 		},
 	};
 };
 
 export default getState;
-

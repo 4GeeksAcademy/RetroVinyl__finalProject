@@ -2,7 +2,7 @@ import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext.js";
 import '../../styles/InfoAlbum.css';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { PaymentForm } from "../component/PaymentForm.js";
@@ -13,7 +13,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 export const InfoAlbum = () => {
     const { store, actions } = useContext(Context)
-
+    const navigate = useNavigate();
     const [cantidad, setCantidad] = useState(1)
     const [precio, setPrecio] = useState(20)
     const precioTotal = precio * cantidad;
@@ -66,9 +66,10 @@ export const InfoAlbum = () => {
                     "Authorization": `Bearer ${token}`
                 }
             });
-            console.log(data);
+            
             const data = await response.json();
             setCommentList(Array.isArray(data) ? data : []);
+            console.log(data);
 
         } catch (error) {
             console.error("Error fetching comments:", error);
@@ -123,8 +124,10 @@ export const InfoAlbum = () => {
 
     return (
         <div className="container">
+            <div className="arrows col-6" onClick={() => navigate(-1)}>
+                    <i className="fa-solid fa-arrow-left arrow-icon"></i>
+                </div>
             <div className="row p-4 justify-content-center">
-
                 <div className="card-info card col-md-5">
                     <img src={albums.cover_image} className="img-card card-img-top" alt="..." />
                     <div className="card-body ml-3">

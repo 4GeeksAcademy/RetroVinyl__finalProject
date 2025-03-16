@@ -29,7 +29,8 @@
 
 .list-comments{
     height: 550px;
-    overflow: scroll ;
+    overflow: auto ;
+    scrollbar-width: none;
 }
 
 .list-group-item{
@@ -47,3 +48,5 @@
 .sentimientosRetro{
     font-family: fantasy;
 }
+
+

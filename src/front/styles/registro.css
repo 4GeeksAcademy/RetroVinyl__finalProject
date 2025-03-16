@@ -1,11 +1,16 @@
-.card-title1{
+
+.info-login{
+    margin:0 0 15px 10px;
     font-family: fantasy;
+    font-size: 1.9rem;
+}
+
+
+.card-title1{
     color: white;
 }
 
 .card-title2{
-    margin-top: 5px;
-    font-family: fantasy;
     color: white;
 }
 

@@ -37,6 +37,7 @@ export const Navbar = () => {
 		  const result = await response.json();
 		  console.log(result);
 		  setUser({ ...user, ...result });
+		  actions.updateUser(result);
 		} catch (error) {
 		  console.error("Error:", error);
 		}
@@ -80,13 +81,27 @@ export const Navbar = () => {
 		navigate("/login"); // Redirige al login
 	};
 
+	//sincroniza isLogged (estado local) con el estado global (store.token)
 	useEffect(() => {
-	
-	setIsLogged(!!store.token);//!!
-	
+		const fetchProfile = async () => {
+		  if (store.token) {
+			setIsLogged(true);
+			await get_profile();
+			
+		  } else {
+			setIsLogged(false);
+		  }
+		};
+		
+		fetchProfile();
+	  }, [store.token]); // Solo se ejecuta cuando cambia el token
+    
+	useEffect(() => {
+	setIsLogged(!!store.token);//convierte el valor de store.token en un booleano (verdadero o falso)
 	get_profile(); 
 	
 	 }, [store.token]);
+
 
 	return (
 		<nav className="navbar py-0 sticky-top">
@@ -135,7 +150,7 @@ export const Navbar = () => {
 							</ul>
 
 							<button className="user btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								{user.username}
+							{store.user ? store.user.username : "Usuario"}
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
 								<Link className="dropdown-item" to="/perfil" style={{ textDecoration: 'none' }}>
@@ -147,7 +162,7 @@ export const Navbar = () => {
 								<Link className="dropdown-item" to="/pedidos" style={{ textDecoration: 'none' }}>
 									Pedidos
 								</Link>
-								<li><div className="dropdown-item"
+								<li><div className="logout dropdown-item"
 									onClick={() => {
 										logoutUser();
 									}} >Cerrar Sesión</div></li>
