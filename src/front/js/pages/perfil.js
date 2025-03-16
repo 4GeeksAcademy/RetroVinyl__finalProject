@@ -145,7 +145,7 @@ export const Perfil = () => {
         </div>
         <div className="col-md-8 border-right">
           <div className=" text-light">
-            <div className="d-flex justify-content-between align-items-center mb-3">
+            <div className="d-flex justify-content-center align-items-center mb-4">
               <h1 className="profile text-center"><span className="text-danger">M</span>i Perfil</h1>
             </div>
             <div className="row mt-4">
@@ -272,7 +272,7 @@ export const Perfil = () => {
                 type="button"
                 onClick={handleSave} // Llamada a la función para guardar los datos
               >
-                Save Profile
+                Guardar Perfil
               </button>
             </div>
           </div>
