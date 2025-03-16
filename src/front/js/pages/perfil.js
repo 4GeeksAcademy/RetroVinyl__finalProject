@@ -131,6 +131,8 @@ export const Perfil = () => {
 
   return (
     <div className="bodyuser container rounded mt-5 mb-5">
+      <div className="arrows col-6" onClick={() => navigate(-1)}>
+      <i className="fa-solid fa-arrow-left  arrow-icon"></i></div>
       <div className="row input-group">
         <div className="col-md-6 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
