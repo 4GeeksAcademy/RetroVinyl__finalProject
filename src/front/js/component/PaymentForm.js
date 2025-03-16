@@ -1,20 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import { useNavigate } from "react-router-dom";
 
 export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id, shipping }) => {
     const { store, actions } = useContext(Context);
     const stripe = useStripe();
     const elements = useElements();
-    const navigate = useNavigate();
 
     const [clientSecret, setClientSecret] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const token = localStorage.getItem("token")
-    const navigate = useNavigate()
 
 
     // Solicita la creación del PaymentIntent al montar el componente
