@@ -82,5 +82,8 @@
     font-weight: bold;
 }
 
+.logout{
+    cursor: pointer;
+}
 
 

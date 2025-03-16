@@ -47,6 +47,9 @@ export const Favoritos = () => {
 
     return (
         <div className="cont-gen container">
+            <div className="arrows col-6" onClick={() => navigate(-1)}>
+                    <i className="fa-solid fa-arrow-left  arrow-icon"></i>
+                </div>
             <div className="titulo-favs">
                 <h1 className="nombre-genero text-center my-2">
                     <span>MIS </span><span className="text-light">FAVORITOS</span>

@@ -2,14 +2,19 @@ import React from "react";
 import { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
 import '../../styles/pedidos.css';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Pedidos = () => {
     const { store, actions } = useContext(Context)
     const [newOrder, setNewOrder] = useState("");
     const [orderList, setOrderList] = useState([]);
+    const navigate = useNavigate()
+    
 
     return (
+        <div><div className="arrows col-6" onClick={() => navigate(-1)}>
+        <i className="fa-solid fa-arrow-left arrow-icon"></i>
+    </div>
         <div className="pedidos container text-center mt-5 pb-5 w-75" style={{ overflow: "hidden" }}>
             <div className="">
                 <h1 className="mispedidos pt-5 pb-3"><span className="text-danger">M</span>is Pedidos</h1>
@@ -42,6 +47,7 @@ export const Pedidos = () => {
                 </div>
             </div>
 
+        </div>
         </div>
     );
 };

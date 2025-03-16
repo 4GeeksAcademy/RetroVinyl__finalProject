@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import '../../styles/Sixty.css'
 
@@ -8,6 +8,7 @@ export const Decada = () => {
     const { store, actions } = useContext(Context)
     const [border, setBorder] = useState("")
     const { decada } = useParams()
+    const navigate = useNavigate();
 
     const texto = {
         '60': 'La música de los años 60 fue una revolución cultural. El rock de The Beatles y The Rolling Stones, el folk de Bob Dylan y el soul de Motown marcaron la década. Festivales como Woodstock simbolizaron libertad y cambio, dejando un legado eterno. Una década que transformó la música para siempre.',
@@ -20,8 +21,11 @@ export const Decada = () => {
     return (
         <div className="container py-3">
             <div className="row box">
-                <div className="pb-3 col-12 text-center text-light">
-                    <h1 className="text-danger" style={{ fontSize: '80px' }}>{decada}'s</h1>
+            <div className="arrows col-6" onClick={() => navigate(-1)}>
+                    <i className="fa-solid fa-arrow-left  arrow-icon"></i>
+                </div>
+                <div className="pb-3 col-12 text-center text-light">                    
+                    <h1 className="text-danger" style={{ fontSize: '80px' }}><strong>{decada}</strong><span className="text-light">'s</span></h1>
                 </div>
                 <div className="row">
                     <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
