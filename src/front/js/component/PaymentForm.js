@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) => {
     const { store, actions } = useContext(Context);
     const stripe = useStripe();
     const elements = useElements();
+    const navigate = useNavigate();
 
     const [clientSecret, setClientSecret] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -72,7 +74,9 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) =>
         } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
             guardarPedido();
             onPaymentSuccess();
+
         }
+        window.location.href = "/pedidos"; //fuerza una recarga completa del navegador, abandonando todo el estado de React y volviendo a cargar completamente la aplicación.
         setLoading(false);
     };
     const guardarPedido = async () => {
@@ -96,7 +100,7 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) =>
 
     return clientSecret ? (
         <form className="text-black" onSubmit={handleSubmit}>
-            
+
             <div style={{ margin: "20px 0" }}>
                 <CardElement />
             </div>
