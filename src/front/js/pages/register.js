@@ -50,7 +50,7 @@ export const Register = () => {
   return (
     <div className="container py-3 mt-4">
       <div className="row">
-        <div className="col-md-6 col-sm-8">
+        <div className="card-login col-md-6 col-sm-8">
           <div className="cardshadow card">
             <div className="card-body">
               <h3 className="card-title1 text-center mb-4">Registrarse</h3>

@@ -23,6 +23,7 @@ requests = "*"
 werkzeug = "*"
 flask-jwt-extended = "*"
 pyjwt = "==2.9.0"
+stripe = "*"
 
 [requires]
 python_version = "3.10"

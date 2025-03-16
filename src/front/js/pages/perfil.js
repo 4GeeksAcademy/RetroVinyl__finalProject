@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 import "../../styles/perfil.css";
 
 export const Perfil = () => {
+  const { actions } = useContext(Context);
   const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
@@ -25,23 +27,24 @@ export const Perfil = () => {
 
   const handleSave = () => {
     update_profile();
+    actions.updateUser(user); //actualiza el estado global y todos los componentes que comparten ese estado se actualizan automaticamente
     navigate("/")
   }
 
   console.log(user);
 
- 
+
   const getInitials = (name, sur_name) => {
     // Si los campos no están vacíos, usamos las iniciales
     const nameInitial = name ? name[0]?.toUpperCase() : "";
-    
+
     const surNameInitial = sur_name ? sur_name[0]?.toUpperCase() : "";
-  
+
     // Retornamos las iniciales concatenadas 
     return nameInitial + surNameInitial;
   };
 
-   // Función para obtener las iniciales deforma dinámica
+  // Función para obtener las iniciales deforma dinámica
   useEffect(() => {
     const initials = getInitials(user.name, user.sur_name);
     setUser(prevUser => ({
@@ -59,7 +62,7 @@ export const Perfil = () => {
   const get_profile = async () => {
 
     const token = localStorage.getItem("token");
-    
+
 
     const myHeaders = {
       "Content-Type": "application/json",
@@ -128,6 +131,8 @@ export const Perfil = () => {
 
   return (
     <div className="bodyuser container rounded mt-5 mb-5">
+      <div className="arrows col-6" onClick={() => navigate(-1)}>
+      <i className="fa-solid fa-arrow-left  arrow-icon"></i></div>
       <div className="row input-group">
         <div className="col-md-6 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
