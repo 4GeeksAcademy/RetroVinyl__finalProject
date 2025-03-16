@@ -132,23 +132,23 @@ export const Perfil = () => {
   return (
     <div className="bodyuser container rounded mt-5 mb-5">
       <div className="arrows col-6" onClick={() => navigate(-1)}>
-      <i className="fa-solid fa-arrow-left  arrow-icon"></i></div>
+        <i className="fa-solid fa-arrow-left  arrow-icon"></i></div>
       <div className="row input-group">
-        <div className="col-md-6 border-right">
+        <div className="col-md-4 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
-            <div className="rounded-circle mt-5" style={{ width: "300px", height: "300px" }}>
+            <div className="rounded-circle" style={{ width: "300px", height: "300px" }}>
               {user.initials}
             </div>
             <span className="font-weight-bold text-light">{user.name} {user.sur_name}</span>
             <span className="text-light-50">{user.email}</span>
           </div>
         </div>
-        <div className="col-md-6 border-right">
-          <div className=" text-light py-5">
+        <div className="col-md-8 border-right">
+          <div className=" text-light">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <h4 className="profile text-center">Mi Perfil</h4>
+              <h1 className="profile text-center"><span className="text-danger">M</span>i Perfil</h1>
             </div>
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <label className="labels">Nombre</label>
                 <input

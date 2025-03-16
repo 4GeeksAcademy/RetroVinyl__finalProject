@@ -11,10 +11,10 @@ export const Decada = () => {
     const navigate = useNavigate();
 
     const texto = {
-        '60': 'La música de los años 60 fue una revolución cultural. El rock de The Beatles y The Rolling Stones, el folk de Bob Dylan y el soul de Motown marcaron la década. Festivales como Woodstock simbolizaron libertad y cambio, dejando un legado eterno. Una década que transformó la música para siempre.',
-        '70': 'Sumérgete en los vibrantes sonidos de los años 70: rock, pop y más. Disfruta de una selección única de éxitos que siguen marcando generaciones. Descubre listas de reproducción, curiosidades y biografías de los artistas que definieron la época. ¡Deja que la nostalgia te envuelva!',
-        '80': '¡Revive la magia de los 80! Una década llena de energía, sintetizadores y grandes himnos del pop, rock y más. Descubre las historias de los artistas que marcaron una era. ¡Déjate llevar por el ritmo de los 80!',
-        '90': '¡Vuelve a los 90 y revive el sonido que definió una generación! Los 90 fueron una década llena de hits inolvidables. Descubre las canciones, artistas y momentos que dejaron huella.¡Haz que el ritmo de los 90 te acompañe de nuevo!'
+        '60': 'La música de los años 60 fue una revolución cultural, con géneros como el rock, pop, jazz y funk ganando protagonismo. Una década que transformó la música para siempre.',
+        '70': 'La música de los años 70 se caracterizó por la diversidad de géneros. Fue una época de innovación y expresión de rebeldía a las normas establecidas.',
+        '80': 'La música de los años 80 estuvo definida por producciones innovadoras y videoclips icónicos. Fue una década de experimentación sonora y el inicio de la música como un fenómeno visual global.',
+        '90': 'La música de los años 90 estuvo marcada por sonidos frescos y letras de protesta o desahogo. El auge de la tecnología ayudo a la globalización de los géneros y artistas, transformándola en masiva y de gran disfrute.'
     };
     const textoFinal = texto[decada]
 

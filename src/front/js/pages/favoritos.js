@@ -52,7 +52,7 @@ export const Favoritos = () => {
                 </div>
             <div className="titulo-favs">
                 <h1 className="nombre-genero text-center my-2">
-                    <span>MIS </span><span className="text-light">FAVORITOS</span>
+                    <span>M</span><span className="text-light">is Favoritos</span>
                 </h1>
             </div>
             <div className="cont-favs-card row">
