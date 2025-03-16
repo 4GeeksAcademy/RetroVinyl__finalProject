@@ -6,7 +6,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { PaymentForm } from "../component/PaymentForm.js";
-import { useNavigate } from "react-router-dom";
 import { Pedidos } from "./Pedidos.js";
 
 // Carga la clave pública de Stripe (almacenada en una variable de entorno, por ejemplo, REACT_APP_STRIPE_PUBLIC_KEY)

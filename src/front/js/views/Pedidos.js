@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useContext, useState } from "react";
 import { Context } from "../store/appContext.js";
 import '../../styles/pedidos.css';
-import { useNavigate } from "react-router-dom";
 
 export const Pedidos = () => {
     const { store, actions } = useContext(Context)
