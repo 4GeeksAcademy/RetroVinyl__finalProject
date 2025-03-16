@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
-export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) => {
+export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id, shipping }) => {
     const { store, actions } = useContext(Context);
     const stripe = useStripe();
     const elements = useElements();
@@ -11,6 +12,7 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) =>
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const token = localStorage.getItem("token")
+    const navigate = useNavigate()
 
 
     // Solicita la creación del PaymentIntent al montar el componente
@@ -37,6 +39,13 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) =>
         setLoading(true);
         setError(null);
 
+        // 🚨 Validación de los campos de shipping antes de procesar el pago
+        if (!shipping || !shipping.name || !shipping.address || !shipping.city || !shipping.cp || !shipping.country || !shipping.contactNumber) {
+            setError("Por favor, completa todos los campos de envío antes de continuar.");
+            setLoading(false);
+            return;
+        }
+
         if (!stripe || !elements || !clientSecret) {
             setLoading(false);
             return;
@@ -46,25 +55,7 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) =>
         const result = await stripe.confirmCardPayment(clientSecret, {
             payment_method: {
                 card: cardElement,
-                // billing_details: {
-                //     name: shipping.name,
-                //     address: {
-                //         line1: shipping.address,
-                //         cp: shipping.cp,
-                //         city: shipping.city,
-                //         country: shipping.country
-                //     }
-                // }
             },
-            // shipping: {
-            //     name: shipping.name,
-            //     address: {
-            //         line1: shipping.address,
-            //         cp: shipping.cp,
-            //         city: shipping.city,
-            //         country: shipping.country
-            //     }
-            // }
         });
 
         if (result.error) {
@@ -73,8 +64,11 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) =>
             guardarPedido();
             onPaymentSuccess();
         }
+        window.location.href = "/pedidos"
         setLoading(false);
     };
+    
+
     const guardarPedido = async () => {
         const response = await fetch(`${process.env.BACKEND_URL}api/pedidos`, {
             method: "POST",
@@ -82,11 +76,19 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id }) =>
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            // Se espera que el backend convierta el monto a centavos si es necesario
+            // Se espera que el backend convierta el monto a centavos si es necesario, guardamos datos de envio(shipping)
             body: JSON.stringify({
                 album_id: album_id,
                 precio_total: amount,
-                cantidad: cantidad
+                cantidad: cantidad,
+                shipping: {
+                    name: shipping.name,
+                    address: shipping.address,
+                    city: shipping.city,
+                    cp: shipping.cp,
+                    country: shipping.country,
+                    contactNumber: shipping.contactNumber
+                }
             })
         })
         const data = await response.json()
