@@ -51,10 +51,11 @@ export const Home = () => {
         <div className="col-12 pb-3">
           <Carousel2 />
         </div>
-        <div className="row">
+        <div className="row infoclass">
           {/* Introcard: ocupa 6 columnas a la izquierda */}
           <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
-            <p className="introWeb pt-2">¡BIENVENIDO A VINILOS NOSTÁLGICOS EL PORTAL DONDE LA MAGIA DEL PASADO SE ENCUENTRA CON LA MÚSICA QUE NUNCA MUERE!</p>
+            <p className="introWeb pt-2">¡Revive la magia del pasado con nuestros vinilos nostálgicos! Música que trasciende el tiempo y nunca pierde su encanto. ¡Haz que tu colección cobre vida con estos tesoros sonoros!</p>
+            <br></br>
           </div>
           <div className="col-12 col-md-6"> {/* Introcard: ocupa 6 columnas a la derecha */}
             <div className="row ">
