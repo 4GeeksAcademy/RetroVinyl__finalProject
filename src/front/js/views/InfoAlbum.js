@@ -1,15 +1,16 @@
 import React from "react";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { Context } from "../store/appContext.js";
 import '../../styles/InfoAlbum.css';
 import { useParams, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { PaymentForm } from "../component/PaymentForm.js";
+import { useNavigate } from "react-router-dom";
+import { Pedidos } from "./Pedidos.js";
 
 // Carga la clave pública de Stripe (almacenada en una variable de entorno, por ejemplo, REACT_APP_STRIPE_PUBLIC_KEY)
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
-//const stripePromise = loadStripe("pk_test_51QvwkbG1uRRpZkNMxgiAR89ARq2qyxOV94XesY7bxfVc6bSNckhZCIKMbKMGEubSI7ki1Fi9G3wyluU6o4o4JMKz00xLWOGXxA");
 
 export const InfoAlbum = () => {
     const { store, actions } = useContext(Context)
@@ -29,6 +30,7 @@ export const InfoAlbum = () => {
 
     const [newComment, setNewComment] = useState("");
     const [commentList, setCommentList] = useState([]);
+    const textareaRef = useRef(null);
 
     const { albumid } = useParams();
     const [albums, setAlbums] = useState([])
@@ -47,6 +49,10 @@ export const InfoAlbum = () => {
 
     useEffect(() => { // DONDE LLAMO A LA RUTA DEL BACK QUE TRAE LA INFORMACION??????
         console.log("estoy cargando los albumes");
+        if (textareaRef.current) {
+            textareaRef.current.style.height = "auto"; // Restablecer la altura
+            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Ajustar según contenido
+        }
 
         const getAlbums = async () => {
             const response = await fetch(`${process.env.BACKEND_URL}api/infoAlbums/${albumid}`)
@@ -57,7 +63,7 @@ export const InfoAlbum = () => {
         }
         getAlbums()
         getComments()
-    }, [albumid, token])
+    }, [albumid, token, newComment])
 
     const getComments = async () => {
         try {
@@ -121,6 +127,7 @@ export const InfoAlbum = () => {
         }
     };
     console.log(commentList);
+
 
     return (
         <div className="container">
@@ -209,6 +216,7 @@ export const InfoAlbum = () => {
                                                 amount={precioTotal}
                                                 album_id={albumid}
                                                 cantidad={cantidad}
+                                                shipping={shipping}
                                                 onPaymentSuccess={() => alert("¡Pago exitoso!")}
                                             />
                                         </Elements>
@@ -236,18 +244,19 @@ export const InfoAlbum = () => {
                                         <strong>{comment.username}</strong><br></br>{comment.texto}
                                     </div>
                                     {comment.user_id == localStorage.getItem("user_id") && (
-                                        <a data-bs-theme="dark" href="#!"><i className="btn-close" onClick={() => { deleteComment(comment.id) }}></i></a>
+                                        <a data-bs-theme="dark" href="#!"><i className="btn btn-close ms-4" onClick={() => { deleteComment(comment.id) }}></i></a>
                                     )}
                                 </li>
 
                             ))}
                         </div>
                     </div>
-                    <div className="input-group mb-3">
-                        <input type="text" className="form-control" placeholder="Deja tu comentario"
+                    <div className="input-group d-flex mb-3">
+                        <textarea ref={textareaRef} type="text" className="form-control" placeholder="Deja tu comentario" rows={1} style={{ width: "auto", resize: "none", overflow: "hidden" }}
                             onChange={(e) => setNewComment(e.target.value)}
                             value={newComment} />
-                        <button className="btn btn-danger" type="button" onClick={() => { postComentario(newComment); setNewComment(""); }}>Añadir</button>
+                        <button className="btn btn-danger mt-1" type="button" style={{flexShrink: 0, height: "38px", cursor: "pointer",}}
+                        onClick={() => { postComentario(newComment); setNewComment(""); }}>Añadir</button>
                     </div>
                 </div>
             </div>
