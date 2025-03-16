@@ -266,7 +266,7 @@ export const Perfil = () => {
               </div>
             </div>
 
-            <div className="mt-5 text-center">
+            <div className="col-md-6 mt-5 text-center">
               <button
                 className="btn btn-danger profile-button"
                 type="button"
