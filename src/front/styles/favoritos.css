@@ -10,9 +10,11 @@
     font-family: fantasy;
 }
 .cont-favs-card{
-    justify-content: start;
+    justify-content: center;
 }
 .carta-favs {
+    overflow: hidden;
+    object-fit: contain;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 

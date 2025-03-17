@@ -14,7 +14,7 @@
     font-family: fantasy;
 }
 .cont-gen-card{
-    justify-content: start;
+    justify-content: center;
 }
 .carta-gen {
     overflow: hidden;

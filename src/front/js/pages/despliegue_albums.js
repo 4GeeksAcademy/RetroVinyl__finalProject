@@ -98,7 +98,7 @@ export const DespliegueAlbums = () => {
                         </div>
                         <div className="cuerpo-gen">
                             <div className="detalles-gen">
-                                <p><strong>Título:</strong> {shortTitle(album.title, 3)}</p>
+                                <p><strong>Título:</strong> {shortTitle(album.title, 2)}</p>
                                 <p><strong>País:</strong> {album.country}</p>
                                 <p><strong>Año:</strong> {album.year}</p>
                             </div>
