@@ -146,7 +146,7 @@ export const Perfil = () => {
         <div className="col-md-8 border-right">
           <div className=" text-light">
             <div className="d-flex justify-content-center align-items-center mb-4">
-              <h1 className="profile text-center"><span className="text-danger">M</span>i Perfil</h1>
+              <h1 className="profile text-center">Mi Perfil</h1>
             </div>
             <div className="row mt-4">
               <div className="col-md-6">
@@ -239,6 +239,9 @@ export const Perfil = () => {
                   name="password"
                   onChange={handleChange}
                 />
+                <small className="text-warning mt-1 d-block">
+                  <i className="fa-solid fa-exclamation-circle"></i> La contraseña será actualizada al guardar los cambios.
+                </small>
               </div>
             </div>
             <div className="row mt-3">

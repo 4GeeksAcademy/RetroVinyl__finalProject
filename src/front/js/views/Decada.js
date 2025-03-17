@@ -19,13 +19,13 @@ export const Decada = () => {
     const textoFinal = texto[decada]
 
     return (
-        <div className="container py-3">
+        <div className="container py-3" style={{ fontFamily:'fantasy' }}>
             <div className="row box">
                 <div className="arrows col-6" onClick={() => navigate(-1)}>
                     <i className="fa-solid fa-arrow-left  arrow-icon"></i>
                 </div>
                 <div className="pb-3 col-12 text-center text-light">
-                    <h1 className="text-danger" style={{ fontSize: '80px' }}><strong>{decada}</strong><span className="text-light">'s</span></h1>
+                    <h1 style={{ fontSize: '80px' }}><span className="text-light">Años <strong className="text-danger">{decada}</strong></span></h1>
                 </div>
                 <div className="row infoclass">
                     <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>

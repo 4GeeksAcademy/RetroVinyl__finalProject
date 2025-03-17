@@ -3,10 +3,8 @@ import { Context } from "../store/appContext";
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import "../../styles/home.css";
-
 export const Home = () => {
   const { store, actions } = useContext(Context);
-
   const SimpleSlider_settings = {
     dots: true,
     infinite: true,
@@ -19,7 +17,6 @@ export const Home = () => {
     arrows: false,
     pauseOnhover: false, //evita que se detenga al pasar el mouse
   };
-
   const Carousel2 = () => (
     <div className="row slider-container2 pt-3" style={{ overflow: "hidden" }}>
       <Slider className="sliderHome" {...SimpleSlider_settings}>
@@ -44,7 +41,6 @@ export const Home = () => {
       </Slider>
     </div>
   );
-
   return (
     <div className="container py-3">
       <div className="row box">
@@ -53,9 +49,9 @@ export const Home = () => {
         </div>
         <div className="row infoclass">
           {/* Introcard: ocupa 6 columnas a la izquierda */}
-          <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
-            <p className="introWeb pt-2">¡Revive la magia del pasado con nuestros vinilos nostálgicos! Música que trasciende el tiempo y nunca pierde su encanto. ¡Haz que tu colección cobre vida con estos tesoros sonoros!</p>
-            <br></br>
+          <div className="Introcard d-flex flex-column align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
+            <p className="introWeb pt-2 mb-3">¡Revive la magia del pasado con nuestros vinilos nostálgicos!</p>
+            <p className="introWeb">Música que trasciende el tiempo y nunca pierde su encanto. ¡Haz que tu colección cobre vida con estos tesoros sonoros!</p>
           </div>
           <div className="col-12 col-md-6"> {/* Introcard: ocupa 6 columnas a la derecha */}
             <div className="row ">
@@ -96,5 +92,4 @@ export const Home = () => {
     </div>
   );
 };
-
 export default Home;

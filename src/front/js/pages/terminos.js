@@ -46,7 +46,7 @@ export const TerminosCondiciones = () => {
 
                             <h4 className="metodos mt-5 mb-3"><strong>5. Devoluciones y reembolsos</strong></h4>
                             <ul>
-                                <li>Si no estás satisfecho con tu compra, puedes devolver los productos dentro de [X días] a partir de la fecha de recepción. Consulta nuestra Política de devoluciones para más detalles.</li>
+                                <li>Si no estás satisfecho con tu compra, puedes devolver los productos dentro de 15 días a partir de la fecha de recepción. Consulta nuestra Política de devoluciones para más detalles.</li>
                                 <li>Los reembolsos se procesarán una vez que recibamos los productos devueltos en las condiciones originales.</li>
                             </ul>
 

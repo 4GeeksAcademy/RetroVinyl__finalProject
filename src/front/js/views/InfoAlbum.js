@@ -126,6 +126,7 @@ export const InfoAlbum = () => {
         }
     };
     console.log(commentList);
+    
 
 
     return (

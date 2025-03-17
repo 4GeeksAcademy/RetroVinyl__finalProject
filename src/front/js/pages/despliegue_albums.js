@@ -1,5 +1,5 @@
-import React, { useEffect, useState} from "react";
-import { useParams, Link , useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import "/workspaces/RetroVinyl__finalProject/src/front/styles/despliegue_albums.css"
 
 
@@ -9,11 +9,12 @@ export const DespliegueAlbums = () => {
     const [favoritos, setFavoritos] = useState([]);
     const token = localStorage.getItem("token");
     const navigate = useNavigate();
+    const [videoActivo, setVideoActivo] = useState(null);
 
     const getFavoritos = async () => {
         const response = await fetch(`${process.env.BACKEND_URL}api/favoritos`,
             {
-                headers:{
+                headers: {
                     "Authorization": `Bearer ${token}`
                 }
             }
@@ -27,22 +28,19 @@ export const DespliegueAlbums = () => {
             const data = await response.json();
             setAlbums(data);
         };
-        if (!token) {
-            navigate("/login", { replace: true });
-          }
         getAlbums();
-        getFavoritos();
+        if (token) { getFavoritos(); }
     }, [token, navigate]);
 
     // Añadir un favorito
     const postFavorito = async (album) => {
         const response = await fetch(`${process.env.BACKEND_URL}api/favoritos`, {
             method: 'POST',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
                 "Authorization": `Bearer ${token}`
-             },
-            body: JSON.stringify({ id_album: album.id, id_usuario: token}),
+            },
+            body: JSON.stringify({ id_album: album.id, id_usuario: token }),
         });
         if (response.ok) {
             console.log("Álbum añadido");
@@ -53,7 +51,7 @@ export const DespliegueAlbums = () => {
     const deleteFavorito = async (id_album) => {
         const response = await fetch(`${process.env.BACKEND_URL}api/favoritos/${id_album}`, {
             method: 'DELETE',
-            headers:{
+            headers: {
                 "Authorization": `Bearer ${token}`
             }
         });
@@ -78,11 +76,11 @@ export const DespliegueAlbums = () => {
     // Acorta el largo de los títulos
     const shortTitle = (title, maxWords) => {
         const words = title.split(" "); // Divide el título en un array de palabras
-        
+
         if (words.length <= maxWords) return title; // Si tiene pocas palabras, se devuelve igual
         return words.slice(0, maxWords).join(" ") + "..."; // Toma solo las primeras palabras y agrega "..." 
     };
-    
+
     return (
         <div className="cont-gen container">
             <div className="arrows col-6" onClick={() => navigate(-1)}>
@@ -95,38 +93,52 @@ export const DespliegueAlbums = () => {
             </div>
             <div className="cont-gen-card row">
                 {albums.map((album) => (
-                    
+
                     <div className="carta-gen" key={album.id}>
                         <div className="img-gen-cont">
                             <img className="img-gen" src={album.cover_image} alt={album.title} />
                         </div>
                         <div className="cuerpo-gen">
                             <div className="detalles-gen">
-                                <p>Título: {shortTitle(album.title, 10)}</p>
-                                <p>País: {album.country}</p>
-                                <p>Año: {album.year}</p>
+                                <p><strong>Título:</strong> {shortTitle(album.title, 3)}</p>
+                                <p><strong>País:</strong> {album.country}</p>
+                                <p><strong>Año:</strong> {album.year}</p>
                             </div>
                         </div>
                         <div className="cont-gen-btn">
-                            <a
+                            <div
                                 className="youtube-gen d-flex justify-content-center align-items-center text-decoration-none"
-                                href="https://www.youtube.com/watch?v=pXu6JC6-d_o&list=PL7tBPYQzCjeLGK4hm4eZnf1gQRPQZYg8Y"
-                                target="_blank"
-                                rel="noopener noreferrer">
-                                <i className="fa-brands fa-youtube" style={{ color: '#f20d0d' }}></i>
-                            </a>
-                            <button className="fav-gen" onClick={() => handleFavoritoClick(album)}>{
+                                onClick={() => setVideoActivo(album.id)}
+                            >
+                                <i className="fa-brands fa-youtube"></i>
+                            </div>
+                            {videoActivo === album.id && (
+                                <div className="modal-overlay-gen" onClick={() => setVideoActivo(null)}>
+                                    <div className="modal-content-gen" onClick={(e) => e.stopPropagation()}>
+                                        <iframe
+                                            width="670"
+                                            height="380"
+                                            src="https://www.youtube.com/embed/TEgDaFw_pEQ?autoplay=1"
+                                            title="YouTube video"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                </div>
+                            )}
+                            <div className="fav-gen" onClick={() => handleFavoritoClick(album)}>{
                                 isFavorito(album.id)
                                     ?
                                     <i class="fa-solid fa-star"></i>
                                     :
                                     <i class="fa-regular fa-star"></i>
                             }
-                            </button>
+                            </div>
                             <Link to={`/infoAlbum/${album.id}`} style={{ textDecoration: 'none' }} >
-                                <button className="compra-gen">
-                                    <i className="fa-solid fa-plus" ></i>
-                                </button>
+                                <div className="compra-gen">
+                                    <i className="fa-solid fa-circle-info"></i>
+                                </div>
                             </Link>
                         </div>
                     </div>

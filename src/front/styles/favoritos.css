@@ -1,47 +1,42 @@
-.cont-gen{
-    height: auto;
-}
-
-.titulo-favs{
-    text-align:start;
-    padding-top: 1rem;
-    margin-bottom: 1rem;
+.cont-favs{
     color: white;
-    font-family: fantasy;
-    color: black;
+    background: rgb(3,2,6);
+    background: linear-gradient(0deg, rgba(3,2,6,1) 42%, rgba(24,31,106,0.5466561624649859) 100%);
+    box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
+    box-sizing: border-box;
     
 }
+.titulo-favs{
+    font-family: fantasy;
+}
 .cont-favs-card{
-    justify-content: center;
+    justify-content: start;
 }
 .carta-favs {
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
     align-items: center;
-    height: 450px; 
-    width: 220px;
+    height: 400px; 
+    width: 250px;
     margin-bottom: 3rem;
-    margin-right: 8px;
-    border-radius: 15px;
+    margin-left: 2rem;
     color: white;
     background: rgba(0, 0, 0, 0.671);
     padding: 1rem;
     box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
     box-sizing: border-box;
 }
-
 .img-favs{
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 200px;
     object-fit: cover;
     border: 1px solid white;
-    border-radius: 10px;
     display: block;
-    margin:8px auto;
-
+    margin-bottom: 1rem;
 }
 .detalles-favs {
+    text-align:start;
     flex-grow: 1;
     max-height: 200px; 
     overflow-y: hidden; 
@@ -53,43 +48,38 @@
 .cont-favs-btn {
     display: flex;
     justify-content: space-between;
-    margin-top: auto;
     width: 100%;
 }
 .fav-favs {
-    width: 40px;
-    height: 40px;
-    font-size: 25px;
+    width: 45px;
+    height: 45px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    border: 1.5px solid #daab03;
+    cursor: pointer;
     background-color: transparent;
     margin-left: 3rem;
     color: #daab03;
     transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
 }
-
 .fav-favs:hover {
     border-color: #daab03;
     box-shadow: 0 0 15px 2px #daab03;
 }
-
 .fav-favs:active {
     border-color: #ffffff;
     color: #ffffff;
     box-shadow: 0 0 15px 2px #ffffff;
 }
 .compra-favs{
-    width: 40px;
-    height: 40px;
-    font-size: 25px;
+    width: 45px;
+    height: 45px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    border: 1.5px solid #248cdb;
+    align-items: center;   
+    cursor: pointer;
     background-color: transparent;
     color:#248cdb;
     transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
@@ -103,16 +93,50 @@
     color: #ffffff;
     box-shadow: 0 0 15px 2px #ffffff;
 }
-
 .youtube-favs{
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    border: 1.5px solid #f20d0d;
+    width: 45px;
+    height: 45px;
+    font-size: 30px;
+    cursor: pointer;;
     background-color: transparent;
+}
+.youtube-favs:hover {
+    border-color: #f20d0d;
+    box-shadow: 0 0 15px 2px #f20d0d;
+}
+
+.youtube-favs:active {
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow: 0 0 15px 2px #ffffff;
 }
 .cuerpo-favs {
     flex-grow: 1; 
     width: 100%;
     overflow: visible; 
 }
+.modal-overlay-favs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content-favs {
+    width: 700px;
+    height: 410px;
+    justify-content: center;
+    background: black;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
+
