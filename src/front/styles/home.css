@@ -3,6 +3,7 @@
     padding: 5px;        
     overflow: hidden;
     box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
+    
 }
 
 .slick-slide {
@@ -25,7 +26,11 @@
     font-size: 1.5rem;    
     overflow: hidden;
     margin-bottom: 15px;
-    
+}
+
+.introWeb{
+    font-family: fantasy;
+    font-size: 30px;
 }
 
 .infoclass{
@@ -45,16 +50,17 @@
     background-size: cover;
     background-color: black;
     color: white; /* Espacio horizontal entre las tarjetas */
-    background: linear-gradient(to right, #191cb1 28%, #FF0000 100%);
+    /* background: linear-gradient(to right, #191cb1 28%, #FF0000 100%);
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
+    color: transparent; */
+    color: white;
     margin-bottom: 15px;
     margin-left: 5px;
     font-family: fantasy;
     font-size: 4rem; 
     transition: background-color 0.3s ease;  
-    box-shadow: rgba(56, 70, 190, 0.15) 0px 5px 15px 0px; 
+    box-shadow: rgb(58, 136, 252, 0.5) 2px 3px 10px 1px;
 }
 
 
@@ -62,15 +68,16 @@
     /*background-image: url("https://img.freepik.com/fotos-premium/fondo-oscuro-abstracto-algunas-lineas-lisas-el_941265-11745.jpg");
     background-size: cover;
     color: rgb(230, 220, 220); */
-    background: linear-gradient(to right, #191cb1 28%, #FF0000 100%);
+    /* background: linear-gradient(to right, #191cb1 28%, #FF0000 100%);
     background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;    
+    color: transparent;     */
+    color: white;
     font-family: fantasy;
     font-size: 4rem;
     margin-bottom: 15px;
     margin-left: -9px;
-    box-shadow: rgba(56, 70, 190, 0.15) 0px 5px 15px 0px;
+    box-shadow: rgb(58, 136, 252, 0.5) 2px 3px 10px 1px;
 }
 
 

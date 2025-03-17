@@ -53,9 +53,9 @@ export const Home = () => {
         </div>
         <div className="row infoclass">
           {/* Introcard: ocupa 6 columnas a la izquierda */}
-          <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
-            <p className="introWeb pt-2">¡Revive la magia del pasado con nuestros vinilos nostálgicos! Música que trasciende el tiempo y nunca pierde su encanto. ¡Haz que tu colección cobre vida con estos tesoros sonoros!</p>
-            <br></br>
+          <div className="Introcard d-flex flex-column align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
+            <p className="introWeb pt-2 mb-3">¡Revive la magia del pasado con nuestros vinilos nostálgicos!</p>
+            <p className="introWeb">Música que trasciende el tiempo y nunca pierde su encanto. ¡Haz que tu colección cobre vida con estos tesoros sonoros!</p>
           </div>
           <div className="col-12 col-md-6"> {/* Introcard: ocupa 6 columnas a la derecha */}
             <div className="row ">
