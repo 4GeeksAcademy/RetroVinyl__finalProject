@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext";
 import "../../styles/perfil.css";
 
 export const Perfil = () => {
+  const { actions } = useContext(Context);
   const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
@@ -25,23 +27,24 @@ export const Perfil = () => {
 
   const handleSave = () => {
     update_profile();
+    actions.updateUser(user); //actualiza el estado global y todos los componentes que comparten ese estado se actualizan automaticamente
     navigate("/")
   }
 
   console.log(user);
 
- 
+
   const getInitials = (name, sur_name) => {
     // Si los campos no están vacíos, usamos las iniciales
     const nameInitial = name ? name[0]?.toUpperCase() : "";
-    
+
     const surNameInitial = sur_name ? sur_name[0]?.toUpperCase() : "";
-  
+
     // Retornamos las iniciales concatenadas 
     return nameInitial + surNameInitial;
   };
 
-   // Función para obtener las iniciales deforma dinámica
+  // Función para obtener las iniciales deforma dinámica
   useEffect(() => {
     const initials = getInitials(user.name, user.sur_name);
     setUser(prevUser => ({
@@ -59,7 +62,7 @@ export const Perfil = () => {
   const get_profile = async () => {
 
     const token = localStorage.getItem("token");
-    
+
 
     const myHeaders = {
       "Content-Type": "application/json",
@@ -128,22 +131,24 @@ export const Perfil = () => {
 
   return (
     <div className="bodyuser container rounded mt-5 mb-5">
+      <div className="arrows col-6" onClick={() => navigate(-1)}>
+        <i className="fa-solid fa-arrow-left  arrow-icon"></i></div>
       <div className="row input-group">
-        <div className="col-md-6 border-right">
+        <div className="col-md-4 border-right">
           <div className="d-flex flex-column align-items-center text-center p-3 py-1">
-            <div className="rounded-circle mt-5" style={{ width: "300px", height: "300px" }}>
+            <div className="rounded-circle" style={{ width: "300px", height: "300px" }}>
               {user.initials}
             </div>
             <span className="font-weight-bold text-light">{user.name} {user.sur_name}</span>
             <span className="text-light-50">{user.email}</span>
           </div>
         </div>
-        <div className="col-md-6 border-right">
-          <div className=" text-light py-5">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h4 className="profile text-center">Mi Perfil</h4>
+        <div className="col-md-8 border-right">
+          <div className=" text-light">
+            <div className="d-flex justify-content-center align-items-center mb-4">
+              <h1 className="profile text-center">Mi Perfil</h1>
             </div>
-            <div className="row mt-2">
+            <div className="row mt-4">
               <div className="col-md-6">
                 <label className="labels">Nombre</label>
                 <input
@@ -234,6 +239,9 @@ export const Perfil = () => {
                   name="password"
                   onChange={handleChange}
                 />
+                <small className="text-warning mt-1 d-block">
+                  <i className="fa-solid fa-exclamation-circle"></i> La contraseña será actualizada al guardar los cambios.
+                </small>
               </div>
             </div>
             <div className="row mt-3">
@@ -261,13 +269,13 @@ export const Perfil = () => {
               </div>
             </div>
 
-            <div className="mt-5 text-center">
+            <div className="col-md-6 mt-5 text-center">
               <button
                 className="btn btn-danger profile-button"
                 type="button"
                 onClick={handleSave} // Llamada a la función para guardar los datos
               >
-                Save Profile
+                Guardar Perfil
               </button>
             </div>
           </div>

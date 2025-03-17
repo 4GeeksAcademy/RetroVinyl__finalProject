@@ -40,7 +40,7 @@ export const Login = () => {
 
       localStorage.setItem("token", data.access_token);  // Guardamos el token en el localStorage
       actions.login(data.access_token);
-      localStorage.setItem("user_id",data.user_id)
+      localStorage.setItem("user_id", data.user_id)
 
       setMessage("¡Usuario logueado con éxito!");
       navigate("/");
@@ -54,10 +54,10 @@ export const Login = () => {
   return (
     <div className="container py-3 mt-4">
       <div className="row">
-        <div className="col-md-6 col-sm-8">
+        <div className="card-login col-md-6 col-sm-8">
           <div className="cardshadow card">
             <div className="card-body">
-              <h3 className="card-title2 text-center mt-2 mb-5">Iniciar Sesión</h3>
+              <h3 className="card-title2 text-center mt-3 mb-5" style={{fontFamily :'fantasy'}}>Iniciar Sesión</h3>
               <form onSubmit={sign_in}>
                 <div className="label mb-5">
                   <label htmlFor="inputEmail3" className="form-label">Email</label>
@@ -83,7 +83,9 @@ export const Login = () => {
                   <h6 className="registrarse text-white text-center mb-3"> ¿No tienes una cuenta? Registrate</h6>
                 </Link>
               </form>
-              {message && <p>{message}</p>} {/* Mostrar el mensaje de respuesta */}
+              <div className="text-center">
+              {message && <p style={{ color: "yellow" }}>{message}</p>} {/* Mostrar el mensaje de respuesta */}
+              </div>
             </div>
           </div>
         </div>

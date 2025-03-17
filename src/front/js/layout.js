@@ -18,6 +18,10 @@ import { Footer } from "./component/footer";
 import Home from "./pages/home";
 import Register from "./pages/register";
 import Perfil from "./pages/perfil";
+import { Pagos } from "./pages/pagos";
+import { PoliticaPrivacidad } from "./pages/politica";
+import { TerminosCondiciones } from "./pages/terminos";
+import { FAQ } from "./pages/faq";
 
 //create your first component
 const Layout = () => {
@@ -46,6 +50,10 @@ const Layout = () => {
                         <Route element={<DespliegueAlbums />} path="/albums/:decada/:genero" />
                         <Route element={<Perfil />} path="/perfil" />
                         <Route element={<h1>Not found!</h1>} path="*" />
+                        <Route element={<Pagos />} path="/pagos" />
+                        <Route element={<PoliticaPrivacidad />} path="/politica" />
+                        <Route element={<TerminosCondiciones />} path="/terminos" />
+                        <Route element={<FAQ />} path="/faq" />
                     </Routes>
                     <Footer />
                 </ScrollToTop>

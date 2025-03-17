@@ -1,3 +1,7 @@
+.profile{
+    font-family: fantasy;
+}
+
 .labels {
     font-size: 14px
 }
@@ -16,6 +20,7 @@
     -webkit-text-fill-color: transparent;
     font-weight: bold;
 }
+
 
 .bodyuser{
     width: 80%;

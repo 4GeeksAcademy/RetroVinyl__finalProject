@@ -4,7 +4,6 @@ import "/workspaces/RetroVinyl__finalProject/src/front/styles/despliegue_albums.
 
 
 export const DespliegueAlbums = () => {
-
     const { decada, genero } = useParams();
     const [albums, setAlbums] = useState([]);
     const [favoritos, setFavoritos] = useState([]);
@@ -84,6 +83,9 @@ export const DespliegueAlbums = () => {
 
     return (
         <div className="cont-gen container">
+            <div className="arrows col-6" onClick={() => navigate(-1)}>
+                    <i className="fa-solid fa-arrow-left arrow-icon"></i>
+                </div>
             <div className="titulo-gen">
                 <h1 className="nombre-genero text-center my-2">
                     <span>{decada}</span>'S <span className="text-light">{genero.toUpperCase()}</span>
@@ -98,9 +100,9 @@ export const DespliegueAlbums = () => {
                         </div>
                         <div className="cuerpo-gen">
                             <div className="detalles-gen">
-                                <p>Título: {shortTitle(album.title, 3)}</p>
-                                <p>País: {album.country}</p>
-                                <p>Año: {album.year}</p>
+                                <p><strong>Título:</strong> {shortTitle(album.title, 3)}</p>
+                                <p><strong>País:</strong> {album.country}</p>
+                                <p><strong>Año:</strong> {album.year}</p>
                             </div>
                         </div>
                         <div className="cont-gen-btn">

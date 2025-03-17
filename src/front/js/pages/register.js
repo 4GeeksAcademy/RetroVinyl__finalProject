@@ -35,6 +35,7 @@ export const Register = () => {
         setMessage(data.msg); // Si la respuesta tiene "msg", lo mostramos
       } else {
         setMessage("¡Usuario registrado con éxito!");
+        alert("¡Registro exitoso. Inicia sesión!");
         navigate("/login");
       }
     } catch (error) {
@@ -50,10 +51,10 @@ export const Register = () => {
   return (
     <div className="container py-3 mt-4">
       <div className="row">
-        <div className="col-md-6 col-sm-8">
+        <div className="card-login col-md-6 col-sm-8">
           <div className="cardshadow card">
             <div className="card-body">
-              <h3 className="card-title1 text-center mb-4">Registrarse</h3>
+              <h3 className="card-title1 text-center mb-4"style={{fontFamily :'fantasy'}}>Registrarse</h3>
               <form onSubmit={handleSubmit}>
                 <div className="label mb-4">
                   <label htmlFor="inputEmail3" className="form-label">Email</label>
@@ -99,7 +100,9 @@ export const Register = () => {
                   Registrarse
                 </button>
               </form>
-              {message && <p>{message}</p>} {/* Mostrar el mensaje de respuesta */}
+              <div className="text-center">
+              {message && <p style={{ color: "yellow" }}>{message}</p>} {/* Mostrar el mensaje de respuesta */}
+              </div>
             </div>
           </div>
         </div>

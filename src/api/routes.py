@@ -143,6 +143,8 @@ def update_profile_user():
         current_user.country = processed_params['country']
     if 'region_state' in processed_params:
         current_user.region_state = processed_params['region_state']
+    if 'password' in processed_params and processed_params['password']:
+        current_user.set_password(processed_params['password'])    
     
     db.session.commit()  # Guardar los cambios en la base de datos
     
@@ -249,7 +251,6 @@ def add_comentario():
 
     new_comentario = Comentario(
         album_id = data['album_id'],
-        #user_id = data['user_id'],
         user_id = current_user_id,
         texto = data['comentario']
         )
@@ -319,8 +320,38 @@ def add_pedido():
         album_id = data['album_id'],   
         user_id = current_user_id,
         precio_total = data['precio_total'],
-        cantidad = data['cantidad']
+        cantidad = data['cantidad'],
+        shipping_name = data['shipping']['name'],
+        shipping_address = data['shipping']['address'],
+        shipping_city = data['shipping']['city'],
+        shipping_cp = data['shipping']['cp'],
+        shipping_country = data['shipping']['country'],
+        shipping_contactNumber = data['shipping']['contactNumber']
     )
     db.session.add(new_pedido)
     db.session.commit()
     return jsonify("Pedido añadido")
+
+@api.route('/pedidos', methods=['GET'])
+@jwt_required()
+def get_pedido():
+    current_user_id = get_jwt_identity()
+    pedidos = Pedido.query.filter_by(user_id = current_user_id).all()
+    pedidos_serialized = [pedido.serialize() for pedido in pedidos]
+    return jsonify(pedidos_serialized), 200
+
+@api.route('/pedidos/<pedido_id>', methods=['DELETE'])
+@jwt_required()
+def eliminar_pedido(pedido_id):
+    current_user_id = get_jwt_identity()  # Obtener el ID del usuario autenticado
+    pedido = Pedido.query.get(pedido_id)
+
+    if not pedido:
+        return jsonify({"error": "Pedido no encontrado"}), 404
+
+    if pedido.user_id != current_user_id:
+        return jsonify({"error": "No autorizado"}), 403
+
+    db.session.delete(pedido)
+    db.session.commit()
+    return jsonify({"message": "Pedido eliminado correctamente"}), 200

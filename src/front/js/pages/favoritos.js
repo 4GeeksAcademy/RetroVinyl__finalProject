@@ -45,60 +45,68 @@ export const Favoritos = () => {
     };
 
     return (
-        <div className="cont-favs container text-center mt-5 pb-5 w-auto" style={{ overflow: "hidden" }}>
-            <div className="titulo-favs">
-                <h1 className="nombre-favs text-center pt-5 pb-3">Mis Favoritos</h1>
+        <div className="container">
+            <div className="arrows col-6" onClick={() => navigate(-1)}>
+                <i className="fa-solid fa-arrow-left  ml-5 arrow-icon"></i>
             </div>
-            <div className="cont-favs-card row">
-                {favoritos.map((item) => {
-                    const album = item.album;
-                    return (
-                        <div className="carta-favs" key={album.id}>
-                            <div className="img-favs-cont">
-                                <img className="img-favs" src={album.cover_image} alt={album.title} />
-                            </div>
-                            <div className="cuerpo-favs">
-                                <div className="detalles-favs">
-                                    <p>Título: {shortTitle(album.title, 3)}</p>
-                                    <p>País: {album.country}</p>
-                                    <p>Año: {album.year}</p>
-                                </div>
-                            </div>
-                            <div className="cont-favs-btn">
-                                <div
-                                    className="youtube-favs d-flex justify-content-center align-items-center text-decoration-none"
-                                    onClick={() => setVideoActivo(album.id)}
-                                >
-                                    <i className="fa-brands fa-youtube" style={{ color: '#f20d0d' }}></i>
-                                </div>
-                                {videoActivo === album.id && (
-                                    <div className="modal-overlay-favs" onClick={() => setVideoActivo(null)}>
-                                        <div className="modal-content-favs" onClick={(e) => e.stopPropagation()}>
-                                            <iframe
-                                                width="670"
-                                                height="380"
-                                                src="https://www.youtube.com/embed/TEgDaFw_pEQ?autoplay=1"
-                                                title="YouTube video"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                referrerPolicy="strict-origin-when-cross-origin"
-                                                allowFullScreen
-                                            ></iframe>
+            <div className="cont-favs container text-center pb-5 w-auto" style={{ overflow: "hidden" }}>
+                <div className="titulo-favs">
+                    <h1 className="nombre-favs text-center pt-5 pb-3 text-ligth">Mis Favoritos</h1>
+                </div>
+                <div className="cont-gen container">
+                    <div className="cont-favs-card row">
+                        {favoritos.map((item) => {
+                            const album = item.album;
+                            return (
+                                <div className="carta-favs" key={album.id}>
+                                    <div className="img-favs-cont">
+                                        <img className="img-favs" src={album.cover_image} alt={album.title} />
+                                    </div>
+                                    <div className="cuerpo-favs">
+                                        <div className="detalles-favs">
+                                            <p><strong>Título:</strong> {shortTitle(album.title, 3)}</p>
+                                            <p><strong>País:</strong> {album.country}</p>
+                                            <p><strong>Año:</strong> {album.year}</p>
                                         </div>
                                     </div>
-                                )}
-                                <div className="fav-favs" onClick={() => deleteFavorito(album.id)}>
-                                    <i className="fa-solid fa-star"></i>
-                                </div>
-                                <Link to={`/infoAlbum/${album.id}`} style={{ textDecoration: 'none' }} >
-                                    <div className="compra-favs">
-                                        <i className="fa-solid fa-circle-info"></i>
+                                    <div className="cont-favs-btn">
+                                        <div
+                                            className="youtube-favs d-flex justify-content-center align-items-center text-decoration-none"
+                                            onClick={() => setVideoActivo(album.id)}
+                                        >
+                                            <i className="fa-brands fa-youtube" style={{ color: '#f20d0d' }}></i>
+                                        </div>
+                                        {videoActivo === album.id && (
+                                            <div className="modal-overlay-favs" onClick={() => setVideoActivo(null)}>
+                                                <div className="modal-content-favs" onClick={(e) => e.stopPropagation()}>
+                                                    <iframe
+                                                        width="670"
+                                                        height="380"
+                                                        src="https://www.youtube.com/embed/TEgDaFw_pEQ?autoplay=1"
+                                                        title="YouTube video"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                        referrerPolicy="strict-origin-when-cross-origin"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                </div>
+                                            </div>
+                                        )}
+                                        <div className="fav-favs" onClick={() => deleteFavorito(album.id)}>
+                                            <i className="fa-solid fa-star"></i>
+                                        </div>
+                                        <Link to={`/infoAlbum/${album.id}`} style={{ textDecoration: 'none' }} >
+                                            <div className="compra-favs">
+                                                <i className="fa-solid fa-circle-info"></i>
+                                            </div>
+                                        </Link>
                                     </div>
-                                </Link>
-                            </div>
-                        </div>
-                    );
-                })}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
             </div>
         </div>
     );
-};
+};  

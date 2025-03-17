@@ -79,6 +79,13 @@ class Pedido(db.Model):
     precio_total = db.Column(db.Float, nullable=False)
     fecha = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     cantidad = db.Column(db.Integer, nullable=False)
+    shipping_name = db.Column(db.String(120), nullable=True)
+    shipping_address = db.Column(db.String(250), nullable=True)
+    shipping_city = db.Column(db.String(120), nullable=True)
+    shipping_cp = db.Column(db.String(20), nullable=True)
+    shipping_country = db.Column(db.String(120), nullable=True)
+    shipping_contactNumber = db.Column(db.String(50), nullable=True)
+
     user = db.relationship("User", backref="pedidos")
     album = db.relationship("Album", backref="pedidos")
 
@@ -97,7 +104,13 @@ class Pedido(db.Model):
             "album_country": self.album.country,
             "album_year": self.album.year,
             "album_genre": self.album.genre,
-            "album_cover_image": self.album.cover_image
+            "album_cover_image": self.album.cover_image,
+            "shipping_name": self.shipping_name,
+            "shipping_address": self.shipping_address,
+            "shipping_city": self.shipping_city,
+            "shipping_cp": self.shipping_cp,
+            "shipping_country": self.shipping_country,
+            "shipping_contactNumber": self.shipping_contactNumber
         }
     
 class Favorito(db.Model):

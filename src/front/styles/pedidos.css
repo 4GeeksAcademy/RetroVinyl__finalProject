@@ -5,10 +5,15 @@
     background: linear-gradient(0deg, rgba(3,2,6,1) 42%, rgba(24,31,106,0.5466561624649859) 100%);
     box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
     box-sizing: border-box;
-    line-height: 1
+    line-height: 1;
+    list-style: none;
         
 }
 
 .mispedidos{
     font-family: fantasy;
+}
+
+.pagos{
+    line-height: 2.0;
 }

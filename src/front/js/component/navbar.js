@@ -9,38 +9,40 @@ export const Navbar = () => {
 	const [searchResults, setSearchResults] = useState([]); // Estado para los resultados de búsqueda
 	const [isLogged, setIsLogged] = useState(!!store.token);
 	const navigate = useNavigate(); // Para redirigir a otra página
-	const [user, setUser] = useState({username: ""});
+	const [user, setUser] = useState({ username: "" });
+	const [showProfileAlert, setShowProfileAlert] = useState(false); //Alerta de perfil incompleto
 
-	 const get_profile = async () => {
+	const get_profile = async () => {
 
 		const token = localStorage.getItem("token");
 		console.log(token);
-	
+
 		const myHeaders = {
-		  "Content-Type": "application/json",
-		  Authorization: `Bearer ${token}`,  
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
 		};
-	
+
 		const requestOptions = {
-		  method: "GET",
-		  headers: myHeaders,
-		  redirect: "follow"
+			method: "GET",
+			headers: myHeaders,
+			redirect: "follow"
 		};
-	
+
 		try {
-		  const response = await fetch(`${process.env.BACKEND_URL}api/perfil`, requestOptions);
-	
-		  if (!response.ok) {
-			throw new Error('Error al obtener el perfil');
-		  }
-	
-		  const result = await response.json();
-		  console.log(result);
-		  setUser({ ...user, ...result });
+			const response = await fetch(`${process.env.BACKEND_URL}api/perfil`, requestOptions);
+
+			if (!response.ok) {
+				throw new Error('Error al obtener el perfil');
+			}
+
+			const result = await response.json();
+			console.log(result);
+			setUser({ ...user, ...result });
+			actions.updateUser(result);
 		} catch (error) {
-		  console.error("Error:", error);
+			console.error("Error:", error);
 		}
-	  };	
+	};
 
 
 	const handleSearch = async () => {
@@ -57,7 +59,7 @@ export const Navbar = () => {
 				if (response.ok) {
 					const data = await response.json();
 					setSearchResults(data);  // Guarda los resultados en data
-					getActions().setUser(data);;
+					actions.setUser(data);
 				} else {
 					console.error("Error al obtener los resultados:", response.status);
 				}
@@ -80,13 +82,39 @@ export const Navbar = () => {
 		navigate("/login"); // Redirige al login
 	};
 
+	//sincroniza isLogged (estado local) con el estado global (store.token)
 	useEffect(() => {
-	
-	setIsLogged(!!store.token);//!!
-	
-	get_profile(); 
-	
-	 }, [store.token]);
+		const fetchProfile = async () => {
+			if (store.token) {
+				setIsLogged(true);
+				await get_profile();
+
+			} else {
+				setIsLogged(false);
+			}
+		};
+
+		fetchProfile();
+	}, [store.token]); // Solo se ejecuta cuando cambia el token
+
+
+	useEffect(() => {
+		setIsLogged(!!store.token);//convierte el valor de store.token en un booleano (verdadero o falso)
+
+		if (store.token) {
+			if (store.user) {
+				if (!store.user.username || store.user.username.trim() === "") {
+					setShowProfileAlert(true);
+				} else {
+					setShowProfileAlert(false);
+				}
+			} else {
+				get_profile();
+			}
+		}
+	}, [store.token, store.user]);
+
+
 
 	return (
 		<nav className="navbar py-0 sticky-top">
@@ -135,9 +163,18 @@ export const Navbar = () => {
 							</ul>
 
 							<button className="user btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-								{user.username}
+								{store.user ? store.user.username : "Usuario"}
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
+								{showProfileAlert && (
+									<li>
+										<Link className="dropdown-item text-warning fw-bold" to="/perfil" style={{ textDecoration: 'none' }}>
+											<i className="fa-solid fa-triangle-exclamation me-2"></i>
+											Completa tu perfil
+										</Link>
+										<hr className="dropdown-divider" />
+									</li>
+								)}
 								<Link className="dropdown-item" to="/perfil" style={{ textDecoration: 'none' }}>
 									Perfil
 								</Link>
@@ -147,7 +184,7 @@ export const Navbar = () => {
 								<Link className="dropdown-item" to="/pedidos" style={{ textDecoration: 'none' }}>
 									Pedidos
 								</Link>
-								<li><div className="dropdown-item"
+								<li><div className="logout dropdown-item"
 									onClick={() => {
 										logoutUser();
 									}} >Cerrar Sesión</div></li>

@@ -4,13 +4,10 @@
     background: linear-gradient(0deg, rgba(3,2,6,1) 42%, rgba(24,31,106,0.5466561624649859) 100%);
     box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
     box-sizing: border-box;
+    
 }
 .titulo-favs{
-    text-align:start;
-    margin-bottom: 2rem;
-    color: white;
     font-family: fantasy;
-    
 }
 .cont-favs-card{
     justify-content: start;
@@ -39,6 +36,7 @@
     margin-bottom: 1rem;
 }
 .detalles-favs {
+    text-align:start;
     flex-grow: 1;
     max-height: 200px; 
     overflow-y: hidden; 

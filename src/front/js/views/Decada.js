@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import '../../styles/Sixty.css'
 
@@ -8,22 +8,26 @@ export const Decada = () => {
     const { store, actions } = useContext(Context)
     const [border, setBorder] = useState("")
     const { decada } = useParams()
+    const navigate = useNavigate();
 
     const texto = {
-        '60': 'La música de los años 60 fue una revolución cultural. El rock de The Beatles y The Rolling Stones, el folk de Bob Dylan y el soul de Motown marcaron la década. Festivales como Woodstock simbolizaron libertad y cambio, dejando un legado eterno. Una década que transformó la música para siempre.',
-        '70': 'Sumérgete en los vibrantes sonidos de los años 70: rock, pop y más. Disfruta de una selección única de éxitos que siguen marcando generaciones. Descubre listas de reproducción, curiosidades y biografías de los artistas que definieron la época. ¡Deja que la nostalgia te envuelva!',
-        '80': '¡Revive la magia de los 80! Una década llena de energía, sintetizadores y grandes himnos del pop, rock y más. Descubre las historias de los artistas que marcaron una era. ¡Déjate llevar por el ritmo de los 80!',
-        '90': '¡Vuelve a los 90 y revive el sonido que definió una generación! Los 90 fueron una década llena de hits inolvidables. Descubre las canciones, artistas y momentos que dejaron huella.¡Haz que el ritmo de los 90 te acompañe de nuevo!'
+        '60': 'La música de los años 60 fue una revolución cultural, con géneros como el rock, pop, jazz y funk ganando protagonismo. Una década que transformó la música para siempre.',
+        '70': 'La música de los años 70 se caracterizó por la diversidad de géneros. Fue una época de innovación y expresión de rebeldía a las normas establecidas.',
+        '80': 'La música de los años 80 estuvo definida por producciones innovadoras y videoclips icónicos. Fue una década de experimentación sonora y el inicio de la música como un fenómeno visual global.',
+        '90': 'La música de los años 90 estuvo marcada por sonidos frescos y letras de protesta o desahogo. El auge de la tecnología ayudo a la globalización de los géneros y artistas, transformándola en masiva y de gran disfrute.'
     };
     const textoFinal = texto[decada]
 
     return (
-        <div className="container py-3">
+        <div className="container py-3" style={{ fontFamily:'fantasy' }}>
             <div className="row box">
-                <div className="pb-3 col-12 text-center text-light">
-                    <h1 className="text-danger" style={{ fontSize: '80px' }}>{decada}'s</h1>
+                <div className="arrows col-6" onClick={() => navigate(-1)}>
+                    <i className="fa-solid fa-arrow-left  arrow-icon"></i>
                 </div>
-                <div className="row">
+                <div className="pb-3 col-12 text-center text-light">
+                    <h1 style={{ fontSize: '80px' }}><span className="text-light">Años <strong className="text-danger">{decada}</strong></span></h1>
+                </div>
+                <div className="row infoclass">
                     <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
                         <p className="introWeb pt-2">{textoFinal}</p>
                     </div>

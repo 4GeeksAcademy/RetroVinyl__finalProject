@@ -1,47 +1,88 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
 import '../../styles/pedidos.css';
-import { Link } from "react-router-dom";
 
 export const Pedidos = () => {
     const { store, actions } = useContext(Context)
-    const [newOrder, setNewOrder] = useState("");
-    const [orderList, setOrderList] = useState([]);
+    const [pedidos, setPedidos] = useState([]);
+    const navigate = useNavigate();
+    console.log(pedidos);
+
+
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        getPedidos()
+    }, [token])
+
+    const getPedidos = async () => {
+        const response = await fetch(`${process.env.BACKEND_URL}api/pedidos`, {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+        const data = await response.json();
+        setPedidos(data);
+        console.log(data);
+    };
+
+    // Función para eliminar un pedido
+    const borarPedido = async (pedido_id) => {
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}api/pedidos/${pedido_id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                // Actualiza la lista eliminando el pedido eliminado
+                setPedidos(pedidos.filter(pedido => pedido.id !== pedido_id));
+            } else {
+                console.error("Error al eliminar el pedido");
+            }
+        } catch (error) {
+            console.error("Error en la solicitud de eliminación:", error);
+        }
+    };
 
     return (
-        <div className="pedidos container text-center mt-5 pb-5 w-auto" style={{ overflow: "hidden" }}>
-            <div className="">
-                <h1 className="mispedidos pt-5 pb-3">Mis Pedidos</h1>
+        <div className="container">
+            <div className="arrows col-6" onClick={() => navigate(-1)}>
+                <i className="fa-solid fa-arrow-left  ml-5 arrow-icon"></i></div>
+            <div className="pedidos container text-center  pb-5 w-auto" style={{ overflow: "hidden" }}>
+                <div>
+                    <h1 className="mispedidos pt-5 pb-3">Mis Pedidos</h1>
+                </div>
+                {pedidos.map((album) => (
+                    <li key={album.id}>
+                        <div className="row p-4">
+                            <div className="col-md-6">
+                                <img className="img-container img-fluid object-cover" src={album.album_cover_image} style={{ height: '370px', width: '370px', overflow: 'hidden' }} />
+                            </div>
+                            <div className="col-md-6 text-light text-start fs-6">
+                                <div className="d-flex justify-content-between">
+                                    <h3>{album.album_title}</h3>
+                                    <a data-bs-theme="dark" href="#!"><i className="btn btn-close" style={{ cursor: "pointer" }} onClick={() => { borarPedido(album.id) }}></i></a>
+                                </div>
+                                <p className="mt-4"><strong>País:</strong> {album.album_country}</p>
+                                <p><strong>Año:</strong> {album.album_year} </p>
+                                <p><strong>Cantidad:</strong> {album.cantidad} </p>
+                                <p><strong>Fecha de compra:</strong> {album.fecha}</p>
+                                <p><strong>Numero de ID de compra:</strong> {album.id}</p>
+                                <p><strong>Dirección de envío:</strong> {album.shipping_address}</p>
+                                <p><strong>Teléfono de contacto:</strong> {album.shipping_contactNumber}</p>
+                                <button type="button" className="btn btn-outline-danger mt-3" disabled><strong>{album.album_genre}</strong></button>
+                            </div>
+                        </div>
+                        <br className="espaciado"></br>
+                    </li>
+                ))}
             </div>
-            <div className="row p-4 ">
-                <div className="col-md-6">
-                    <img className="img-container img-fluid object-cover" src="https://m.media-amazon.com/images/I/913fRR9Dk5L._UF894,1000_QL80_.jpg" style={{ height: '300px', width: '300px', overflow: 'hidden' }} />
-                </div>
-                <div className="col-md-6 text-light text-start mt-3 fs-4">
-                    <h3>Imagine Dragons - Origins</h3>
-                    <h5 className="mt-5">País: UK</h5>
-                    <h5>Año: 2018 </h5>
-                    <h5>Fecha de compra: 2-05-2018 </h5>
-                    <h5>Numero de ID de compra: 2052018 </h5>
-                    <button type="button" className="btn btn-outline-danger mt-3" disabled><strong>Pop-Rock</strong></button>
-                </div>
-            </div>
-            <br className="espaciado"></br>
-            <div className="row p-4 ">
-                <div className="col-md-6">
-                    <img className="img-container img-fluid object-cover" src="https://m.media-amazon.com/images/I/913fRR9Dk5L._UF894,1000_QL80_.jpg" style={{ height: '300px', width: '300px', overflow: 'hidden' }} />
-                </div>
-                <div className="col-md-6 text-light text-start mt-3 fs-4">
-                    <h3>Imagine Dragons - Origins</h3>
-                    <h5 className="mt-5">País: UK</h5>
-                    <h5>Año: 2018 </h5>
-                    <h5>Fecha de compra: 2-05-2018 </h5>
-                    <h5>Numero de ID de compra: 2052018 </h5>
-                    <button type="button" className="btn btn-outline-danger mt-3" disabled><strong>Pop-Rock</strong></button>
-                </div>
-            </div>
-
         </div>
     );
 };

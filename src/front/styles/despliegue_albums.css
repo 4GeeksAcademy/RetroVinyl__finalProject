@@ -1,5 +1,6 @@
 .cont-gen{
     height: auto;
+    
 }
 .nombre-genero{
     font-size: 4rem;
@@ -11,7 +12,6 @@
     margin-bottom: 1rem;
     color: white;
     font-family: fantasy;
-    color: black;
 }
 .cont-gen-card{
     justify-content: start;
