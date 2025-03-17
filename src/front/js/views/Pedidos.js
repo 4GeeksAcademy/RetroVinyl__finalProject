@@ -59,7 +59,7 @@ export const Pedidos = () => {
                                 <img className="img-container img-fluid object-cover" src={album.album_cover_image} style={{ height: '370px', width: '370px', overflow: 'hidden' }} />
                             </div>
                             <div className="col-md-6 text-light text-start fs-6">
-                                <div className="d-flex justify-content-between">
+                                <div className="d-flex justify-content-between mt-3">
                                     <h3>{album.album_title}</h3>
                                     <a data-bs-theme="dark" href="#!"><i className="btn btn-close" style={{ cursor: "pointer" }} onClick={() => { borarPedido(album.id) }}></i></a>
                                 </div>
