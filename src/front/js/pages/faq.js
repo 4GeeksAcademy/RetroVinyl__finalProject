@@ -27,7 +27,7 @@ export const FAQ = () => {
 
                             <h4 className="metodos mt-5 mb-3"><strong>2. ¿Cuáles son los métodos de pago disponibles?</strong></h4>
                             <ul>
-                                <li>Aceptamos pagos mediante tarjetas de crédito y débito, Stripe, y PayPal. Puedes elegir el método de pago que prefieras al realizar el pago en el proceso de compra.</li>
+                                <li>Aceptamos pagos mediante tarjetas de crédito y débito y Stripe. Puedes elegir el método de pago que prefieras al realizar el pago en el proceso de compra.</li>
                             </ul>
 
                             <h4 className="metodos mt-5 mb-3"><strong>3. ¿Cómo se calculan los costos de envío?</strong></h4>
