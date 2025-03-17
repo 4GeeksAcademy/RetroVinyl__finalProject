@@ -14,7 +14,6 @@ export const Login = () => {
 
   const sign_in = async (e) => {
     e.preventDefault();
-    console.log("Intentando iniciar sesión...");
 
     try {
       const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
@@ -30,13 +29,11 @@ export const Login = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log("Error de respuesta:", errorData);
         setMessage(errorData.msg || "Hubo un error con el inicio de sesión.");
         return;
       }
 
       const data = await response.json(); // Convertimos la respuesta a JSON
-      console.log("Datos de login exitoso:", data);
 
       localStorage.setItem("token", data.access_token);  // Guardamos el token en el localStorage
       actions.login(data.access_token);

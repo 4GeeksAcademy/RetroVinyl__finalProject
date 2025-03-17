@@ -1,12 +1,9 @@
 import React from "react";
-import { useContext, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext.js";
 import '../../styles/Sixty.css'
 
 export const Decada = () => {
-    const { store, actions } = useContext(Context)
-    const [border, setBorder] = useState("")
+    
     const { decada } = useParams()
     const navigate = useNavigate();
 

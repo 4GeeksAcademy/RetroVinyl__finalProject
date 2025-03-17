@@ -1,16 +1,11 @@
 import React, { useEffect } from "react";
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext.js";
 import '../../styles/pedidos.css';
 
 export const Pedidos = () => {
-    const { store, actions } = useContext(Context)
     const [pedidos, setPedidos] = useState([]);
     const navigate = useNavigate();
-    console.log(pedidos);
-
-
     const token = localStorage.getItem("token");
 
     useEffect(() => {
@@ -25,7 +20,6 @@ export const Pedidos = () => {
         });
         const data = await response.json();
         setPedidos(data);
-        console.log(data);
     };
 
     // Función para eliminar un pedido

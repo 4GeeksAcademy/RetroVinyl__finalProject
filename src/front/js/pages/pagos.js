@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useContext, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext.js";
 import '../../styles/pedidos.css';
 
 export const Pagos = () => {

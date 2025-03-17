@@ -43,7 +43,6 @@ export const DespliegueAlbums = () => {
             body: JSON.stringify({ id_album: album.id, id_usuario: token }),
         });
         if (response.ok) {
-            console.log("Álbum añadido");
             getFavoritos()
         }
     };
@@ -56,7 +55,6 @@ export const DespliegueAlbums = () => {
             }
         });
         if (response.ok) {
-            console.log("Álbum borrado");
             getFavoritos()
         }
     };
@@ -118,7 +116,7 @@ export const DespliegueAlbums = () => {
                                         <iframe
                                             width="670"
                                             height="380"
-                                            src="https://www.youtube.com/embed/TEgDaFw_pEQ?autoplay=1"
+                                            src={`https://www.youtube.com/${album.youtube_link}`}
                                             title="YouTube video"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
@@ -130,9 +128,9 @@ export const DespliegueAlbums = () => {
                             <div className="fav-gen" onClick={() => handleFavoritoClick(album)}>{
                                 isFavorito(album.id)
                                     ?
-                                    <i class="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i>
                                     :
-                                    <i class="fa-regular fa-star"></i>
+                                    <i className="fa-regular fa-star"></i>
                             }
                             </div>
                             <Link to={`/infoAlbum/${album.id}`} style={{ textDecoration: 'none' }} >

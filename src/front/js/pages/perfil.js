@@ -31,8 +31,6 @@ export const Perfil = () => {
     navigate("/")
   }
 
-  console.log(user);
-
 
   const getInitials = (name, sur_name) => {
     // Si los campos no están vacíos, usamos las iniciales
@@ -83,7 +81,6 @@ export const Perfil = () => {
       }
 
       const result = await response.json();
-      console.log(result);
       const initials = getInitials(result.name, result.sur_name);
 
       setUser({ ...user, ...result, initials });
@@ -96,8 +93,6 @@ export const Perfil = () => {
   // PUT
   const update_profile = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
-
 
     const headers = {
       "Content-Type": "application/json",
@@ -123,7 +118,6 @@ export const Perfil = () => {
       }
 
       const result = await response.json();
-      console.log(result);
     } catch (error) {
       console.error("Error:", error);  // Manejo de errores
     }
