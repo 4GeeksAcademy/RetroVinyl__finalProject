@@ -89,16 +89,16 @@ export const DespliegueAlbums = () => {
                     <span>{decada}</span>'S <span className="text-light">{genero.toUpperCase()}</span>
                 </h1>
             </div>
-            <div className="cont-gen-card row">
+            <div className="cont-gen-card row lh-1">
                 {albums.map((album) => (
-
+                 
                     <div className="carta-gen" key={album.id}>
                         <div className="img-gen-cont">
                             <img className="img-gen" src={album.cover_image} alt={album.title} />
                         </div>
                         <div className="cuerpo-gen">
-                            <div className="detalles-gen">
-                                <p><strong>Título:</strong> {shortTitle(album.title, 2)}</p>
+                            <div className="detalles-gen mt-3 lh-1">
+                                <p><strong>Título:</strong> {shortTitle(album.title, 5)}</p>
                                 <p><strong>País:</strong> {album.country}</p>
                                 <p><strong>Año:</strong> {album.year}</p>
                             </div>
