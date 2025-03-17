@@ -61,9 +61,9 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id, ship
         } else if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
             guardarPedido();
             onPaymentSuccess();
+            window.location.href = "/pedidos"; //fuerza una recarga completa del navegador, abandonando todo el estado de React y volviendo a cargar completamente la aplicación.
 
         }
-        window.location.href = "/pedidos"; //fuerza una recarga completa del navegador, abandonando todo el estado de React y volviendo a cargar completamente la aplicación.
         setLoading(false);
     };
     

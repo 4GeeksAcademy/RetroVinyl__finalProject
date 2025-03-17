@@ -61,7 +61,7 @@ export const Pedidos = () => {
                             <div className="col-md-6 text-light text-start fs-6">
                                 <div className="d-flex justify-content-between mt-3">
                                     <h3>{album.album_title}</h3>
-                                    <a data-bs-theme="dark" href="#!"><i className="btn btn-close" style={{ cursor: "pointer" }} onClick={() => { borarPedido(album.id) }}></i></a>
+                                    <a data-bs-theme="dark" href="#!"><i className="fa-solid fa-trash fs-4 mt-1" style={{ cursor: "pointer", color : "red"}} onClick={() => { borarPedido(album.id) }}></i></a>
                                 </div>
                                 <p className="mt-4"><strong>País:</strong> {album.album_country}</p>
                                 <p><strong>Año:</strong> {album.album_year} </p>
