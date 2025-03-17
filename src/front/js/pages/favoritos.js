@@ -82,7 +82,7 @@ export const Favoritos = () => {
                                                     <iframe
                                                         width="670"
                                                         height="380"
-                                                        src={`https://www.youtube.com/${album.youtube_link}`}
+                                                        src={`https://www.youtube.com/embed/${album.youtube}`}
                                                         title="YouTube video"
                                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                         referrerPolicy="strict-origin-when-cross-origin"
