@@ -31,8 +31,6 @@ export const Perfil = () => {
     navigate("/")
   }
 
-  console.log(user);
-
 
   const getInitials = (name, sur_name) => {
     // Si los campos no están vacíos, usamos las iniciales
@@ -83,7 +81,6 @@ export const Perfil = () => {
       }
 
       const result = await response.json();
-      console.log(result);
       const initials = getInitials(result.name, result.sur_name);
 
       setUser({ ...user, ...result, initials });
@@ -96,8 +93,6 @@ export const Perfil = () => {
   // PUT
   const update_profile = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
-
 
     const headers = {
       "Content-Type": "application/json",
@@ -123,7 +118,6 @@ export const Perfil = () => {
       }
 
       const result = await response.json();
-      console.log(result);
     } catch (error) {
       console.error("Error:", error);  // Manejo de errores
     }
@@ -146,7 +140,7 @@ export const Perfil = () => {
         <div className="col-md-8 border-right">
           <div className=" text-light">
             <div className="d-flex justify-content-center align-items-center mb-4">
-              <h1 className="profile text-center"><span className="text-danger">M</span>i Perfil</h1>
+              <h1 className="profile text-center">Mi Perfil</h1>
             </div>
             <div className="row mt-4">
               <div className="col-md-6">
@@ -239,6 +233,9 @@ export const Perfil = () => {
                   name="password"
                   onChange={handleChange}
                 />
+                <small className="text-warning mt-1 d-block">
+                  <i className="fa-solid fa-exclamation-circle"></i> La contraseña será actualizada al guardar los cambios.
+                </small>
               </div>
             </div>
             <div className="row mt-3">

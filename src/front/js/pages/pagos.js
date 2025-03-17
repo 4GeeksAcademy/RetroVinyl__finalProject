@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import { useContext, useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../store/appContext.js";
 import '../../styles/pedidos.css';
 
 export const Pagos = () => {
@@ -26,7 +24,6 @@ export const Pagos = () => {
                             <ul>
                                 <li>Tarjetas de crédito y débito: Visa, MasterCard, American Express, y otras tarjetas principales.</li>
                                 <li>Stripe: Procesamos tus pagos de forma segura utilizando Stripe, uno de los proveedores de pago más confiables del mundo. Puedes pagar de manera rápida y segura con tu tarjeta o cuenta bancaria.</li>
-                                <li>PayPal: Si prefieres usar PayPal, puedes pagar a través de tu cuenta de PayPal de forma sencilla y segura.</li>
                                 <li>Otros métodos de pago: Dependiendo de tu ubicación, podríamos ofrecer métodos adicionales como transferencias bancarias directas o pagos en efectivo en puntos de venta locales.</li>
                             </ul>
 

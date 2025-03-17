@@ -1,18 +1,17 @@
 import React from "react";
-import { useContext, useState, useEffect, useRef } from "react";
-import { Context } from "../store/appContext.js";
+import {  useState, useEffect, useRef } from "react";
 import '../../styles/InfoAlbum.css';
 import { useParams, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { PaymentForm } from "../component/PaymentForm.js";
-import { Pedidos } from "./Pedidos.js";
+
 
 // Carga la clave pública de Stripe (almacenada en una variable de entorno, por ejemplo, REACT_APP_STRIPE_PUBLIC_KEY)
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 export const InfoAlbum = () => {
-    const { store, actions } = useContext(Context)
+
     const navigate = useNavigate();
     const [cantidad, setCantidad] = useState(1)
     const [precio, setPrecio] = useState(20)
@@ -33,6 +32,7 @@ export const InfoAlbum = () => {
 
     const { albumid } = useParams();
     const [albums, setAlbums] = useState([])
+    
 
     // Estado para los datos de envío
     const [shipping, setShipping] = useState({
@@ -47,7 +47,7 @@ export const InfoAlbum = () => {
     const token = localStorage.getItem("token");
 
     useEffect(() => { // DONDE LLAMO A LA RUTA DEL BACK QUE TRAE LA INFORMACION??????
-        console.log("estoy cargando los albumes");
+        
         if (textareaRef.current) {
             textareaRef.current.style.height = "auto"; // Restablecer la altura
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Ajustar según contenido
@@ -57,8 +57,7 @@ export const InfoAlbum = () => {
             const response = await fetch(`${process.env.BACKEND_URL}api/infoAlbums/${albumid}`)
             const data = await response.json()
             setAlbums(data)
-            console.log(response);
-
+            
         }
         getAlbums()
         getComments()
@@ -74,7 +73,6 @@ export const InfoAlbum = () => {
             
             const data = await response.json();
             setCommentList(Array.isArray(data) ? data : []);
-            console.log(data);
 
         } catch (error) {
             console.error("Error fetching comments:", error);
@@ -95,7 +93,6 @@ export const InfoAlbum = () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
-            console.log("Data fetched successfully:", data);
             setNewComment(""); // Limpiar campo después de enviar
             getComments()
         } catch (error) {
@@ -125,7 +122,7 @@ export const InfoAlbum = () => {
             console.error("Error deleting comment:", error);
         }
     };
-    console.log(commentList);
+    
 
 
     return (
@@ -145,10 +142,10 @@ export const InfoAlbum = () => {
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
                             <p className="card-text mt-3"><strong>Cantidad:</strong></p>
-                            <div class="d-sm-flex">
-                                <button class="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(restar(cantidad))}>-</button>
+                            <div className="d-sm-flex">
+                                <button className="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(restar(cantidad))}>-</button>
                                 <p className="card-text mt-3 ps-3 pe-3"><strong>{cantidad}</strong></p>
-                                <button class="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(cantidad + 1)}>+</button>
+                                <button className="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(cantidad + 1)}>+</button>
                             </div>
                         </div>
                         <br></br>
@@ -262,5 +259,3 @@ export const InfoAlbum = () => {
         </div>
     );
 };
-//setCommentList(commentList.filter((t, currentindex) => index !== currentindex))
-//onClick={() => { setCommentList(() => [...commentList, newComment]); setNewComment(''); }}

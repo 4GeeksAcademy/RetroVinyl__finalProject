@@ -143,6 +143,8 @@ def update_profile_user():
         current_user.country = processed_params['country']
     if 'region_state' in processed_params:
         current_user.region_state = processed_params['region_state']
+    if 'password' in processed_params and processed_params['password']:
+        current_user.set_password(processed_params['password'])    
     
     db.session.commit()  # Guardar los cambios en la base de datos
     

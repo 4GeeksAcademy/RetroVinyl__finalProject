@@ -14,7 +14,6 @@ export const Login = () => {
 
   const sign_in = async (e) => {
     e.preventDefault();
-    console.log("Intentando iniciar sesión...");
 
     try {
       const response = await fetch(`${process.env.BACKEND_URL}api/login`, {
@@ -30,13 +29,11 @@ export const Login = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log("Error de respuesta:", errorData);
         setMessage(errorData.msg || "Hubo un error con el inicio de sesión.");
         return;
       }
 
       const data = await response.json(); // Convertimos la respuesta a JSON
-      console.log("Datos de login exitoso:", data);
 
       localStorage.setItem("token", data.access_token);  // Guardamos el token en el localStorage
       actions.login(data.access_token);
@@ -57,7 +54,7 @@ export const Login = () => {
         <div className="card-login col-md-6 col-sm-8">
           <div className="cardshadow card">
             <div className="card-body">
-              <h3 className="card-title2 text-center mt-3 mb-5">Iniciar Sesión</h3>
+              <h3 className="card-title2 text-center mt-3 mb-5" style={{fontFamily :'fantasy'}}>Iniciar Sesión</h3>
               <form onSubmit={sign_in}>
                 <div className="label mb-5">
                   <label htmlFor="inputEmail3" className="form-label">Email</label>
@@ -83,7 +80,9 @@ export const Login = () => {
                   <h6 className="registrarse text-white text-center mb-3"> ¿No tienes una cuenta? Registrate</h6>
                 </Link>
               </form>
-              {message && <p>{message}</p>} {/* Mostrar el mensaje de respuesta */}
+              <div className="text-center">
+              {message && <p style={{ color: "yellow" }}>{message}</p>} {/* Mostrar el mensaje de respuesta */}
+              </div>
             </div>
           </div>
         </div>

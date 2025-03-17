@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import "../../styles/home.css";
 
 export const Home = () => {
-  const { store, actions } = useContext(Context);
-
   const SimpleSlider_settings = {
     dots: true,
     infinite: true,
@@ -19,7 +16,6 @@ export const Home = () => {
     arrows: false,
     pauseOnhover: false, //evita que se detenga al pasar el mouse
   };
-
   const Carousel2 = () => (
     <div className="row slider-container2 pt-3" style={{ overflow: "hidden" }}>
       <Slider className="sliderHome" {...SimpleSlider_settings}>
@@ -44,7 +40,6 @@ export const Home = () => {
       </Slider>
     </div>
   );
-
   return (
     <div className="container py-3">
       <div className="row box">
@@ -96,5 +91,4 @@ export const Home = () => {
     </div>
   );
 };
-
 export default Home;

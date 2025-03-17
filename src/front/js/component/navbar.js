@@ -15,8 +15,7 @@ export const Navbar = () => {
 	const get_profile = async () => {
 
 		const token = localStorage.getItem("token");
-		console.log(token);
-
+		
 		const myHeaders = {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
@@ -36,7 +35,6 @@ export const Navbar = () => {
 			}
 
 			const result = await response.json();
-			console.log(result);
 			setUser({ ...user, ...result });
 			actions.updateUser(result);
 		} catch (error) {
@@ -53,9 +51,7 @@ export const Navbar = () => {
 				const response = await fetch(
 					`${process.env.BACKEND_URL}/api/search?query=${searchTerm}`
 				);
-
-				console.log("Respuesta del backend:", response);
-
+				
 				if (response.ok) {
 					const data = await response.json();
 					setSearchResults(data);  // Guarda los resultados en data
