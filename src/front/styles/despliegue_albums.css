@@ -15,6 +15,7 @@
 }
 .cont-gen-card{
     justify-content: center;
+    padding-right: 2rem;
 }
 .carta-gen {
     overflow: hidden;
