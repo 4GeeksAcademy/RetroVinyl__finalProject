@@ -33,6 +33,7 @@
     padding: 1rem;
     box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
     box-sizing: border-box;
+    position: relative;
 }
 
 .img-gen{
@@ -57,7 +58,7 @@
     display: flex;
     justify-content: space-between;
     margin-top: auto;
-    width: 100%;
+    width: 100%;  
 }
 .fav-gen {
     width: 40px;
