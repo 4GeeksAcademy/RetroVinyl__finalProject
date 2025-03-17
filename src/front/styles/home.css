@@ -15,6 +15,8 @@
     width: 100%;
   }
 .Introcard{
+    overflow: hidden;
+    object-fit: contain;
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(10,39,94,0.4206057422969187) 100%);
     color: white;
@@ -31,8 +33,7 @@
 .infoclass{
     margin-left: 3px;
 }
-.sesenta:hover, .setenta:hover, .ochenta:hover, .noventa:hover {
-   
+.sesenta:hover, .setenta:hover, .ochenta:hover, .noventa:hover {   
     cursor: pointer;
     color: white;
     background: linear-gradient(to right, rgba(255, 0, 0, 0.7) 0%, rgba(51, 85, 187, 0.7) 100%);
