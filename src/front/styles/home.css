@@ -38,20 +38,23 @@
     background: linear-gradient(to right, rgba(255, 0, 0, 0.7) 0%, rgba(51, 85, 187, 0.7) 100%);
 }
 .sesenta, .ochenta{
-    
+    overflow: hidden;
+    object-fit: contain;
     color: white;
     margin-bottom: 15px;
     margin-left: 5px;
     font-family: fantasy;
-    font-size: 4rem;
+    font-size: 3rem;
     transition: background-color 0.3s ease;
     box-shadow: rgb(58, 136, 252, 0.5) 2px 3px 10px 1px;
 }
-.noventa, .setenta{
-   
+
+.noventa, .setenta{ 
+    overflow: hidden;
+    object-fit: contain;  
     color: white;
     font-family: fantasy;
-    font-size: 4rem;
+    font-size: 3rem;
     margin-bottom: 15px;
     margin-left: -9px;
     box-shadow: rgb(58, 136, 252, 0.5) 2px 3px 10px 1px;
