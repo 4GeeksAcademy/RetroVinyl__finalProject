@@ -53,7 +53,7 @@ export const Favoritos = () => {
                 <div className="titulo-favs">
                     <h1 className="nombre-favs text-center pt-5 pb-3 text-ligth">Mis Favoritos</h1>
                 </div>
-                <div className="cont-gen container">
+                <div className="cont-gen container lh-1">
                     <div className="cont-favs-card row">
                         {favoritos.map((item) => {
                             const album = item.album;
@@ -64,12 +64,12 @@ export const Favoritos = () => {
                                     </div>
                                     <div className="cuerpo-favs">
                                         <div className="detalles-favs">
-                                            <p><strong>Título:</strong> {shortTitle(album.title, 2)}</p>
+                                            <p><strong>Título:</strong> {shortTitle(album.title, 5)}</p>
                                             <p><strong>País:</strong> {album.country}</p>
                                             <p><strong>Año:</strong> {album.year}</p>
                                         </div>
                                     </div>
-                                    <div className="cont-favs-btn">
+                                    <div className="cont-favs-btn d-flex justify-content-between">
                                         <div
                                             className="youtube-favs d-flex justify-content-center align-items-center text-decoration-none"
                                             onClick={() => setVideoActivo(album.id)}
