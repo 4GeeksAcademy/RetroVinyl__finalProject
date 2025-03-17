@@ -28,8 +28,16 @@
 }
 .introWeb{
     font-family: fantasy;
-    font-size: 30px;
+    font-size: 28px;
 }
+
+.introWeb1 {
+    font-family: fantasy;
+    font-size: 28px;
+    overflow: hidden;
+    object-fit: contain;
+}
+
 .infoclass{
     margin-left: 3px;
 }

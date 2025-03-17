@@ -11,6 +11,7 @@
 }
 .cont-favs-card{
     justify-content: center;
+    margin-right: 1rem;
 }
 .carta-favs {
     overflow: hidden;
