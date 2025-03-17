@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import "/workspaces/RetroVinyl__finalProject/src/front/styles/despliegue_albums.css"
+import '../../styles/despliegue_albums.css'
 
 
 export const DespliegueAlbums = () => {
