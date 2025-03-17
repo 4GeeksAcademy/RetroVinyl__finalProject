@@ -15,7 +15,7 @@ export const Navbar = () => {
 	const get_profile = async () => {
 
 		const token = localStorage.getItem("token");
-		
+
 		const myHeaders = {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ export const Navbar = () => {
 				const response = await fetch(
 					`${process.env.BACKEND_URL}/api/search?query=${searchTerm}`
 				);
-				
+
 				if (response.ok) {
 					const data = await response.json();
 					setSearchResults(data);  // Guarda los resultados en data
@@ -113,8 +113,8 @@ export const Navbar = () => {
 
 
 	return (
-		<nav className="navbar py-0 sticky-top">
-			<div className="container-fluid px-3 d-flex justify-content-between">
+		<nav className="row navbar py-0 sticky-top">
+			<div className="col-12 container-fluid px-3 d-flex justify-content-between">
 				<Link className="navbar-brand" to="/" style={{ textDecoration: 'none' }}>
 					<i className="circle fa-solid fa-record-vinyl"></i>
 					RetroVinyl
