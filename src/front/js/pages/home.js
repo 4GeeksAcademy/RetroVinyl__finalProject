@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import "../../styles/home.css";
+
 export const Home = () => {
-  const { store, actions } = useContext(Context);
   const SimpleSlider_settings = {
     dots: true,
     infinite: true,

@@ -91,8 +91,6 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id, ship
             })
         })
         const data = await response.json()
-        console.log(data);
-
     }
 
     return clientSecret ? (
