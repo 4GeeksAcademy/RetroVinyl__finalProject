@@ -52,6 +52,10 @@ export const InfoAlbum = () => {
             textareaRef.current.style.height = "auto"; // Restablecer la altura
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Ajustar según contenido
         }
+        //Hace que no puedas acceder a la vista actual si no estas registrado(token), te redirige al login
+        if (!token) {
+            navigate("/login", { replace: true });
+        }
 
         const getAlbums = async () => {
             const response = await fetch(`${process.env.BACKEND_URL}api/infoAlbums/${albumid}`)
