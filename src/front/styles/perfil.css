@@ -1,0 +1,46 @@
+.profile{
+    font-family: fantasy;
+}
+
+.labels {
+    font-size: 14px
+}
+
+.form-control::placeholder {
+    color: rgb(153, 143, 143) !important; /* Cambia el color del texto del placeholder a blanco */
+    
+}
+
+.form-control:not(:placeholder-shown) {
+    /* Intenta usar un gradiente más vibrante */
+    background: linear-gradient(to right, #4169E1 0%, #FF0000 100%);
+    background-clip: text;  /* Versión estándar */
+    -webkit-background-clip: text;
+    color: transparent;  /* Versión estándar */
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+
+.bodyuser{
+    width: 80%;
+    background: rgb(0, 0, 0, 0.671);
+    padding: 5px;        
+    overflow: hidden;
+    box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
+}
+
+.rounded-circle{
+    margin-top: 25px;
+    font-size: 180px; 
+    background: #2F51CF;
+    background: linear-gradient(to right, #2F51CF 0%, #CF1512 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;   
+    
+}
+
+.user{
+    font-family: fantasy;
+    font-size: 21px;
+}

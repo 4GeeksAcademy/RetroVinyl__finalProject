@@ -1,3 +1,27 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+body{
+    background: url("https://wallpaperbat.com/img/37501388-abstract-background-with-neon-circle.png") no-repeat center center/cover fixed;
+}
+
+.arrow-icon{
+    font-size: 50px; 
+    background: linear-gradient(to right, #4169E1 0%, #FF0000 100%); 
+    background-clip: text; 
+    -webkit-background-clip: text; 
+    color: transparent; 
+    -webkit-text-fill-color: transparent; 
+    display: inline-block; 
+    cursor: pointer;
+} 
+
+.arrow-icon:hover {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);  /* Sombra al pasar el mouse */
+}
+ 
+    
+
+
+
+

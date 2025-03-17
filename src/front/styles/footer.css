@@ -1,0 +1,13 @@
+.contact{
+    color: rgb(122, 119, 119);
+    font-weight: bold;
+    line-height: 0;
+}
+
+.footer{
+    color: rgb(122, 119, 119);
+    
+}
+footer a {
+    text-decoration: none;
+  }

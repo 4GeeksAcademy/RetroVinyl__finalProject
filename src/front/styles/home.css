@@ -1,7 +1,70 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.box{
+    background: rgb(0, 0, 0, 0.671);
+    padding: 5px;
+    overflow: hidden;
+    box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
+    
+}
+.slick-slide {
+    padding: 0 8px;
+  }
+.slick-slide img {
+    outline: none;
+    user-select: none;
+    pointer-events: none;
+    width: 100%;
+  }
+.Introcard{
+    overflow: hidden;
+    object-fit: contain;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(10,39,94,0.4206057422969187) 100%);
+    color: white;
+    grid-column: span 1;
+    font-size: medium;
+    font-size: 1.5rem;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.introWeb{
+    font-family: fantasy;
+    font-size: 28px;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.introWeb1 {
+    font-family: fantasy;
+    font-size: 28px;
+    overflow: hidden;
+    object-fit: contain;
+}
+
+.infoclass{
+    margin-left: 3px;
+}
+.sesenta:hover, .setenta:hover, .ochenta:hover, .noventa:hover {   
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(to right, rgba(255, 0, 0, 0.7) 0%, rgba(51, 85, 187, 0.7) 100%);
+}
+.sesenta, .ochenta{
+    overflow: hidden;
+    object-fit: contain;
+    color: white;
+    margin-bottom: 15px;
+    margin-left: 5px;
+    font-family: fantasy;
+    font-size: 3rem;
+    transition: background-color 0.3s ease;
+    box-shadow: rgb(58, 136, 252, 0.5) 2px 3px 10px 1px;
+}
+
+.noventa, .setenta{ 
+    overflow: hidden;
+    object-fit: contain;  
+    color: white;
+    font-family: fantasy;
+    font-size: 3rem;
+    margin-bottom: 15px;
+    margin-left: -9px;
+    box-shadow: rgb(58, 136, 252, 0.5) 2px 3px 10px 1px;
+}
