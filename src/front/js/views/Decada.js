@@ -26,7 +26,7 @@ export const Decada = () => {
                 </div>
                 <div className="row infoclass">
                     <div className="Introcard d-flex align-items-center justify-content-center col-6 col-md-6 col-sm-12 card-body bg-transparent p-4 border-0 text-center" style={{ height: "29rem" }}>
-                        <p className="introWeb pt-2">{textoFinal}</p>
+                        <p className="introWeb1 pt-2">{textoFinal}</p>
                     </div>
                     <div className="col-12 col-md-6"> {/* Introcard: ocupa 6 columnas a la derecha */}
                         <div className="row">
