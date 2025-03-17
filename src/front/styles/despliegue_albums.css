@@ -14,18 +14,19 @@
     color: black;
 }
 .cont-gen-card{
-    justify-content: center;
+    justify-content: start;
 }
 .carta-gen {
+    overflow: hidden;
+    object-fit: contain;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
     align-items: center;
-    height: 450px; 
-    width: 220px;
+    height: 400px; 
+    width: 250px;
     margin-bottom: 3rem;
-    margin-right: 8px;
-    border-radius: 15px;
+    margin-left: 2rem;
     color: white;
     background: rgba(0, 0, 0, 0.671);
     padding: 1rem;
@@ -34,13 +35,12 @@
 }
 
 .img-gen{
-    width: 150px;
-    height: 150px;
+    width: 220px;
+    height: 200px;
     object-fit: cover;
     border: 1px solid white;
-    border-radius: 10px;
     display: block;
-    margin:8px auto;
+    margin-bottom: 1rem;
 
 }
 .detalles-gen {
@@ -61,14 +61,13 @@
 .fav-gen {
     width: 40px;
     height: 40px;
-    font-size: 25px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    border: 1.5px solid #daab03;
+    cursor: pointer;
     background-color: transparent;
-    margin-left: 3rem;
+    margin-left: 4rem;
     color: #daab03;
     transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
 }
@@ -86,12 +85,11 @@
 .compra-gen{
     width: 40px;
     height: 40px;
-    font-size: 25px;
+    font-size: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
-    border: 1.5px solid #248cdb;
+    cursor: pointer;
     background-color: transparent;
     color:#248cdb;
     transition: border-color 0.2s, box-shadow 0.2s, color 0.2s;
@@ -109,12 +107,44 @@
 .youtube-gen{
     width: 40px;
     height: 40px;
-    border-radius: 10px;
-    border: 1.5px solid #f20d0d;
+    font-size: 30px;
+    cursor: pointer;
+    color: #f20d0d;
     background-color: transparent;
+}
+.youtube-gen:hover {
+    border-color: #f20d0d;
+    box-shadow: 0 0 15px 2px #f20d0d;
+}
+
+.youtube-gen:active {
+    border-color: #ffffff;
+    color: #ffffff;
+    box-shadow: 0 0 15px 2px #ffffff;
 }
 .cuerpo-gen {
     flex-grow: 1; 
     width: 100%;
     overflow: visible; 
+}
+.modal-overlay-gen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content-gen {
+    width: 700px;
+    height: 410px;
+    justify-content: center;
+    background: black;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }

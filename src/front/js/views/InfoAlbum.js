@@ -120,6 +120,7 @@ export const InfoAlbum = () => {
         }
     };
     console.log(commentList);
+    
 
     return (
         <div className="container">
@@ -243,7 +244,7 @@ export const InfoAlbum = () => {
                     <div className="input-group mb-3">
                         <input type="text" className="form-control" placeholder="Deja tu comentario"
                             onChange={(e) => setNewComment(e.target.value)}
-                            value={newComment} />
+                            value={newComment}/>
                         <button className="btn btn-danger" type="button" onClick={() => { postComentario(newComment); setNewComment(""); }}>Añadir</button>
                     </div>
                 </div>

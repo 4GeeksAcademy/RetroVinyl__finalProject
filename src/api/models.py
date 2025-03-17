@@ -55,6 +55,7 @@ class Album(db.Model):
     cover_image = db.Column(db.String(250), unique=False, nullable=False)
     genre = db.Column(db.String(250), unique=False, nullable=False)
     have = db.Column(db.String(80), unique=False, nullable=False)
+    youtube_link = db.Column(db.String(100),nullable = True)
 
     def __repr__(self):
         return f'<Album {self.title}>'
@@ -67,7 +68,8 @@ class Album(db.Model):
             "year" : self.year,
             "cover_image" : self.cover_image,
             "genre" : self.genre,
-            "have" : self.have,   
+            "have" : self.have,  
+            "youtube" : self.youtube_link, 
         }
 
 class Pedido(db.Model):

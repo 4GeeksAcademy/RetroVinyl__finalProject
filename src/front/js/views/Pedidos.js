@@ -10,9 +10,9 @@ export const Pedidos = () => {
     const [orderList, setOrderList] = useState([]);
 
     return (
-        <div className="pedidos container text-center mt-5 pb-5 w-75" style={{ overflow: "hidden" }}>
+        <div className="pedidos container text-center mt-5 pb-5 w-auto" style={{ overflow: "hidden" }}>
             <div className="">
-                <h1 className="mispedidos pt-5 pb-3"><span className="text-danger">M</span>is Pedidos</h1>
+                <h1 className="mispedidos pt-5 pb-3">Mis Pedidos</h1>
             </div>
             <div className="row p-4 ">
                 <div className="col-md-6">
