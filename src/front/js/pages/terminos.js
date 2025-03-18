@@ -6,7 +6,7 @@ export const TerminosCondiciones = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="arrows col-6" onClick={() => navigate(-1)}>
                 <i className="fa-solid fa-arrow-left ml-5 arrow-icon"></i>
             </div>
@@ -14,8 +14,8 @@ export const TerminosCondiciones = () => {
                 <div>
                     <h1 className="mispedidos text-light text-center pt-5 pb-3 mb-3">Términos y Condiciones</h1>
                 </div>
-                <div className="row p-4">
-                    <div className="col-md-12 text-light fs-4">
+                <div className="row">
+                    <div className="col-md-12 text-light fs-6">
                         <div className="text-start">
                             <h3 className="metodos mb-5"><strong>Bienvenido a RetroVinyl<i className="circle fa-solid fa-record-vinyl"></i></strong></h3>
                             <h4 className="metodos mb-5">Al acceder o utilizar nuestro sitio web y realizar una compra, aceptas los siguientes términos y condiciones. Te recomendamos leerlos cuidadosamente antes de continuar.</h4>

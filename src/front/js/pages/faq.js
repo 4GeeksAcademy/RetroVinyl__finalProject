@@ -6,7 +6,7 @@ export const FAQ = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="arrows col-6" onClick={() => navigate(-1)}>
                 <i className="fa-solid fa-arrow-left ml-5 arrow-icon"></i>
             </div>
@@ -14,8 +14,8 @@ export const FAQ = () => {
                 <div>
                     <h1 className="mispedidos text-light text-center pt-5 pb-3 mb-3">Preguntas Frecuentes</h1>
                 </div>
-                <div className="row p-4">
-                    <div className="col-md-12 text-light fs-4">
+                <div className="row ">
+                    <div className="col-md-12 text-light fs-6">
                         <div className="text-start">
                             <h3 className="metodos mb-5"><strong>Resuelve tus dudas aquí</strong></h3>
                             <h4 className="metodos mb-5">Aquí te dejamos algunas de las preguntas más frecuentes de nuestros clientes. Si no encuentras la respuesta a tu duda, no dudes en contactarnos.</h4>

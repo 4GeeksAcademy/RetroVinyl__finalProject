@@ -2,6 +2,7 @@
     color: rgb(122, 119, 119);
     font-weight: bold;
     line-height: 0;
+    
 }
 
 .footer{
@@ -11,3 +12,4 @@
 footer a {
     text-decoration: none;
   }
+  

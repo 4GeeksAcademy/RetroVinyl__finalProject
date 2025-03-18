@@ -3,17 +3,17 @@
     height: auto;
     margin-top: 10px;
     color: white;
+    border-radius: 0;
     background: rgb(0, 0, 0, 0.671);
     box-shadow: rgb(58, 136, 252, 0.5) 0px 7px 29px 0px;
     box-sizing: border-box;
-    
 }
 
 
 .img-card{
     margin-top: 15px;
     height: 350px;
-    object-fit: contain;
+    object-fit: contain;    
 }
 
 .card-coment{

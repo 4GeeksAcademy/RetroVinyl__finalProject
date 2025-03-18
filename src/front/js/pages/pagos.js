@@ -8,15 +8,15 @@ export const Pagos = () => {
 
 
     return (
-        <div className="container">
+        <div className="container-fuid">
             <div className="arrows col-6" onClick={() => navigate(-1)}>
                 <i className="fa-solid fa-arrow-left  ml-5 arrow-icon"></i></div>
             <div className="pagos container text-start pb-5 w-75" style={{ overflow: "hidden" }}>
                 <div>
                     <h1 className="mispedidos text-light text-center pt-5 pb-3 mb-3">Métodos de Pago</h1>
                 </div>
-                <div className="row p-4">
-                    <div className="col-md-12 text-light fs-4">
+                <div className="row">
+                    <div className="col-md-12 text-light fs-6">
                         <div className="text-start">
                             <h3 className="metodos mb-5"><strong>Métodos de Pago Aceptados</strong></h3>
                             <h4 className="metodos mb-5">En nuestra tienda online, ofrecemos opciones de pago seguras y convenientes para ti. Aceptamos los siguientes métodos de pago:</h4>
