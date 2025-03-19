@@ -26,7 +26,8 @@ export const DespliegueAlbums = () => {
         const getAlbums = async () => {
             const response = await fetch(`${process.env.BACKEND_URL}api/albums/${decada}/${genero}`);
             const data = await response.json();
-            setAlbums(data);
+            const sortedData = data.sort((a, b) => a.id - b.id); // compara los id de los albumes y los devuelve ordenado de menor a mayor 
+            setAlbums(sortedData);
         };
         getAlbums();
         if (token) { getFavoritos(); }
