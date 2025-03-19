@@ -30,7 +30,7 @@ export const PaymentForm = ({ amount, onPaymentSuccess, cantidad, album_id, ship
                 }
             })
             .catch(err => setError(err.message));
-    }, [amount]);
+    }, [cantidad]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -199,7 +199,7 @@ export const InfoAlbum = () => {
                             </div>
                         </div>
                         <br></br>
-                        <p className="card-text"><strong>TOTAL :</strong>{precioTotal}<strong>€</strong></p>
+                        <p className="card-text"><strong>TOTAL : </strong>{precioTotal}<strong>€</strong></p>
                         <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#paymentModal">
                             Comprar
