@@ -26,7 +26,8 @@ export const DespliegueAlbums = () => {
         const getAlbums = async () => {
             const response = await fetch(`${process.env.BACKEND_URL}api/albums/${decada}/${genero}`);
             const data = await response.json();
-            setAlbums(data);
+            const sortedData = data.sort((a, b) => a.id - b.id); // compara los id de los albumes y los devuelve ordenado de menor a mayor 
+            setAlbums(sortedData);
         };
         getAlbums();
         if (token) { getFavoritos(); }
@@ -82,8 +83,8 @@ export const DespliegueAlbums = () => {
     return (
         <div className="cont-gen container">
             <div className="arrows col-6" onClick={() => navigate(-1)}>
-                    <i className="fa-solid fa-arrow-left arrow-icon"></i>
-                </div>
+                <i className="fa-solid fa-arrow-left arrow-icon"></i>
+            </div>
             <div className="titulo-gen">
                 <h1 className="nombre-genero text-center my-2">
                     <span>{decada}</span>'S <span className="text-light">{genero.toUpperCase()}</span>
@@ -91,7 +92,7 @@ export const DespliegueAlbums = () => {
             </div>
             <div className="cont-gen-card row lh-1">
                 {albums.map((album) => (
-                 
+
                     <div className="carta-gen" key={album.id}>
                         <div className="img-gen-cont">
                             <img className="img-gen" src={album.cover_image} alt={album.title} />
@@ -116,7 +117,7 @@ export const DespliegueAlbums = () => {
                                         <iframe
                                             width="670"
                                             height="380"
-                                            src={`https://www.youtube.com/${album.youtube_link}`}
+                                            src={`https://www.youtube.com/embed/${album.youtube}`}
                                             title="YouTube video"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerPolicy="strict-origin-when-cross-origin"
@@ -125,15 +126,29 @@ export const DespliegueAlbums = () => {
                                     </div>
                                 </div>
                             )}
-                            <div className="fav-gen" onClick={() => handleFavoritoClick(album)}>{
+                            <div className="fav-gen"  onClick={(e) =>{ 
+                                if (token){handleFavoritoClick(album) // si existe el token llama a la funcion añadir favs
+
+                                }else{
+                                    alert("Debes iniciar sesión")}// si no existe token manda un alert
+                                }} >
+                                    {
                                 isFavorito(album.id)
                                     ?
-                                    <i className="fa-solid fa-star"></i>
+                                    <i className="fa-solid fa-star"></i> //si el album ya está en favs, rellenala
                                     :
-                                    <i className="fa-regular fa-star"></i>
-                            }
+                                    <i className="fa-regular fa-star"></i> // si no esta en favs dejala vacia
+                            } 
                             </div>
-                            <Link to={`/infoAlbum/${album.id}`} style={{ textDecoration: 'none' }} >
+                            <Link
+                                to={token ? `/infoAlbum/${album.id}` : "#"} //si hay token redirige a infoalbum
+                                style={{ textDecoration: 'none' }}
+                                onClick={(e) => {
+                                    if (!token) { // si no existe token detiene la navegación y muestra el alert
+                                        e.preventDefault(); 
+                                        alert("Debes inciar sesión");
+                                    }
+                                }} >
                                 <div className="compra-gen">
                                     <i className="fa-solid fa-circle-info"></i>
                                 </div>

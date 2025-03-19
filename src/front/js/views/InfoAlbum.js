@@ -1,5 +1,5 @@
 import React from "react";
-import {  useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import '../../styles/InfoAlbum.css';
 import { useParams, useNavigate } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
@@ -31,8 +31,9 @@ export const InfoAlbum = () => {
     const textareaRef = useRef(null);
 
     const { albumid } = useParams();
-    const [albums, setAlbums] = useState([])
-    
+    const [albums, setAlbums] = useState([]);
+    const [favoritos, setFavoritos] = useState([]);
+
 
     // Estado para los datos de envío
     const [shipping, setShipping] = useState({
@@ -47,7 +48,7 @@ export const InfoAlbum = () => {
     const token = localStorage.getItem("token");
 
     useEffect(() => { // DONDE LLAMO A LA RUTA DEL BACK QUE TRAE LA INFORMACION??????
-        
+
         if (textareaRef.current) {
             textareaRef.current.style.height = "auto"; // Restablecer la altura
             textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Ajustar según contenido
@@ -61,8 +62,9 @@ export const InfoAlbum = () => {
             const response = await fetch(`${process.env.BACKEND_URL}api/infoAlbums/${albumid}`)
             const data = await response.json()
             setAlbums(data)
-            
+
         }
+        getFavoritos()
         getAlbums()
         getComments()
     }, [albumid, token, newComment])
@@ -74,12 +76,12 @@ export const InfoAlbum = () => {
                     "Authorization": `Bearer ${token}`
                 }
             });
+                const data = await response.json();
+                setCommentList(Array.isArray(data) ? data : []);
             
-            const data = await response.json();
-            setCommentList(Array.isArray(data) ? data : []);
-
         } catch (error) {
             console.error("Error fetching comments:", error);
+            return
         }
     };
 
@@ -126,15 +128,59 @@ export const InfoAlbum = () => {
             console.error("Error deleting comment:", error);
         }
     };
-    
+    const getFavoritos = async () => {
+        const response = await fetch(`${process.env.BACKEND_URL}api/favoritos`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        const data = await response.json();
+        setFavoritos(data);
+    };
+    const isFavorito = (id) => {
+        return favoritos.some((fav) => fav.id_album === id);
+    };
+    const handleFavoritoClick = (album) => {
+        if (isFavorito(album.id)) {
+            deleteFavorito(album.id);
+        } else {
+            postFavorito(album);
+        }
+    };
+    const postFavorito = async (album) => {
+        const response = await fetch(`${process.env.BACKEND_URL}api/favoritos`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ id_album: album.id, id_usuario: token }),
+        });
+        if (response.ok) {
+            getFavoritos()
+        }
+    };
+    const deleteFavorito = async (id_album) => {
+        const response = await fetch(`${process.env.BACKEND_URL}api/favoritos/${id_album}`, {
+            method: 'DELETE',
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+        if (response.ok) {
+            getFavoritos()
+        }
+    };
 
 
     return (
         <div className="container">
             <div className="arrows col-6" onClick={() => navigate(-1)}>
-                    <i className="fa-solid fa-arrow-left arrow-icon"></i>
-                </div>
-            <div className="row p-4 justify-content-center">
+                <i className="fa-solid fa-arrow-left arrow-icon"></i>
+            </div>
+            <div className="row p-4 justify-content-around">
                 <div className="card-info card col-md-5">
                     <img src={albums.cover_image} className="img-card card-img-top" alt="..." />
                     <div className="card-body ml-3">
@@ -146,19 +192,30 @@ export const InfoAlbum = () => {
                     <div className="card-body">
                         <div className="d-flex justify-content-between">
                             <p className="card-text mt-3"><strong>Cantidad:</strong></p>
-                            <div className="d-sm-flex">
+                            <div className="d-flex">
                                 <button className="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(restar(cantidad))}>-</button>
                                 <p className="card-text mt-3 ps-3 pe-3"><strong>{cantidad}</strong></p>
                                 <button className="btn btn-outline-danger ms-1" type="button" onClick={() => setCantidad(cantidad + 1)}>+</button>
                             </div>
                         </div>
                         <br></br>
-                        <p className="card-text"><strong>TOTAL :</strong>{precioTotal}<strong>€</strong></p>
-
+                        <p className="card-text"><strong>TOTAL : </strong>{precioTotal}<strong>€</strong></p>
+                        <div className="d-flex justify-content-between">
                         <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#paymentModal">
                             Comprar
                         </button>
-
+                        <div className="fav-gen"  onClick={() =>{ 
+                                handleFavoritoClick(albums) 
+                                }} >
+                                    {
+                                isFavorito(albums.id)
+                                    ?
+                                    <i className="fa-solid fa-star"></i> //si el album ya está en favs, rellenala
+                                    :
+                                    <i className="fa-regular fa-star"></i> // si no esta en favs dejala vacia
+                            } 
+                            </div>
+                        </div>
                         <div className="modal fade" id="paymentModal" tabIndex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
                             <div className="modal-dialog modal-dialog-centered modal-lg">
                                 <div className="modal-content">
@@ -228,7 +285,7 @@ export const InfoAlbum = () => {
                 </div>
 
 
-                <div className="card-coment text-light text-center ms-3 col-md-6">
+                <div className="card-coment text-light text-center  col-md-6">
                     <div className="p-3">
                         <h3 className="sentimientosRetro" >¡Escucha, revive y comparte!</h3>
                         <h4> Cuéntanos tu historia</h4>
@@ -255,8 +312,8 @@ export const InfoAlbum = () => {
                         <textarea ref={textareaRef} type="text" className="form-control" placeholder="Deja tu comentario" rows={1} style={{ width: "auto", resize: "none", overflow: "hidden" }}
                             onChange={(e) => setNewComment(e.target.value)}
                             value={newComment} />
-                        <button className="btn btn-danger mt-1" type="button" style={{flexShrink: 0, height: "38px", cursor: "pointer",}}
-                        onClick={() => { postComentario(newComment); setNewComment(""); }}>Añadir</button>
+                        <button className="btn btn-danger mt-1" type="button" style={{ flexShrink: 0, height: "38px", cursor: "pointer", }}
+                            onClick={() => { postComentario(newComment); setNewComment(""); }}>Añadir</button>
                     </div>
                 </div>
             </div>

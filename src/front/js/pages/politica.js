@@ -6,7 +6,7 @@ export const PoliticaPrivacidad = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="arrows col-6" onClick={() => navigate(-1)}>
                 <i className="fa-solid fa-arrow-left ml-5 arrow-icon"></i>
             </div>
@@ -14,8 +14,8 @@ export const PoliticaPrivacidad = () => {
                 <div>
                     <h1 className="mispedidos text-light text-center pt-5 pb-3 mb-3">Política de Privacidad</h1>
                 </div>
-                <div className="row p-4">
-                    <div className="col-md-12 text-light fs-4">
+                <div className="row">
+                    <div className="col-md-12 text-light fs-6">
                         <div className="text-start">
                             <h3 className="metodos mb-5"><strong>Tu privacidad es importante para nosotros</strong></h3>
                             <h4 className="metodos mb-5">En nuestra tienda online, valoramos tu privacidad y trabajamos para proteger tus datos personales. A continuación, te explicamos cómo recolectamos, usamos y protegemos tu información.</h4>
@@ -55,7 +55,7 @@ export const PoliticaPrivacidad = () => {
 
                             <h4 className="metodos mt-5 mb-3"><strong>Tus derechos</strong></h4>
                             <ul>
-                                <li>Tienes derecho a acceder, modificar o eliminar tus datos personales en cualquier momento. Si deseas actualizar tu información o ejercer tus derechos, puedes contactarnos a través de [correo electrónico de contacto].</li>
+                                <li>Tienes derecho a acceder, modificar o eliminar tus datos personales en cualquier momento. Si deseas actualizar tu información o ejercer tus derechos, puedes contactarnos a través de retrovinyl@gmail.com.</li>
                             </ul>
 
                         </div>

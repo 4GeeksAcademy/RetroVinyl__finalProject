@@ -262,10 +262,6 @@ def add_comentario():
 @jwt_required()
 def get_comentarios(albumid):
     comentarios = Comentario.query.filter_by(album_id=albumid).all()
-    
-    if not comentarios:
-        return jsonify({"message": "No hay comentarios para este álbum"}), 404
-
     return jsonify([comentario.serialize() for comentario in comentarios]), 200
 
 @api.route('/comentariosAlbum/<comment_id>', methods=['DELETE'])
